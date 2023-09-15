@@ -18,5 +18,7 @@ Siente libre de navegar a través de los archivos del repositorio, estamos encan
 Esto es un proyecto de:
 
 [Maria Martinez](https://github.com/Mariayey12)
+
 [Kevin Ruda](https://github.com/ElKev117)
+
 [Nicolas Duque](https://github.com/ad-nicolas)
