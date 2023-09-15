@@ -14,3 +14,9 @@ Siente libre de navegar a través de los archivos del repositorio, estamos encan
 # DIAGRAMA ENTIDAD-RELACION
 
 ![DIAGRAMA DB](https://github.com/ad-nicolas/ReservaVuelos/blob/eb02d955f39a0aeb625a1bf048f015f985d13eb8/assets/Diagrama%20Entidad-Relacion.png)
+
+Esto es un proyecto de:
+
+[Maria Martinez](https://github.com/Mariayey12)
+[Kevin Ruda](https://github.com/ElKev117)
+[Nicolas Duque](https://github.com/ad-nicolas)
