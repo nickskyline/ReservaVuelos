@@ -7,7 +7,7 @@ En este sistema de reserva de vuelos los usuarios podrán acceder y reservar los
 
 Siente libre de navegar a través de los archivos del repositorio, estamos encantados de recibir feedback y todo tipo de retroalimentación!
 
-# DIAGRAMA DE CLASES UML
+# DIAGRAMA DE CLASES 
 
 ![DIAGRAMA UML](![image](https://github.com/ad-nicolas/ReservaVuelos/assets/92681721/ba89ad11-8b1d-44c9-a29c-be0bbfe6cb27)
 
