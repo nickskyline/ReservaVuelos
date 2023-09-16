@@ -16,6 +16,9 @@ Siente libre de navegar a través de los archivos del repositorio, estamos encan
 
 ![DIAGRAMA DB](https://github.com/ad-nicolas/ReservaVuelos/blob/eb02d955f39a0aeb625a1bf048f015f985d13eb8/assets/Diagrama%20Entidad-Relacion.png)
 
+# PROTOTIMO DEL PROYECTO RESERVA DE VUELO 
+(https://wireframe.cc/pro/pp/b7435192b681501)
+
 Esto es un proyecto de:
 
 [Maria Martinez](https://github.com/Mariayey12)
