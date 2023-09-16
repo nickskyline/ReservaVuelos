@@ -9,7 +9,7 @@ Siente libre de navegar a través de los archivos del repositorio, estamos encan
 
 # DIAGRAMA DE CLASES UML
 
-![DIAGRAMA UML](https://github.com/ad-nicolas/ReservaVuelos/blob/eb02d955f39a0aeb625a1bf048f015f985d13eb8/assets/Diagrama%20UML.png)
+![DIAGRAMA UML](181.234.200.14/32)
 
 # DIAGRAMA ENTIDAD-RELACION
 
