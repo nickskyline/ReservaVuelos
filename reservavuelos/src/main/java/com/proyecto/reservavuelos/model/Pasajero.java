@@ -2,21 +2,23 @@ package com.proyecto.reservavuelos.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
+
+@Entity
 public class Pasajero {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pasajero_generador")
     @SequenceGenerator(name = "pasajero_generador", allocationSize = 1)
     private Long id;
-
-    @Column(name = "id_persona")
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id")
-    private Long id_persona;
-    @Column(name = "tipo_pasajero")
+    @Column(name = "tipo_pasajero", nullable = false)
     private String tipoPasajero;
 
-    @OneToMany(mappedBy = "reserva", cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_pasajero")
-    private Reserva reserva;
+    @ManyToOne
+    @JoinColumn(name = "id_persona", nullable = false)
+    private Persona persona;
+    @ManyToMany(mappedBy = "pasajeros")
+    private List<Reserva> reservas;
+
 }

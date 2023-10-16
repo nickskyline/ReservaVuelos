@@ -3,7 +3,10 @@ package com.proyecto.reservavuelos.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
+
+@Entity
 public class Reserva {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "reserva_generador")
@@ -11,16 +14,22 @@ public class Reserva {
     public Long id;
 
 
-    @Column(name = "id_pasajero")
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id")
-    private Long id_vuelo;
-
-    @Column(name = "id_vuelo")
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id")
-    private Long id_pasajero;
-
-    @Column(name = "fecha_reservacion")
+    @Column(name = "fecha_reservacion", nullable = false)
     private LocalDate fechaReserva;
+
+    @ManyToMany
+    @JoinTable(
+            name = "reserva_pasajero",
+            joinColumns = @JoinColumn(name = "id_reserva"),
+            inverseJoinColumns = @JoinColumn(name = "id_pasajero")
+    )
+    private List<Pasajero> pasajeros;
+
+    @ManyToMany
+    @JoinTable(
+            name = "reserva_vuelo",
+            joinColumns = @JoinColumn(name = "id_reserva"),
+            inverseJoinColumns = @JoinColumn(name = "id_vuelo")
+    )
+    private List<Vuelo> vuelos;
 }
