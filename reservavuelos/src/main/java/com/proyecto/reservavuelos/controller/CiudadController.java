@@ -14,6 +14,7 @@ import java.util.List;
 @RequestMapping("api/v1/ciudades")
 public class CiudadController {
 
+    //http://localhost:8080/api/v1/ciudades:
     private CiudadService ciudadService;
 
     @Autowired

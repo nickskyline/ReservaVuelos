@@ -35,6 +35,6 @@ public class Persona {
     @Column(name = "telefono", nullable = false)
     private String telefono;
 
-    @OneToOne(mappedBy = "persona", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "persona")
     private Pasajero pasajero;
 }

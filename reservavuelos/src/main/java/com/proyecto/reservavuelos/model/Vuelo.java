@@ -1,11 +1,14 @@
 package com.proyecto.reservavuelos.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
+@Data
 public class Vuelo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
