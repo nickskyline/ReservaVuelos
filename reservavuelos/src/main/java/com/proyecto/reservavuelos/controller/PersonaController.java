@@ -43,7 +43,7 @@ public class PersonaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> actualizarPersona(@PathVariable Long id, @RequestBody Persona nuevaPersona) {
+    public ResponseEntity<String> actualizarPersona( @PathVariable Long id, @RequestBody Persona nuevaPersona) {
         boolean actualizada = personaService.actualizarPersona(id, nuevaPersona);
 
         if (actualizada) {

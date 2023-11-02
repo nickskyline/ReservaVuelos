@@ -1,5 +1,6 @@
 package com.proyecto.reservavuelos.model;
 
+import com.proyecto.reservavuelos.util.TipoDocumento;
 import jakarta.persistence.*;
 import lombok.Data;
 
