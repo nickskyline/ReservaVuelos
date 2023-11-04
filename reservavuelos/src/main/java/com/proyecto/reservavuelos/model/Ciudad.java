@@ -4,13 +4,16 @@ package com.proyecto.reservavuelos.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Data
 public class Ciudad {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ciudad_generador")
-    @SequenceGenerator(name = "ciudad_generador", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
 
     @Column(name = "nombre", nullable = false)

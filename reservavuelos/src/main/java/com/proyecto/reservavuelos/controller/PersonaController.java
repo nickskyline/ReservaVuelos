@@ -11,7 +11,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("api/v1/persona")
+@RequestMapping("api/v1/personas")
 public class PersonaController {
     private PersonaService personaService;
 
@@ -32,7 +32,7 @@ public class PersonaController {
         return new ResponseEntity<>(personas, HttpStatus.OK);
     }
 
-    @GetMapping("/buscar")
+    @GetMapping("/cedula")
     public ResponseEntity<Persona> buscarPorNumeroDocumento(@RequestParam("numeroDocumento") String numeroDocumento) {
         Persona persona = personaService.buscarPorNumeroDocumento(numeroDocumento);
         if (persona != null) {
@@ -43,7 +43,7 @@ public class PersonaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> actualizarPersona( @PathVariable Long id, @RequestBody Persona nuevaPersona) {
+    public ResponseEntity<String> actualizarPersona(@PathVariable Long id, @RequestBody Persona nuevaPersona) {
         boolean actualizada = personaService.actualizarPersona(id, nuevaPersona);
 
         if (actualizada) {

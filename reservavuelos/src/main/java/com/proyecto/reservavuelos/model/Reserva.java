@@ -11,8 +11,7 @@ import java.util.List;
 @Data
 public class Reserva {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "reserva_generador")
-    @SequenceGenerator(name = "reserva_generador", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
 
 

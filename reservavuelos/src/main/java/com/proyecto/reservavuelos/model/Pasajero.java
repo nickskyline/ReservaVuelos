@@ -11,16 +11,14 @@ import java.util.List;
 public class Pasajero {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pasajero_generador")
-    @SequenceGenerator(name = "pasajero_generador", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "tipo_pasajero", nullable = false)
     private String tipoPasajero;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "id_persona", nullable = false)
     private Persona persona;
     @ManyToMany(mappedBy = "pasajeros")
     private List<Reserva> reservas;
-
 }

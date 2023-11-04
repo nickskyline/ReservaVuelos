@@ -21,13 +21,13 @@ public class AerolineaController {
         this.aerolineaService = aerolineaService;
     }
 
-    @PostMapping
+    @PostMapping()
     public ResponseEntity<String> crearAerolinea(@RequestBody Aerolinea aerolinea) {
         Aerolinea nuevaAerolinea = aerolineaService.crearAerolinea(aerolinea);
         return new ResponseEntity<>("Aerolínea creada con éxito", HttpStatus.CREATED);
     }
 
-    @GetMapping
+    @GetMapping()
     public ResponseEntity<List<Aerolinea>> obtenerTodasLasAerolineas() {
         List<Aerolinea> aerolineas = aerolineaService.obtenerTodasLasAerolineas();
         return new ResponseEntity<>(aerolineas, HttpStatus.OK);
@@ -42,7 +42,6 @@ public class AerolineaController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-
 
     @PutMapping("/{id}")
     public ResponseEntity<String> actualizarAerolinea(@PathVariable Long id, @RequestBody Aerolinea nuevaAerolinea) {

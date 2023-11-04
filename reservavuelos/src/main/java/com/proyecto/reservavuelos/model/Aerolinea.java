@@ -9,8 +9,7 @@ import java.util.List;
 @Data
 public class Aerolinea {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "aerolinea_generador")
-    @SequenceGenerator(name = "aerolinea_generador", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "nombre", nullable = false)

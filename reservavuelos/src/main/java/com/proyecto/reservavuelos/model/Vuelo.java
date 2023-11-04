@@ -1,5 +1,6 @@
 package com.proyecto.reservavuelos.model;
 
+import com.proyecto.reservavuelos.util.TipoVuelo;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -14,13 +15,12 @@ public class Vuelo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
 
-
     @ManyToOne
-    @JoinColumn(name = "ciudad_origen_id") // Columna de la ciudad de origen
+    @JoinColumn(name = "ciudad_origen_id", referencedColumnName = "id") // Columna de la ciudad de origen
     private Ciudad ciudadOrigen;
 
     @ManyToOne
-    @JoinColumn(name = "ciudad_destino_id") // Columna de la ciudad de destino
+    @JoinColumn(name = "ciudad_destino_id", referencedColumnName = "id") // Columna de la ciudad de destino
     private Ciudad ciudadDestino;
 
     @Column(name = "fecha_salida", nullable = false)
@@ -43,7 +43,7 @@ public class Vuelo {
     private TipoVuelo tipoVuelo;
 
     @ManyToOne
-    @JoinColumn(name = "id_aerolinea")
+    @JoinColumn(name = "id_aerolinea", referencedColumnName = "id")
     private Aerolinea aerolinea;
     @ManyToMany(mappedBy = "vuelos")
     private List<Reserva> reservas;

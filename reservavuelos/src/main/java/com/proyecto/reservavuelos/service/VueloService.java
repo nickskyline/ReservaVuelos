@@ -13,12 +13,26 @@ public class VueloService {
     private VueloRepository vueloRepository;
 
     @Autowired
-
     public VueloService(VueloRepository vueloRepository) {
         this.vueloRepository = vueloRepository;
     }
 
     public Vuelo crearVuelo(Vuelo vuelo) {
+
+        if (vuelo.getCiudadOrigen() == null ||
+            vuelo.getCiudadDestino() == null ||
+            vuelo.getFechaSalida() == null ||
+            vuelo.getFechaLlegada() == null ||
+            vuelo.getAsientosDisponibles() == null ||
+            vuelo.getPrecio() == null ||
+            vuelo.getHorario() == null ||
+            vuelo.getTipoVuelo() == null ||
+            vuelo.getAerolinea() == null ) {
+
+            throw new IllegalArgumentException();
+
+        }
+
         return vueloRepository.save(vuelo);
     }
 

@@ -1,4 +1,4 @@
-package com.proyecto.reservavuelos.model;
+package com.proyecto.reservavuelos.util;
 
 public enum TipoVuelo {
     PUBLICO,
