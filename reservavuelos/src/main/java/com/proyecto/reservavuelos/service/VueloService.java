@@ -1,39 +1,71 @@
 package com.proyecto.reservavuelos.service;
 
+import com.proyecto.reservavuelos.dto.VueloDto;
+import com.proyecto.reservavuelos.model.Aerolinea;
+import com.proyecto.reservavuelos.model.Ciudad;
+import com.proyecto.reservavuelos.model.Persona;
 import com.proyecto.reservavuelos.model.Vuelo;
+import com.proyecto.reservavuelos.repository.AerolineaRepository;
+import com.proyecto.reservavuelos.repository.CiudadRepository;
 import com.proyecto.reservavuelos.repository.VueloRepository;
+import com.proyecto.reservavuelos.util.TipoVuelo;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.validation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 @Service
 public class VueloService {
 
     private VueloRepository vueloRepository;
+    private CiudadRepository ciudadRepository;
+    private AerolineaRepository aerolineaRepository;
 
     @Autowired
-    public VueloService(VueloRepository vueloRepository) {
+    public VueloService(VueloRepository vueloRepository, CiudadRepository ciudadRepository, AerolineaRepository aerolineaRepository) {
         this.vueloRepository = vueloRepository;
+        this.ciudadRepository = ciudadRepository;
+        this.aerolineaRepository = aerolineaRepository;
     }
 
-    public Vuelo crearVuelo(Vuelo vuelo) {
+    public Vuelo crearVuelo(VueloDto vueloDto) {
 
-        if (vuelo.getCiudadOrigen() == null ||
-            vuelo.getCiudadDestino() == null ||
-            vuelo.getFechaSalida() == null ||
-            vuelo.getFechaLlegada() == null ||
-            vuelo.getAsientosDisponibles() == null ||
-            vuelo.getPrecio() == null ||
-            vuelo.getHorario() == null ||
-            vuelo.getTipoVuelo() == null ||
-            vuelo.getAerolinea() == null ) {
+        // Validar la informacion proporcionada
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
+        Set<ConstraintViolation<VueloDto>> violations = validator.validate(vueloDto);
 
-            throw new IllegalArgumentException();
-
+        if (!violations.isEmpty()) {
+            throw new ValidationException("Errores de validación en los campos de la creacion del vuelo");
         }
 
-        return vueloRepository.save(vuelo);
+        // Hallar las ciudades y aerolineas a traves del repositorio.
+        Optional<Ciudad> ciudadOrigen = ciudadRepository.findById(vueloDto.getIdCiudadOrigen());
+        Optional<Ciudad> ciudadDestino = ciudadRepository.findById(vueloDto.getIdCiudadDestino());
+        Optional<Aerolinea> aerolinea = aerolineaRepository.findById(vueloDto.getIdAerolinea());
+
+        if (ciudadOrigen.isPresent() && ciudadDestino.isPresent() && aerolinea.isPresent()) {
+
+            // Formatear las fechas
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            LocalDateTime fechaSalidaConvertida = LocalDateTime.parse(vueloDto.getFechaSalida(), formatter);
+            LocalDateTime fechaLlegadaConvertida = LocalDateTime.parse(vueloDto.getFechaLlegada(), formatter);
+
+            // Crear el vuelo
+            Vuelo nuevoVuelo = new Vuelo(ciudadOrigen.get(), ciudadDestino.get(), fechaSalidaConvertida,
+                    fechaLlegadaConvertida, vueloDto.getAsientosDisponibles(), vueloDto.getPrecio(),
+                    vueloDto.getTipoVuelo(), aerolinea.get());
+
+            // Enviarlo al repositorio
+            return vueloRepository.save(nuevoVuelo);
+        } else {
+            throw new NoSuchElementException();
+        }
     }
 
     public Vuelo obtenerVueloPorId(Long id) {

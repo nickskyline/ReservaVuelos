@@ -26,6 +26,8 @@ public class AerolineaService {
         return aerolineaRepository.save(aerolinea);
     }
 
+
+
     public List<Aerolinea> obtenerTodasLasAerolineas() {
         return aerolineaRepository.findAll();
     }

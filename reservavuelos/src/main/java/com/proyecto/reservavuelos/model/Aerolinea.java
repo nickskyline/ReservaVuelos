@@ -1,12 +1,16 @@
 package com.proyecto.reservavuelos.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Entity
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Aerolinea {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,4 +28,10 @@ public class Aerolinea {
     @OneToMany(mappedBy = "aerolinea", cascade = CascadeType.ALL)
     private List<Vuelo> vuelos;
 
+    public Aerolinea(Long id, String nombre, String pais, String telefono) {
+        this.id = id;
+        this.nombre = nombre;
+        this.pais = pais;
+        this.telefono = telefono;
+    }
 }

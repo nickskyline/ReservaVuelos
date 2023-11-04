@@ -1,12 +1,15 @@
 package com.proyecto.reservavuelos.service;
 
+import com.proyecto.reservavuelos.dto.PersonaDto;
 import com.proyecto.reservavuelos.model.Persona;
 import com.proyecto.reservavuelos.repository.PersonaRepository;
+import jakarta.validation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class PersonaService {
@@ -14,8 +17,17 @@ public class PersonaService {
     @Autowired
     private PersonaRepository personaRepository;
 
-    public Persona crearPersona(Persona persona) {
+    public Persona crearPersona(PersonaDto personaDto) {
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
+        Set<ConstraintViolation<PersonaDto>> violations = validator.validate(personaDto);
+
+        if (!violations.isEmpty()) {
+            throw new ValidationException("Errores de validación en los campos de persona");
+        }
+
         return personaRepository.save(persona);
+
     }
 
     public List<Persona> obtenerTodasLasPersonas() {
@@ -31,16 +43,7 @@ public class PersonaService {
 
         if (personaOptional.isPresent()) {
             Persona personaExistente = personaOptional.get();
-            personaExistente.setNombres(nuevaPersona.getNombres());
-            personaExistente.setApellidos(nuevaPersona.getApellidos());
-            personaExistente.setGenero(nuevaPersona.getGenero());
-            personaExistente.setTipoDocumento(nuevaPersona.getTipoDocumento());
-            personaExistente.setNumeroDocumento(nuevaPersona.getNumeroDocumento());
-            personaExistente.setFechaNacimiento(nuevaPersona.getFechaNacimiento());
-            personaExistente.setPaisOrigen(nuevaPersona.getPaisOrigen());
-            personaExistente.setPaisResidencia(nuevaPersona.getPaisResidencia());
-            personaExistente.setEmail(nuevaPersona.getEmail());
-            personaExistente.setTelefono(nuevaPersona.getTelefono());
+            copiarCamposPersona(nuevaPersona, personaExistente);
 
             // Guarda la persona actualizada en la base de datos
             personaRepository.save(personaExistente);

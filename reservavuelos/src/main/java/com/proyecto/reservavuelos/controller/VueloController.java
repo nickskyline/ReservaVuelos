@@ -1,7 +1,9 @@
 package com.proyecto.reservavuelos.controller;
 
+import com.proyecto.reservavuelos.dto.VueloDto;
 import com.proyecto.reservavuelos.model.Vuelo;
 import com.proyecto.reservavuelos.service.VueloService;
+import com.proyecto.reservavuelos.util.TipoVuelo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +23,9 @@ public class VueloController {
     }
 
     @PostMapping
-    public ResponseEntity<Vuelo> crearVuelo(@RequestBody Vuelo vuelo) {
-        Vuelo nuevoVuelo = vueloService.crearVuelo(vuelo);
+    public ResponseEntity<Vuelo> crearVuelo(@RequestBody VueloDto vueloDto) {
+
+        Vuelo nuevoVuelo = vueloService.crearVuelo(vueloDto);
         return new ResponseEntity<>(nuevoVuelo, HttpStatus.CREATED);
     }
 
