@@ -96,11 +96,6 @@ public class VueloTest {
         Ciudad ciudadOrigen = new Ciudad(1L, "Bogota", "Colombia");
         Aerolinea aerolinea = new Aerolinea(1L, "Avianca", "Colombia", "123456890");
 
-        /*
-        when(mockCiudadRepository.findById(ciudadOrigen.id)).thenReturn(Optional.of(ciudadOrigen));
-        when(mockCiudadRepository.findById(ciudadDestino.id)).thenReturn(Optional.of(ciudadDestino));
-        when(mockAerolineaRepository.findById(aerolinea.getId())).thenReturn(Optional.of(aerolinea));
-*/
         //Act
         assertThrows(NoSuchElementException.class, () -> vueloService.crearVuelo(vueloDto));
     }
@@ -183,6 +178,24 @@ public class VueloTest {
     }
 
     @Test
+    public void crearVueloConFechaSalidaEnElPasado() {
+        //Arrange
+        VueloDto vueloDto = vueloValido();
+
+        Ciudad ciudadDestino = new Ciudad(1L, "Barcelona", "Espanha");
+        Ciudad ciudadOrigen = new Ciudad(1L, "Bogota", "Colombia");
+        vueloDto.setFechaSalida("1899-12-03 10:15");
+        Aerolinea aerolinea = new Aerolinea(1L, "Avianca", "Colombia", "123456890");
+        when(mockCiudadRepository.findById(ciudadOrigen.id)).thenReturn(Optional.of(ciudadOrigen));
+        when(mockCiudadRepository.findById(ciudadDestino.id)).thenReturn(Optional.of(ciudadDestino));
+        when(mockAerolineaRepository.findById(aerolinea.getId())).thenReturn(Optional.of(aerolinea));
+
+        //Act && Assert
+        assertThrows(IllegalArgumentException.class, () -> vueloService.crearVuelo(vueloDto));
+    }
+
+
+    @Test
     public void crearVueloSinFechaLlegada() {
         //Arrange
         VueloDto vueloDto = vueloValido();
@@ -197,6 +210,23 @@ public class VueloTest {
 
         //Act && Assert
         assertThrows(ValidationException.class, () -> vueloService.crearVuelo(vueloDto));
+    }
+
+    @Test
+    public void crearVueloConFechaLlegadaEnElPasado() {
+        //Arrange
+        VueloDto vueloDto = vueloValido();
+
+        Ciudad ciudadDestino = new Ciudad(1L, "Barcelona", "Espanha");
+        Ciudad ciudadOrigen = new Ciudad(1L, "Bogota", "Colombia");
+        vueloDto.setFechaLlegada("1899-12-03 10:15");
+        Aerolinea aerolinea = new Aerolinea(1L, "Avianca", "Colombia", "123456890");
+        when(mockCiudadRepository.findById(ciudadOrigen.id)).thenReturn(Optional.of(ciudadOrigen));
+        when(mockCiudadRepository.findById(ciudadDestino.id)).thenReturn(Optional.of(ciudadDestino));
+        when(mockAerolineaRepository.findById(aerolinea.getId())).thenReturn(Optional.of(aerolinea));
+
+        //Act && Assert
+        assertThrows(IllegalArgumentException.class, () -> vueloService.crearVuelo(vueloDto));
     }
 
     @Test
@@ -217,6 +247,24 @@ public class VueloTest {
     }
 
     @Test
+    public void crearVueloConAsientosDisponiblesNegativos() {
+        //Arrange
+        VueloDto vueloDto = vueloValido();
+
+        Ciudad ciudadDestino = new Ciudad(1L, "Barcelona", "Espanha");
+        Ciudad ciudadOrigen = new Ciudad(1L, "Bogota", "Colombia");
+        vueloDto.setAsientosDisponibles(-50);
+        Aerolinea aerolinea = new Aerolinea(1L, "Avianca", "Colombia", "123456890");
+        when(mockCiudadRepository.findById(ciudadOrigen.id)).thenReturn(Optional.of(ciudadOrigen));
+        when(mockCiudadRepository.findById(ciudadDestino.id)).thenReturn(Optional.of(ciudadDestino));
+        when(mockAerolineaRepository.findById(aerolinea.getId())).thenReturn(Optional.of(aerolinea));
+
+        //Act && Assert
+        assertThrows(ValidationException.class, () -> vueloService.crearVuelo(vueloDto));
+    }
+
+
+    @Test
     public void crearVueloSinPrecio() {
         //Arrange
         VueloDto vueloDto = vueloValido();
@@ -224,6 +272,23 @@ public class VueloTest {
         Ciudad ciudadDestino = new Ciudad(1L, "Barcelona", "Espanha");
         Ciudad ciudadOrigen = new Ciudad(1L, "Bogota", "Colombia");
         vueloDto.setPrecio(null);
+        Aerolinea aerolinea = new Aerolinea(1L, "Avianca", "Colombia", "123456890");
+        when(mockCiudadRepository.findById(ciudadOrigen.id)).thenReturn(Optional.of(ciudadOrigen));
+        when(mockCiudadRepository.findById(ciudadDestino.id)).thenReturn(Optional.of(ciudadDestino));
+        when(mockAerolineaRepository.findById(aerolinea.getId())).thenReturn(Optional.of(aerolinea));
+
+        //Act && Assert
+        assertThrows(ValidationException.class, () -> vueloService.crearVuelo(vueloDto));
+    }
+
+    @Test
+    public void crearVueloConPrecioNegativo() {
+        //Arrange
+        VueloDto vueloDto = vueloValido();
+
+        Ciudad ciudadDestino = new Ciudad(1L, "Barcelona", "Espanha");
+        Ciudad ciudadOrigen = new Ciudad(1L, "Bogota", "Colombia");
+        vueloDto.setPrecio(-50D);
         Aerolinea aerolinea = new Aerolinea(1L, "Avianca", "Colombia", "123456890");
         when(mockCiudadRepository.findById(ciudadOrigen.id)).thenReturn(Optional.of(ciudadOrigen));
         when(mockCiudadRepository.findById(ciudadDestino.id)).thenReturn(Optional.of(ciudadDestino));

@@ -1,15 +1,18 @@
 package com.proyecto.reservavuelos.model;
 
+import com.proyecto.reservavuelos.util.Genero;
 import com.proyecto.reservavuelos.util.TipoDocumento;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class Persona {
 
     @Id
@@ -24,7 +27,7 @@ public class Persona {
 
     @Column(name = "genero", nullable = false)
     @NotNull
-    private String genero;
+    private Genero genero;
 
     @Column(name = "tipo_documento", nullable = false)
     @NotNull
@@ -58,4 +61,18 @@ public class Persona {
 
     @OneToOne(mappedBy = "persona")
     private Pasajero pasajero;
+
+    public Persona(String nombres, String apellidos, Genero genero, TipoDocumento tipoDocumento, String numeroDocumento, LocalDate fechaNacimiento, String paisOrigen, String paisResidencia, String email, String telefono) {
+        this.nombres = nombres;
+        this.apellidos = apellidos;
+        this.genero = genero;
+        this.tipoDocumento = tipoDocumento;
+        this.numeroDocumento = numeroDocumento;
+        this.fechaNacimiento = fechaNacimiento;
+        this.paisOrigen = paisOrigen;
+        this.paisResidencia = paisResidencia;
+        this.email = email;
+        this.telefono = telefono;
+    }
+
 }

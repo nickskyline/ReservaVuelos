@@ -1,15 +1,15 @@
 package com.proyecto.reservavuelos.dto;
 
+import com.proyecto.reservavuelos.util.Genero;
 import com.proyecto.reservavuelos.util.TipoDocumento;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
-
-import java.time.LocalDate;
 
 @Component
 @Data
@@ -24,16 +24,17 @@ public class PersonaDto {
     private String apellidos;
 
     @NotNull
-    private String genero;
+    private Genero genero;
 
     @NotNull
     private TipoDocumento tipoDocumento;
 
     @NotNull
+    @Pattern(regexp = "^(0|[1-9][0-9]*)$")
     private String numeroDocumento;
 
     @NotNull
-    private LocalDate fechaNacimiento;
+    private String fechaNacimiento;
 
     @NotNull
     private String paisOrigen;
@@ -46,6 +47,7 @@ public class PersonaDto {
     private String email;
 
     @NotNull
+    @Pattern(regexp = "^(0|[1-9][0-9]*)$")
     private String telefono;
 
 }

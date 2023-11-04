@@ -1,5 +1,6 @@
 package com.proyecto.reservavuelos.controller;
 
+import com.proyecto.reservavuelos.dto.PersonaDto;
 import com.proyecto.reservavuelos.model.Persona;
 import com.proyecto.reservavuelos.service.PersonaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class PersonaController {
     }
 
     @PostMapping
-    public ResponseEntity<String> crearPersona(@RequestBody Persona persona) {
+    public ResponseEntity<String> crearPersona(@RequestBody PersonaDto persona) {
         Persona nuevaPersona = personaService.crearPersona(persona);
         return new ResponseEntity<>("Persona creada con éxito", HttpStatus.CREATED);
     }
@@ -43,7 +44,7 @@ public class PersonaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> actualizarPersona(@PathVariable Long id, @RequestBody Persona nuevaPersona) {
+    public ResponseEntity<String> actualizarPersona(@PathVariable Long id, @RequestBody PersonaDto nuevaPersona) {
         boolean actualizada = personaService.actualizarPersona(id, nuevaPersona);
 
         if (actualizada) {

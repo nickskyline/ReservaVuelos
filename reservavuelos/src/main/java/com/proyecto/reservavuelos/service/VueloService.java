@@ -56,6 +56,11 @@ public class VueloService {
             LocalDateTime fechaSalidaConvertida = LocalDateTime.parse(vueloDto.getFechaSalida(), formatter);
             LocalDateTime fechaLlegadaConvertida = LocalDateTime.parse(vueloDto.getFechaLlegada(), formatter);
 
+            if (fechaSalidaConvertida.isBefore(LocalDateTime.now()) || fechaSalidaConvertida.isBefore(LocalDateTime.parse("1900-01-01 10:10", formatter)) ||
+                    fechaLlegadaConvertida.isBefore(LocalDateTime.parse("1900-01-01 10:10", formatter)) || fechaLlegadaConvertida.isBefore(fechaSalidaConvertida)) {
+                throw new IllegalArgumentException("Las fechas de llegada y salida no pueden ser en el futuro, ni en el pasado!");
+            }
+
             // Crear el vuelo
             Vuelo nuevoVuelo = new Vuelo(ciudadOrigen.get(), ciudadDestino.get(), fechaSalidaConvertida,
                     fechaLlegadaConvertida, vueloDto.getAsientosDisponibles(), vueloDto.getPrecio(),
