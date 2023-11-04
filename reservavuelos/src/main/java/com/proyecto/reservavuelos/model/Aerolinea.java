@@ -25,4 +25,18 @@ public class Aerolinea {
     @OneToMany(mappedBy = "aerolinea", cascade = CascadeType.ALL)
     private List<Vuelo> vuelos;
 
-}
+    public Aerolinea(String nombreAerolinea) {
+    }
+
+    public Aerolinea() {
+
+    }
+
+    public void setId(String ap) {
+
+    }
+    }
+
+
+
+

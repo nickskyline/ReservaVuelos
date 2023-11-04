@@ -1,28 +1,24 @@
 package com.proyecto.reservavuelos.service;
-
 import com.proyecto.reservavuelos.model.Aerolinea;
 import com.proyecto.reservavuelos.repository.AerolineaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class AerolineaService {
-
-
     private AerolineaRepository aerolineaRepository;
 
     @Autowired
     public AerolineaService(AerolineaRepository aerolineaRepository) {
         this.aerolineaRepository = aerolineaRepository;
     }
-
-
-
-
     public Aerolinea crearAerolinea(Aerolinea aerolinea) {
+        if (aerolinea.getNombre() == null || aerolinea.getNombre().isEmpty()) {
+            // Realizar alguna acción o lanzar una excepción, pero no llamar a save
+            throw new IllegalArgumentException("El nombre de la aerolínea no es válido");
+        }
         return aerolineaRepository.save(aerolinea);
     }
 
