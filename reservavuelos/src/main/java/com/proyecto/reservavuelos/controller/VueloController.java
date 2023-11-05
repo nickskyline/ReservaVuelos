@@ -46,10 +46,10 @@ public class VueloController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Vuelo> actualizarVuelo(@PathVariable Long id, @RequestBody Vuelo vueloActualizado) {
-        Vuelo vuelo = vueloService.actualizarVuelo(id, vueloActualizado);
-        if (vuelo != null) {
-            return new ResponseEntity<>(vuelo, HttpStatus.OK);
+    public ResponseEntity<?> actualizarVuelo(@PathVariable Long id, @RequestBody VueloDto vueloDtoActualizado) {
+        vueloService.actualizarVuelo(id, vueloDtoActualizado);
+        if (vueloDtoActualizado != null) {
+            return new ResponseEntity<>(vueloDtoActualizado, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

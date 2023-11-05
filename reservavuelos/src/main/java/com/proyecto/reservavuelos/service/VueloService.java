@@ -33,6 +33,24 @@ public class VueloService {
         this.aerolineaRepository = aerolineaRepository;
     }
 
+
+    private LocalDateTime convertirYValidarFechas(VueloDto vueloDto) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        LocalDateTime fechaSalidaConvertida = LocalDateTime.parse(vueloDto.getFechaSalida(), formatter);
+        LocalDateTime fechaLlegadaConvertida = LocalDateTime.parse(vueloDto.getFechaLlegada(), formatter);
+
+        LocalDateTime fechaMinima = LocalDateTime.parse("1900-01-01 10:10", formatter);
+        LocalDateTime fechaActual = LocalDateTime.now();
+
+        if (fechaSalidaConvertida.isBefore(fechaActual) || fechaSalidaConvertida.isBefore(fechaMinima) ||
+                fechaLlegadaConvertida.isBefore(fechaMinima) || fechaLlegadaConvertida.isBefore(fechaSalidaConvertida)) {
+            throw new IllegalArgumentException("Las fechas de llegada y salida no pueden ser en el futuro, ni en el pasado!");
+        }
+
+        return fechaSalidaConvertida;
+    }
+
+
     public Vuelo crearVuelo(VueloDto vueloDto) {
 
         // Validar la informacion proporcionada
@@ -51,15 +69,8 @@ public class VueloService {
 
         if (ciudadOrigen.isPresent() && ciudadDestino.isPresent() && aerolinea.isPresent()) {
 
-            // Formatear las fechas
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-            LocalDateTime fechaSalidaConvertida = LocalDateTime.parse(vueloDto.getFechaSalida(), formatter);
-            LocalDateTime fechaLlegadaConvertida = LocalDateTime.parse(vueloDto.getFechaLlegada(), formatter);
-
-            if (fechaSalidaConvertida.isBefore(LocalDateTime.now()) || fechaSalidaConvertida.isBefore(LocalDateTime.parse("1900-01-01 10:10", formatter)) ||
-                    fechaLlegadaConvertida.isBefore(LocalDateTime.parse("1900-01-01 10:10", formatter)) || fechaLlegadaConvertida.isBefore(fechaSalidaConvertida)) {
-                throw new IllegalArgumentException("Las fechas de llegada y salida no pueden ser en el futuro, ni en el pasado!");
-            }
+            LocalDateTime fechaSalidaConvertida = convertirYValidarFechas(vueloDto);
+            LocalDateTime fechaLlegadaConvertida = convertirYValidarFechas(vueloDto);
 
             // Crear el vuelo
             Vuelo nuevoVuelo = new Vuelo(ciudadOrigen.get(), ciudadDestino.get(), fechaSalidaConvertida,
@@ -89,22 +100,23 @@ public class VueloService {
         return vueloRepository.findAll();
     }
 
-    public Vuelo actualizarVuelo(Long id, VueloDto vueloDtoActualizado) {
-        Optional<Vuelo> optionalVuelo = vueloRepository.findById(id);
+    public void actualizarVuelo(Long vueloId, VueloDto vueloDto) {
+        // Realizar las validaciones necesarias en caso de ser necesario
 
-        if (optionalVuelo != null) {
-            Vuelo vueloExistente = optionalVuelo.get();
+        Ciudad ciudadOrigen = ciudadRepository.findById(vueloDto.getIdCiudadOrigen()).orElseThrow(NoSuchElementException::new);
+        Ciudad ciudadDestino = ciudadRepository.findById(vueloDto.getIdCiudadDestino()).orElseThrow(NoSuchElementException::new);
+        Aerolinea aerolinea = aerolineaRepository.findById(vueloDto.getIdAerolinea()).orElseThrow(NoSuchElementException::new);
 
-            vueloExistente.setId(id); // Aseguramos que el ID no cambie
-            vueloExistente.getCiudadOrigen();
-            vueloExistente.getCiudadDestino();
-            vueloExistente.setFechaSalida();
-            vueloExistente.setFechaLlegada();
-            vueloExistente.setAsientosDisponibles();
+        LocalDateTime fechaSalidaConvertida = convertirYValidarFechas(vueloDto);
+        LocalDateTime fechaLlegadaConvertida = convertirYValidarFechas(vueloDto);
 
-            return vueloRepository.save(vueloActualizado);
-        }
-        return null; // El vuelo no existe
+        vueloRepository.actualizarVuelo(vueloId, ciudadOrigen, ciudadDestino,
+                fechaSalidaConvertida,
+                fechaLlegadaConvertida,
+                vueloDto.getAsientosDisponibles(),
+                vueloDto.getPrecio(),
+                vueloDto.getTipoVuelo(),
+                aerolinea);
     }
 
     public boolean eliminarVuelo(Long id) {
