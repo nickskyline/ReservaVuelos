@@ -36,7 +36,8 @@ public class ReservaService {
         Reserva reservaExistente = reservaRepository.findById(id).orElse(null);
         if (reservaExistente != null) {
             reservaActualizada.setId(id); // Aseguramos que el ID no cambie
-            // Aquí puedes realizar otras actualizaciones necesarias
+
+
             return reservaRepository.save(reservaActualizada);
         }
         return null; // La reserva no existe

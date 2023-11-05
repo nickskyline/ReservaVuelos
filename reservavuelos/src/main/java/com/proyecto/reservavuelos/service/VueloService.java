@@ -120,11 +120,12 @@ public class VueloService {
     }
 
     public boolean eliminarVuelo(Long id) {
-        Vuelo vuelo = vueloRepository.findById(id).orElse(null);
-        if (vuelo != null) {
-            vueloRepository.delete(vuelo);
-            return true;
+        Optional<Vuelo> vueloOptional = vueloRepository.findById(id);
+
+        if (vueloOptional.isPresent()) {
+            vueloRepository.delete(vueloOptional.get());
+            return true; // Persona eliminada con éxito
         }
-        return false; // No se pudo eliminar el vuelo
+        return false; // Persona no encontrada
     }
 }
