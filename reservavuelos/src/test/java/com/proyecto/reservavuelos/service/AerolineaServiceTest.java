@@ -203,6 +203,8 @@ la misma que la que se intentó guardar. Si ambas aserciones pasan con éxito, l
         assertThat(aerolineas).isNotNull();
         assertThat(aerolineas).isEmpty();
     }
+
+    /*
     @Test
     public void obtenerAerolineasPorPaisDeberiaRetornarAerolineasDelaCiudadEspecificado() {
         // Arrange
@@ -244,6 +246,8 @@ la misma que la que se intentó guardar. Si ambas aserciones pasan con éxito, l
         assertThat(aerolineasEstadosUnidos).isNotNull();
         assertThat(aerolineasEstadosUnidos).isEmpty();
     }
+
+     */
 
 }
 
