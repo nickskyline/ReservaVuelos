@@ -67,24 +67,41 @@ public class VueloService {
                     vueloDto.getTipoVuelo(), aerolinea.get());
 
             // Enviarlo al repositorio
-            return vueloRepository.save(nuevoVuelo);
+            vueloRepository.save(nuevoVuelo);
+            return nuevoVuelo;
         } else {
             throw new NoSuchElementException();
         }
     }
 
     public Vuelo obtenerVueloPorId(Long id) {
-        return vueloRepository.findById(id).orElse(null);
+
+        Optional<Vuelo> optionalVuelo = vueloRepository.findById(id);
+
+        if (optionalVuelo.isPresent()) {
+            return optionalVuelo.get();
+        } else {
+            return null;
+        }
     }
 
     public List<Vuelo> obtenerTodosLosVuelos() {
         return vueloRepository.findAll();
     }
 
-    public Vuelo actualizarVuelo(Long id, Vuelo vueloActualizado) {
-        Vuelo vueloExistente = vueloRepository.findById(id).orElse(null);
-        if (vueloExistente != null) {
-            vueloActualizado.setId(id); // Aseguramos que el ID no cambie
+    public Vuelo actualizarVuelo(Long id, VueloDto vueloDtoActualizado) {
+        Optional<Vuelo> optionalVuelo = vueloRepository.findById(id);
+
+        if (optionalVuelo != null) {
+            Vuelo vueloExistente = optionalVuelo.get();
+
+            vueloExistente.setId(id); // Aseguramos que el ID no cambie
+            vueloExistente.getCiudadOrigen();
+            vueloExistente.getCiudadDestino();
+            vueloExistente.setFechaSalida();
+            vueloExistente.setFechaLlegada();
+            vueloExistente.setAsientosDisponibles();
+
             return vueloRepository.save(vueloActualizado);
         }
         return null; // El vuelo no existe
