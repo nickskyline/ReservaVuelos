@@ -25,17 +25,28 @@ public class Aerolinea {
     @OneToMany(mappedBy = "aerolinea", cascade = CascadeType.ALL)
     private List<Vuelo> vuelos;
 
+    public Aerolinea(String nombreAerolinea, String francia) {
+    }
+
     public Aerolinea(String nombreAerolinea) {
+
     }
 
     public Aerolinea() {
 
     }
 
+    public Aerolinea(String deltaAirlines, String estadosUnidos, String nuevaYork) {
+    }
+
     public void setId(String ap) {
 
     }
+
+    public boolean getCiudad() {
+        return false;
     }
+}
 
 
 

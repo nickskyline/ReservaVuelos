@@ -9,9 +9,12 @@ import java.util.Optional;
 @Service
 public class AerolineaService {
     private AerolineaRepository aerolineaRepository;
+    private String nombreAerolinea;
+    private String codigoIATA;
 
     @Autowired
     public AerolineaService(AerolineaRepository aerolineaRepository) {
+
         this.aerolineaRepository = aerolineaRepository;
     }
     public Aerolinea crearAerolinea(Aerolinea aerolinea) {
@@ -24,7 +27,9 @@ public class AerolineaService {
 
     public List<Aerolinea> obtenerTodasLasAerolineas() {
         return aerolineaRepository.findAll();
+
     }
+
     public Aerolinea obtenerAerolineaPorId(Long id) {
         Optional<Aerolinea> aerolineaOptional = aerolineaRepository.findById(id);
 
@@ -61,5 +66,14 @@ public class AerolineaService {
         }
 
         return false; // Aerolínea no encontrada
+    }
+
+
+    public List<Aerolinea> obtenerAerolineasPorCiudad(String estadosUnidos) {
+        return null;
+    }
+
+    public List<Aerolinea> obtenerAerolineasPorPaisYCiudad(String estadosUnidos, String nuevaYork) {
+        return null;
     }
 }
