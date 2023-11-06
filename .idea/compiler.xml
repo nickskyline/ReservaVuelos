@@ -7,13 +7,15 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="reservavuelos" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="reservavuelos" target="1.5" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="reservavuelos" options="-parameters" />
+      <module name="reservavuelos" options="" />
     </option>
   </component>
 </project>
