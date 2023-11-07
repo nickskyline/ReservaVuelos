@@ -49,5 +49,4 @@ public class PersonaDto {
     @NotNull
     @Pattern(regexp = "^(0|[1-9][0-9]*)$")
     private String telefono;
-
 }

@@ -26,36 +26,27 @@ public class Persona {
     private String apellidos;
 
     @Column(name = "genero", nullable = false)
-    @NotNull
     private Genero genero;
 
     @Column(name = "tipo_documento", nullable = false)
-    @NotNull
     private TipoDocumento tipoDocumento;
 
     @Column(name = "numero_documento", nullable = false)
-    @NotNull
     private String numeroDocumento;
 
     @Column(name = "fecha_nacimiento", nullable = false)
-    @NotNull
     private LocalDate fechaNacimiento;
 
     @Column(name = "pais_origen", nullable = false)
-    @NotNull
     private String paisOrigen;
 
     @Column(name = "pais_residencia", nullable = false)
-    @NotNull
     private String paisResidencia;
 
     @Column(name = "email", nullable = false)
-    @NotNull
-    @Email
     private String email;
 
     @Column(name = "telefono", nullable = false)
-    @NotNull
     private String telefono;
 
 
@@ -74,5 +65,4 @@ public class Persona {
         this.email = email;
         this.telefono = telefono;
     }
-
 }

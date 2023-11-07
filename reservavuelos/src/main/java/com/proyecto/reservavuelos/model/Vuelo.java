@@ -1,6 +1,7 @@
 package com.proyecto.reservavuelos.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.proyecto.reservavuelos.util.TipoVuelo;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -47,9 +49,11 @@ public class Vuelo {
     @ManyToOne
     @JoinColumn(name = "id_aerolinea", referencedColumnName = "id")
     private Aerolinea aerolinea;
-    @ManyToMany(mappedBy = "vuelos")
-    @JsonBackReference
-    private List<Reserva> reservas;
+
+
+    @OneToMany(mappedBy = "vuelo")
+    @JsonManagedReference
+    private List<Reserva> reserva = new ArrayList<>();
 
     public Vuelo(Ciudad ciudadOrigen, Ciudad ciudadDestino, LocalDateTime fechaSalida, LocalDateTime fechaLlegada, Integer asientosDisponibles, Double precio, TipoVuelo tipoVuelo, Aerolinea aerolinea) {
         this.ciudadOrigen = ciudadOrigen;

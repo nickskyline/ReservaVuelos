@@ -420,5 +420,4 @@ public class VueloTest {
         //Assert
         verify(mockVueloRepository, times(1));
     }
-
 }

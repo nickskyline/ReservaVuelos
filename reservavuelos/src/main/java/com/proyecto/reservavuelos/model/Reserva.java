@@ -1,5 +1,6 @@
 package com.proyecto.reservavuelos.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -9,6 +10,7 @@ import java.util.List;
 
 @Entity
 @Data
+@Table(name = "reserva")
 public class Reserva {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,11 +28,9 @@ public class Reserva {
     )
     private List<Pasajero> pasajeros;
 
-    @ManyToMany
-    @JoinTable(
-            name = "reserva_vuelo",
-            joinColumns = @JoinColumn(name = "id_reserva"),
-            inverseJoinColumns = @JoinColumn(name = "id_vuelo")
-    )
-    private List<Vuelo> vuelos;
+
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "id_vuelo", referencedColumnName = "id")
+    @JsonBackReference
+    private Vuelo vuelo;
 }
