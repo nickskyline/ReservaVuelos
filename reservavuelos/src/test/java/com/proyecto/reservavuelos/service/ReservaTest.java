@@ -79,7 +79,7 @@ public class ReservaTest {
     }
 
     @Test
-    public void actualizarReservaTestCuandoReservaNoExistente() {
+    public void actualizarReservaTest_ReservaNoExistente() {
         // Arrange
         Long id = 1L;
         Reserva reservaActualizada = new Reserva();
@@ -93,7 +93,7 @@ public class ReservaTest {
     }
 
     @Test
-    public void eliminarReservaTestCuandoReservaNoExistente() {
+    public void eliminarReservaTest_ReservaNoExistente() {
         // Arrange
         Long id = 1L;
         when(mockReservaRepository.findById(id)).thenReturn(Optional.empty());
@@ -162,7 +162,7 @@ public class ReservaTest {
     }
 
     @Test
-    public void crearReservaTestConReservaNull() {
+    public void crearReservaTest_ReservaNull() {
         // Arrange
         Reserva reserva = null;
 
@@ -182,7 +182,7 @@ public class ReservaTest {
     }
 
     @Test
-    public void actualizarReservaTestConIdNull() {
+    public void actualizarReservaTest_IdNull() {
         // Arrange
         Long id = null;
         Reserva reservaActualizada = new Reserva();
@@ -192,7 +192,7 @@ public class ReservaTest {
     }
 
     @Test
-    public void eliminarReservaTestConIdNull() {
+    public void eliminarReservaTest_IdNull() {
         // Arrange
         Long id = null;
 
