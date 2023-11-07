@@ -155,8 +155,9 @@ public class CiudadTest {
         ciudad.setPais("Colombia");
 
         // Act & Assert
-        assertThrows(ValidationException.class, () -> ciudadService.agregarCiudad(ciudad));
+        assertThrows(IllegalArgumentException.class, () -> ciudadService.agregarCiudad(ciudad));
     }
+
 
     @Test
     public void agregarCiudadConPaisNuloTest() {
@@ -166,7 +167,7 @@ public class CiudadTest {
         ciudad.setPais(null);
 
         // Act & Assert
-        assertThrows(ValidationException.class, () -> ciudadService.agregarCiudad(ciudad));
+        assertThrows(IllegalArgumentException.class, () -> ciudadService.agregarCiudad(ciudad));
     }
 
     @Test
@@ -185,8 +186,9 @@ public class CiudadTest {
         when(ciudadRepository.findById(id)).thenReturn(Optional.of(ciudadExistente));
 
         // Act & Assert
-        assertThrows(ValidationException.class, () -> ciudadService.actualizarCiudadPorId(id, nuevaCiudad));
+        assertThrows(IllegalArgumentException.class, () -> ciudadService.actualizarCiudadPorId(id, nuevaCiudad));
     }
+
 
     @Test
     public void actualizarCiudadConPaisNuloTest() {
@@ -204,7 +206,7 @@ public class CiudadTest {
         when(ciudadRepository.findById(id)).thenReturn(Optional.of(ciudadExistente));
 
         // Act & Assert
-        assertThrows(ValidationException.class, () -> ciudadService.actualizarCiudadPorId(id, nuevaCiudad));
+        assertThrows(IllegalArgumentException.class, () -> ciudadService.actualizarCiudadPorId(id, nuevaCiudad));
     }
 
 

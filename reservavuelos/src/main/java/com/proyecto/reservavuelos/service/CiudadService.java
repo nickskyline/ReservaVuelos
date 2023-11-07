@@ -19,6 +19,9 @@ public class CiudadService {
     }
 
     public Ciudad agregarCiudad(Ciudad ciudad) {
+        if (ciudad == null || ciudad.getNombre() == null || ciudad.getPais() == null) {
+            throw new IllegalArgumentException("La ciudad, el nombre y el país no pueden ser null");
+        }
         return ciudadRepository.save(ciudad);
     }
 
@@ -37,6 +40,10 @@ public class CiudadService {
         return false; // Ciudad no encontrada
     }
     public boolean actualizarCiudadPorId(Long id, Ciudad nuevaCiudad) {
+
+        if (id == null || nuevaCiudad == null || nuevaCiudad.getNombre() == null || nuevaCiudad.getPais() == null) {
+            throw new IllegalArgumentException("El ID, la ciudad, el nombre y el país no pueden ser null");
+        }
         Optional<Ciudad> ciudadOptional = ciudadRepository.findById(id);
 
         if (ciudadOptional.isPresent()) {
