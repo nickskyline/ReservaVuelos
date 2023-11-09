@@ -11,4 +11,6 @@ public interface AerolineaRepository extends JpaRepository<Aerolinea, Long> {
     boolean existsByNombre(String nombre);
 
     Optional<Aerolinea> findById(String id);
+
+    Object findByCiudad(String ciudad);
 }

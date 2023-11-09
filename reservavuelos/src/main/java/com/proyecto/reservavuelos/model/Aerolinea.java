@@ -25,13 +25,13 @@ public class Aerolinea {
     @OneToMany(mappedBy = "aerolinea", cascade = CascadeType.ALL)
     private List<Vuelo> vuelos;
 
-    public Aerolinea(String nombre, String pais, String telefono) {
+    public Aerolinea(String nombre) {
         this.nombre = nombre;
         this.pais = pais;
         this.telefono = telefono;
     }
 
-    public Aerolinea(String deltaAirlines) {
+    public Aerolinea() {
 
     }
 

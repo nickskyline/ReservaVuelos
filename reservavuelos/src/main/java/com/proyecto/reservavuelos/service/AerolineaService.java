@@ -34,7 +34,7 @@ public class AerolineaService {
 
         // Crear una nueva instancia de Aerolinea
         Aerolinea aerolinea;
-        aerolinea = new Aerolinea("Delta Airlines");
+        aerolinea = new Aerolinea( );
         aerolinea.setNombre(nombre);
         aerolinea.setPais(aerolineaDto.getPais());
         aerolinea.setTelefono(aerolineaDto.getTelefono());
@@ -74,16 +74,17 @@ public class AerolineaService {
     }
 
     public boolean eliminarAerolinea(Long id) {
-        Optional<Aerolinea> aerolineaOptional = aerolineaRepository.findById(id);
+        if (id != null) {
+            Optional<Aerolinea> aerolineaOptional = aerolineaRepository.findById(id);
 
-        if (aerolineaOptional.isPresent()) {
-            aerolineaRepository.delete(aerolineaOptional.get());
-            return true; // Aerolínea eliminada con éxito
+            if (aerolineaOptional.isPresent()) {
+                aerolineaRepository.deleteById(id);
+                return true; // Aerolínea eliminada con éxito
+            }
         }
 
-        return false; // Aerolínea no encontrada
+        return false; // Aerolínea no encontrada o ID nulo
     }
-
 
     public List<Aerolinea> obtenerAerolineasPorCiudad(String estadosUnidos) {
         return null;
