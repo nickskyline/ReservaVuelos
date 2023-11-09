@@ -71,6 +71,7 @@ class AerolineaServiceTest {
     // de JUnit o cualquier otra biblioteca de aserciones para realizar las comprobaciones.
     //-----------------------------------*****************----------------------------//
 
+/*1.-testCrearNuevaAerolinea*/
     @Test
     public void testCrearNuevaAerolineaConDto() {
         // Datos de ejemplo para la prueba
@@ -272,6 +273,7 @@ class AerolineaServiceTest {
         // Verificar que el resultado es nulo (ya que no se encontró la aerolínea)
         assertNull(result);
     }
+
     @Test
     public void testActualizarAerolineaInexistente() {
         // ID de una aerolínea inexistente
@@ -296,18 +298,45 @@ class AerolineaServiceTest {
         // Verificar que la operación falló (debería devolver false)
         assertFalse(resultado);
     }
+    @Test
+    public void testActualizarAerolineaExitosa() {
+        // Arrange
+        Long id = 1L;
+        Aerolinea aerolineaExistente = new Aerolinea();
+        aerolineaExistente.setId(String.valueOf (id));
+        aerolineaExistente.setNombre("Aerolínea Antigua");
+        aerolineaExistente.setPais("España");
 
+        Aerolinea nuevaAerolinea = new Aerolinea();
+        nuevaAerolinea.setNombre("Aerolínea Actualizada");
+        nuevaAerolinea.setPais("Francia");
 
+        when(aerolineaRepository.findById(id)).thenReturn(Optional.of(aerolineaExistente));
+        when(aerolineaRepository.save(aerolineaExistente)).thenReturn(aerolineaExistente);
 
+        // Act
+        boolean resultado = this.aerolineaService.actualizarAerolinea(id, nuevaAerolinea);
 
+        // Assert
+        assertTrue(resultado);
+        assertEquals("Aerolínea Actualizada", aerolineaExistente.getNombre());
+        assertEquals("Francia", aerolineaExistente.getPais());
+    }
 
+    @Test
+    public void testActualizarAerolineaNoEncontrada() {
+        // Arrange
+        Long id = 1L;
+        Aerolinea nuevaAerolinea = new Aerolinea();
 
+        when(aerolineaRepository.findById(id)).thenReturn(Optional.empty());
 
+        // Act
+        boolean resultado = this.aerolineaService.actualizarAerolinea(id, nuevaAerolinea);
 
-
-
-
-
+        // Assert
+        assertFalse(resultado);
+    }
 
 
 

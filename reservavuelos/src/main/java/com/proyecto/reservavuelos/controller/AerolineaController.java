@@ -45,7 +45,7 @@ public class AerolineaController {
 
     @PutMapping("/{id}")
     public ResponseEntity<String> actualizarAerolinea(@PathVariable Long id, @RequestBody Aerolinea nuevaAerolinea) {
-        boolean actualizada = aerolineaService.actualizarAerolinea(id, nuevaAerolinea);
+        boolean actualizada = aerolineaService.actualizarAerolinea(String.valueOf (id), nuevaAerolinea);
 
         if (actualizada) {
             return new ResponseEntity<>("Aerolínea actualizada con éxito", HttpStatus.OK);
