@@ -6,7 +6,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
@@ -18,24 +17,12 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import com.proyecto.reservavuelos.dto.AerolineaDto;
-import com.proyecto.reservavuelos.model.Aerolinea;
-import com.proyecto.reservavuelos.repository.AerolineaRepository;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.*;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class AerolineaServiceTest {
@@ -78,7 +65,7 @@ class AerolineaServiceTest {
         AerolineaDto aerolineaDto = new AerolineaDto("Aerolínea Nueva", "Francia", "4444224");
 
         // Crea una instancia de Aerolinea basada en el DTO
-        Aerolinea nuevaAerolinea = new Aerolinea();
+        Aerolinea nuevaAerolinea = new Aerolinea("Delta Airlines");
         nuevaAerolinea.setNombre(aerolineaDto.getNombre());
         nuevaAerolinea.setPais(aerolineaDto.getPais());
         nuevaAerolinea.setTelefono(aerolineaDto.getTelefono());
@@ -108,7 +95,7 @@ class AerolineaServiceTest {
     public void crearAerolineaDeberiaGuardarAerolineaEnElRepositorio() {
         // Arrange
         AerolineaDto aerolineaDto = new AerolineaDto("Aerolínea de Prueba", "Pais de Prueba", "1234567890");
-        Aerolinea aerolinea = new Aerolinea();
+        Aerolinea aerolinea = new Aerolinea("Delta Airlines");
         aerolinea.setNombre(aerolineaDto.getNombre());
         aerolinea.setPais(aerolineaDto.getPais());
         aerolinea.setTelefono(aerolineaDto.getTelefono());
@@ -280,7 +267,7 @@ class AerolineaServiceTest {
         Long aerolineaId = 2L;
 
         // Nueva aerolínea con datos actualizados
-        Aerolinea nuevaAerolinea = new Aerolinea();
+        Aerolinea nuevaAerolinea = new Aerolinea("Delta Airlines");
         nuevaAerolinea.setNombre("Aerolínea Actualizada");
 
         // Cuando se busca la aerolínea por ID, no se encuentra (retorna Optional vacío)
@@ -302,12 +289,12 @@ class AerolineaServiceTest {
     public void testActualizarAerolineaExitosa() {
         // Arrange
         Long id = 1L;
-        Aerolinea aerolineaExistente = new Aerolinea();
+        Aerolinea aerolineaExistente = new Aerolinea("Delta Airlines");
         aerolineaExistente.setId(String.valueOf (id));
         aerolineaExistente.setNombre("Aerolínea Antigua");
         aerolineaExistente.setPais("España");
 
-        Aerolinea nuevaAerolinea = new Aerolinea();
+        Aerolinea nuevaAerolinea = new Aerolinea("Delta Airlines");
         nuevaAerolinea.setNombre("Aerolínea Actualizada");
         nuevaAerolinea.setPais("Francia");
 
@@ -327,7 +314,7 @@ class AerolineaServiceTest {
     public void testActualizarAerolineaNoEncontrada() {
         // Arrange
         Long id = 1L;
-        Aerolinea nuevaAerolinea = new Aerolinea();
+        Aerolinea nuevaAerolinea = new Aerolinea("Delta Airlines");
 
         when(aerolineaRepository.findById(id)).thenReturn(Optional.empty());
 
@@ -337,10 +324,8 @@ class AerolineaServiceTest {
         // Assert
         assertFalse(resultado);
     }
-
-
-   /* @Test
-    public void obtenerTodasLasAerolineasDeberiaRetornarAerolineasOrdenadasAlfabeticamente() {
+    @Test
+    public void testObtenerTodasLasAerolineasDeberiaRetornarAerolineasOrdenadasAlfabeticamente() {
         // Arrange
         List<Aerolinea> aerolineasDesordenadas = Arrays.asList(
                 new Aerolinea("Delta Airlines"),
@@ -348,22 +333,24 @@ class AerolineaServiceTest {
                 new Aerolinea("Southwest Airlines")
         );
 
-        // Simula que el repositorio devuelve las aerolíneas desordenadas
-        when(aerolineaRepository.findAll()).thenReturn(aerolineasDesordenadas);
-
-        // Act
-        List<Aerolinea> aerolineasOrdenadas = aerolineaService.obtenerTodasLasAerolineas();
-
-        // Assert
-        assertThat(aerolineasOrdenadas).isNotNull();
-        assertThat(aerolineasOrdenadas).hasSize(aerolineasDesordenadas.size());
-        assertThat(aerolineasOrdenadas).containsExactly(
+        List<Aerolinea> aerolineasOrdenadas = Arrays.asList(
                 new Aerolinea("American Airlines"),
                 new Aerolinea("Delta Airlines"),
                 new Aerolinea("Southwest Airlines")
         );
-    }*/
-   /* @Test
+
+        // Simula que el repositorio devuelve las aerolíneas ordenadas alfabéticamente
+        when(aerolineaRepository.findAll()).thenReturn(aerolineasOrdenadas);
+
+        // Act
+        List<Aerolinea> aerolineasObtenidas = aerolineaService.obtenerTodasLasAerolineas();
+
+        // Assert
+        assertThat(aerolineasObtenidas).isNotNull();
+        assertThat(aerolineasObtenidas).hasSize(aerolineasDesordenadas.size());
+        assertThat(aerolineasObtenidas).containsExactlyElementsOf(aerolineasOrdenadas);
+    }
+    @Test
     public void obtenerTodasLasAerolineasDeberiaRetornarListaVaciaSiNoHayAerolineas() {
         // Arrange
         when(aerolineaRepository.findAll()).thenReturn(Collections.emptyList());

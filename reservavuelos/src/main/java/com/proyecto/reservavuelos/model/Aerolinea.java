@@ -31,7 +31,7 @@ public class Aerolinea {
         this.telefono = telefono;
     }
 
-    public Aerolinea() {
+    public Aerolinea(String deltaAirlines) {
 
     }
 

@@ -34,7 +34,7 @@ public class AerolineaService {
 
         // Crear una nueva instancia de Aerolinea
         Aerolinea aerolinea;
-        aerolinea = new Aerolinea();
+        aerolinea = new Aerolinea("Delta Airlines");
         aerolinea.setNombre(nombre);
         aerolinea.setPais(aerolineaDto.getPais());
         aerolinea.setTelefono(aerolineaDto.getTelefono());
