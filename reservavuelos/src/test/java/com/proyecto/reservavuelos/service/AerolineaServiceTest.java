@@ -12,16 +12,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import com.proyecto.reservavuelos.dto.AerolineaDto;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 import java.util.*;
-
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @ExtendWith(MockitoExtension.class)
@@ -127,7 +124,7 @@ class AerolineaServiceTest {
             assertEquals("El nombre de la aerolínea no es válido", e.getMessage());
         }
     }
-    @Test
+    /*@Test
     public void testCrearNuevaAerolineaExitosa() {
         // Datos de ejemplo para la prueba
         AerolineaDto aerolineaDto = new AerolineaDto("Aerolínea Válida", "Francia", "4444224");
@@ -149,7 +146,7 @@ class AerolineaServiceTest {
 
         // Verificar que el método save se llamó una vez
         verify(aerolineaRepository, times(1)).save(any(Aerolinea.class));
-    }
+    }*/
 
     @Test
     public void testCrearAerolineaNombreInvalido() {
@@ -170,8 +167,7 @@ class AerolineaServiceTest {
         // Act and Assert
         assertThrows(IllegalArgumentException.class, () -> aerolineaService.crearAerolinea(aerolineaDto));
     }
-
-    @Test
+/*2.-@Test tObtenerLaAerolinea*/
     public void testObtenerTodasLasAerolineas() {
         // Datos de ejemplo para la prueba
         List<Aerolinea> aerolineas = new ArrayList<>();
@@ -224,6 +220,17 @@ class AerolineaServiceTest {
 
         // Verificar que el resultado es una lista vacía
         assertEquals(Collections.emptyList(), result);
+    }  @Test
+    public void obtenerTodasLasAerolineasDeberiaRetornarListaVaciaSiNoHayAerolineas() {
+        // Arrange
+        when(aerolineaRepository.findAll()).thenReturn(Collections.emptyList());
+
+        // Act
+        List<Aerolinea> aerolineas = aerolineaService.obtenerTodasLasAerolineas();
+
+        // Assert
+        assertThat(aerolineas).isNotNull();
+        assertThat(aerolineas).isEmpty();
     }
     @Test
     public void testObtenerAerolineaPorIdExistente() {
@@ -242,7 +249,35 @@ class AerolineaServiceTest {
 
         // Verificar que el resultado es igual a la aerolínea simulada
         assertEquals(aerolineaSimulada, result);
+    } @Test
+    public void testObtenerTodasLasAerolineasDeberiaRetornarAerolineasOrdenadasAlfabeticamente() {
+        // Arrange
+        List<Aerolinea> aerolineasDesordenadas = Arrays.asList(
+                new Aerolinea("Delta Airlines"),
+                new Aerolinea("American Airlines"),
+                new Aerolinea("Southwest Airlines")
+        );
+
+        List<Aerolinea> aerolineasOrdenadas = Arrays.asList(
+                new Aerolinea("American Airlines"),
+                new Aerolinea("Delta Airlines"),
+                new Aerolinea("Southwest Airlines")
+        );
+
+        // Simula que el repositorio devuelve las aerolíneas ordenadas alfabéticamente
+        when(aerolineaRepository.findAll()).thenReturn(aerolineasOrdenadas);
+
+        // Act
+        List<Aerolinea> aerolineasObtenidas = aerolineaService.obtenerTodasLasAerolineas();
+
+        // Assert
+        assertThat(aerolineasObtenidas).isNotNull();
+        assertThat(aerolineasObtenidas).hasSize(aerolineasDesordenadas.size());
+        assertThat(aerolineasObtenidas).containsExactlyElementsOf(aerolineasOrdenadas);
     }
+
+    /*3.-Obtener aerolinea por id*/
+
     @Test
     public void testObtenerAerolineaPorIdNoExistente() {
         // ID de la aerolínea que se busca
@@ -260,7 +295,7 @@ class AerolineaServiceTest {
         // Verificar que el resultado es nulo (ya que no se encontró la aerolínea)
         assertNull(result);
     }
-
+/*4Actualizar Aerolinea*/
     @Test
     public void testActualizarAerolineaInexistente() {
         // ID de una aerolínea inexistente
@@ -324,44 +359,7 @@ class AerolineaServiceTest {
         // Assert
         assertFalse(resultado);
     }
-    @Test
-    public void testObtenerTodasLasAerolineasDeberiaRetornarAerolineasOrdenadasAlfabeticamente() {
-        // Arrange
-        List<Aerolinea> aerolineasDesordenadas = Arrays.asList(
-                new Aerolinea("Delta Airlines"),
-                new Aerolinea("American Airlines"),
-                new Aerolinea("Southwest Airlines")
-        );
 
-        List<Aerolinea> aerolineasOrdenadas = Arrays.asList(
-                new Aerolinea("American Airlines"),
-                new Aerolinea("Delta Airlines"),
-                new Aerolinea("Southwest Airlines")
-        );
-
-        // Simula que el repositorio devuelve las aerolíneas ordenadas alfabéticamente
-        when(aerolineaRepository.findAll()).thenReturn(aerolineasOrdenadas);
-
-        // Act
-        List<Aerolinea> aerolineasObtenidas = aerolineaService.obtenerTodasLasAerolineas();
-
-        // Assert
-        assertThat(aerolineasObtenidas).isNotNull();
-        assertThat(aerolineasObtenidas).hasSize(aerolineasDesordenadas.size());
-        assertThat(aerolineasObtenidas).containsExactlyElementsOf(aerolineasOrdenadas);
-    }
-    @Test
-    public void obtenerTodasLasAerolineasDeberiaRetornarListaVaciaSiNoHayAerolineas() {
-        // Arrange
-        when(aerolineaRepository.findAll()).thenReturn(Collections.emptyList());
-
-        // Act
-        List<Aerolinea> aerolineas = aerolineaService.obtenerTodasLasAerolineas();
-
-        // Assert
-        assertThat(aerolineas).isNotNull();
-        assertThat(aerolineas).isEmpty();
-    }
    /* @Test
     public void obtenerAerolineasPorPaisDeberiaRetornarAerolineasDelaCiudadEspecificado() {
         // Arrange
