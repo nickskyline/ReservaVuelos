@@ -23,4 +23,9 @@ public class Pasajero {
     @ManyToMany(mappedBy = "pasajeros")
     private List<Reserva> reservas;
 
+    public Pasajero(String tipoPasajero, Persona persona, List<Reserva> reservas) {
+        this.tipoPasajero = tipoPasajero;
+        this.persona = persona;
+        this.reservas = reservas;
+    }
 }

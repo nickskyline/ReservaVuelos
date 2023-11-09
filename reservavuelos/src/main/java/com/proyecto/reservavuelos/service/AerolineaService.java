@@ -1,4 +1,5 @@
 package com.proyecto.reservavuelos.service;
+import com.proyecto.reservavuelos.dto.AerolineaDto;
 import com.proyecto.reservavuelos.model.Aerolinea;
 import com.proyecto.reservavuelos.repository.AerolineaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,36 +9,51 @@ import java.util.Optional;
 
 @Service
 public class AerolineaService {
-    private AerolineaRepository aerolineaRepository;
+    private final AerolineaRepository aerolineaRepository;
     private String nombreAerolinea;
-    private String codigoIATA;
+    private String nuevaYork;
 
     @Autowired
     public AerolineaService(AerolineaRepository aerolineaRepository) {
 
         this.aerolineaRepository = aerolineaRepository;
     }
-    public Aerolinea crearAerolinea(Aerolinea aerolinea) {
-        if (aerolinea.getNombre() == null || aerolinea.getNombre().isEmpty()) {
-            // Realizar alguna acción o lanzar una excepción, pero no llamar a save
+
+    public Aerolinea crearAerolinea(AerolineaDto aerolineaDto) {
+        // Verificar si el nombre de la aerolínea es válido
+        String nombre = aerolineaDto.getNombre();
+        if (nombre == null || nombre.isEmpty()) {
             throw new IllegalArgumentException("El nombre de la aerolínea no es válido");
         }
+
+        // Verificar si la aerolínea ya existe en la base de datos
+        if (aerolineaRepository.existsByNombre(nombre)) {
+            throw new IllegalArgumentException("La aerolínea ya existe");
+        }
+
+
+        // Crear una nueva instancia de Aerolinea
+        Aerolinea aerolinea;
+        aerolinea = new Aerolinea();
+        aerolinea.setNombre(nombre);
+        aerolinea.setPais(aerolineaDto.getPais());
+        aerolinea.setTelefono(aerolineaDto.getTelefono());
+
+        // Guardar la aerolínea en la base de datos
         return aerolineaRepository.save(aerolinea);
     }
 
+
     public List<Aerolinea> obtenerTodasLasAerolineas() {
         return aerolineaRepository.findAll();
-
     }
+
 
     public Aerolinea obtenerAerolineaPorId(Long id) {
         Optional<Aerolinea> aerolineaOptional = aerolineaRepository.findById(id);
 
-        if (aerolineaOptional.isPresent()) {
-            return aerolineaOptional.get();
-        } else {
-            return null; // Retorna null si la aerolínea no se encuentra
-        }
+        // Retorna null si la aerolínea no se encuentra
+        return aerolineaOptional.orElse (null);
     }
 
     public boolean actualizarAerolinea(Long id, Aerolinea nuevaAerolinea) {
@@ -74,6 +90,15 @@ public class AerolineaService {
     }
 
     public List<Aerolinea> obtenerAerolineasPorPaisYCiudad(String estadosUnidos, String nuevaYork) {
+        this.nuevaYork = nuevaYork;
         return null;
+    }
+
+    public String getNombreAerolinea() {
+        return nombreAerolinea;
+    }
+
+    public void setNombreAerolinea(String nombreAerolinea) {
+        this.nombreAerolinea = nombreAerolinea;
     }
 }
