@@ -339,47 +339,7 @@ class AerolineaServiceTest {
     }
 
 
-
    /* @Test
-    public void obtenerTodasLasAerolineasDeberiaRetornarListaDeAerolineas() {
-        // Arrange
-        List<Aerolinea> aerolineas = new ArrayList<> ();
-        aerolineas.add(new Aerolinea("Aerolínea 1"));
-        aerolineas.add(new Aerolinea("Aerolínea 2"));
-
-        // Configura el comportamiento del repositorio para que retorne la lista de aerolíneas simulada
-        when(aerolineaRepository.findAll()).thenReturn(aerolineas);
-
-        // Act
-        List<Aerolinea> aerolineasObtenidas = aerolineaService.obtenerTodasLasAerolineas();
-
-        // Assert
-        // Verifica que el método findAll del repositorio haya sido llamado
-        verify(aerolineaRepository).findAll();
-
-        // Verifica que la lista de aerolíneas obtenida sea igual a la lista simulada
-        assertEquals(aerolineas, aerolineasObtenidas);
-    }
-    @Test
-    public void obtenerTodasLasAerolineasDeberiaRetornarTodasLasAerolineas() {
-        // Arrange
-        List<Aerolinea> aerolineasEsperadas = Arrays.asList(
-                new Aerolinea("Aerolínea 1"),
-                new Aerolinea("Aerolínea 2"),
-                new Aerolinea("Aerolínea 3")
-        );
-
-        when(aerolineaRepository.findAll()).thenReturn(aerolineasEsperadas);
-
-        // Act
-        List<Aerolinea> aerolineasObtenidas = aerolineaService.obtenerTodasLasAerolineas();
-
-        // Assert
-        assertThat(aerolineasObtenidas).isNotNull();
-        assertThat(aerolineasObtenidas).hasSize(aerolineasEsperadas.size());
-        assertThat(aerolineasObtenidas).containsExactlyInAnyOrderElementsOf(aerolineasEsperadas);
-    }
-    @Test
     public void obtenerTodasLasAerolineasDeberiaRetornarAerolineasOrdenadasAlfabeticamente() {
         // Arrange
         List<Aerolinea> aerolineasDesordenadas = Arrays.asList(
@@ -402,7 +362,7 @@ class AerolineaServiceTest {
                 new Aerolinea("Delta Airlines"),
                 new Aerolinea("Southwest Airlines")
         );
-    }
+    }*/
    /* @Test
     public void obtenerTodasLasAerolineasDeberiaRetornarListaVaciaSiNoHayAerolineas() {
         // Arrange
