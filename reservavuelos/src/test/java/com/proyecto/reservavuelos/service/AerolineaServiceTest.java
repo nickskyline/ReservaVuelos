@@ -428,49 +428,124 @@ class AerolineaServiceTest {
         assertThat(aerolineasObtenidas).hasSize(aerolineasEsperadas.size());
         assertThat(aerolineasObtenidas).containsExactlyInAnyOrderElementsOf(aerolineasEsperadas);
     }
+    @Test
+    public void testObtenerAerolineasPorCiudadInexistente() {
+        // Arrange
+        String ciudadInexistente = "Ciudad Inexistente";
 
+        when(aerolineaRepository.findByCiudad(ciudadInexistente)).thenReturn(Collections.emptyList());
 
-   /* @Test
-    public void obtenerAerolineasPorPaisDeberiaRetornarAerolineasDelaCiudadEspecificado() {
+        // Act
+        List<Aerolinea> aerolineasObtenidas = aerolineaService.obtenerAerolineasPorCiudad(ciudadInexistente);
+
+        // Assert
+        assertThat(aerolineasObtenidas).isNotNull();
+        assertThat(aerolineasObtenidas).isEmpty();
+    }
+
+    @Test
+    public void obtenerAerolineasPorPaisYCiudadDeberiaRetornarAerolineasDelPaisYCiudadEspecificados() {
         // Arrange
         List<Aerolinea> aerolineas = Arrays.asList(
-                new Aerolinea("Delta Airlines", "Estados Unidos"),
-                new Aerolinea("British Airways", "Reino Unido"),
-                new Aerolinea("Air France", "Francia"),
-                new Aerolinea("Lufthansa", "Alemania")
+                new Aerolinea("Delta Airlines", "Estados Unidos", "Nueva York"),
+                new Aerolinea("British Airways", "Reino Unido", "Londres"),
+                new Aerolinea("Air France", "Francia", "París"),
+                new Aerolinea("Lufthansa", "Alemania", "Berlín")
         );
 
         // Simula que el repositorio devuelve todas las aerolíneas
         when(aerolineaRepository.findAll()).thenReturn(aerolineas);
 
         // Act
-        List<Aerolinea> aerolineasEstadosUnidos = aerolineaService.obtenerAerolineasPorPais("Estados Unidos");
+        List<Aerolinea> aerolineasEstadosUnidosNuevaYork = this.aerolineaService.obtenerAerolineasPorPaisYCiudad("Estados Unidos", "Nueva York");
 
         // Assert
-        assertThat(aerolineasEstadosUnidos).isNotNull();
-        assertThat(aerolineasEstadosUnidos).hasSize(1);
-        assertThat(aerolineasEstadosUnidos.get(0).getNombre()).isEqualTo("Delta Airlines");
+        assertThat(aerolineasEstadosUnidosNuevaYork).isNotNull();
+        assertThat(aerolineasEstadosUnidosNuevaYork).hasSize(1);
+        assertThat(aerolineasEstadosUnidosNuevaYork.get(0).getNombre()).isEqualTo("Delta Airlines");
     }
 
-   /* @Test
-    public void obtenerAerolineasPorPaisDeberiaRetornarListaVaciaSiNoHayAerolineasDelPaisEspecificado() {
+    @Test
+    public void testObtenerAerolineasPorPaisYCiudad() {
         // Arrange
-        List<Aerolinea> aerolineas = Arrays.asList(
-                new Aerolinea("British Airways", "Reino Unido"),
-                new Aerolinea("Air France", "Francia"),
-                new Aerolinea("Lufthansa", "Alemania")
+        String pais = "Estados Unidos";
+        String ciudad = "Nueva York";
+
+        List<Aerolinea> aerolineasEsperadas = Arrays.asList(
+                new Aerolinea("Delta Airlines", pais, ciudad),
+                new Aerolinea("American Airlines", pais, ciudad),
+                new Aerolinea("United Airlines", pais, ciudad)
         );
 
-        // Simula que el repositorio devuelve aerolíneas de otros países
-        when(aerolineaRepository.findAll()).thenReturn(aerolineas);
+        // Simula que el repositorio devuelve aerolíneas para el país y la ciudad especificados
+        when(aerolineaRepository.findByPaisAndCiudad(pais, ciudad)).thenReturn(aerolineasEsperadas);
 
         // Act
-        List<Aerolinea> aerolineasEstadosUnidos = aerolineaService.obtenerAerolineasPorCiudad("Estados Unidos");
+        List<Aerolinea> aerolineasObtenidas = this.aerolineaService.obtenerAerolineasPorPaisYCiudad(pais, ciudad);
 
         // Assert
-        assertThat(aerolineasEstadosUnidos).isNotNull();
-        assertThat(aerolineasEstadosUnidos).isEmpty();
-    }*/
+        assertThat(aerolineasObtenidas).isNotNull();
+        assertThat(aerolineasObtenidas).hasSize(aerolineasEsperadas.size());
+        assertThat(aerolineasObtenidas).containsExactlyInAnyOrderElementsOf(aerolineasEsperadas);
+    }
+    @Test
+    public void testObtenerAerolineasPorPaisYCiudadExitoso() {
+        // Arrange
+        String pais = "Estados Unidos";
+        String ciudad = "Nueva York";
+        List<Aerolinea> aerolineasEsperadas = Arrays.asList(
+                new Aerolinea(1L, "Delta Airlines", pais, ciudad),
+                new Aerolinea(2L, "American Airlines", pais, ciudad)
+        );
+
+        // Simula que el repositorio devuelve las aerolíneas para el país y ciudad especificados
+        when(aerolineaRepository.findByPaisAndCiudad(pais, ciudad)).thenReturn(aerolineasEsperadas);
+
+        // Act
+        List<Aerolinea> aerolineasObtenidas = aerolineaService.obtenerAerolineasPorPaisYCiudad(pais, ciudad);
+
+        // Assert
+        assertThat(aerolineasObtenidas).isNotNull();
+        assertThat(aerolineasObtenidas).hasSize(2);
+        assertThat(aerolineasObtenidas).containsExactlyInAnyOrderElementsOf(aerolineasEsperadas);
+    }
+
+    @Test
+    public void testObtenerAerolineasPorPaisYCiudadConPaisNulo() {
+        // Arrange
+        String ciudad = "Barcelona";
+
+        // Assert
+        assertThrows(IllegalArgumentException.class, () -> aerolineaService.obtenerAerolineasPorPaisYCiudad(null, ciudad));
+    }
+
+    @Test
+    public void testObtenerAerolineasPorPaisYCiudadConCiudadNula() {
+        // Arrange
+        String pais = "España";
+
+        // Assert
+        assertThrows(IllegalArgumentException.class, () -> aerolineaService.obtenerAerolineasPorPaisYCiudad(pais, null));
+    }
+
+    @Test
+    public void testObtenerAerolineasPorPaisYCiudadConPaisVacio() {
+        // Arrange
+        String ciudad = "París";
+
+        // Assert
+        assertThrows(IllegalArgumentException.class, () -> aerolineaService.obtenerAerolineasPorPaisYCiudad("", ciudad));
+    }
+
+    @Test
+    public void testObtenerAerolineasPorPaisYCiudadConCiudadVacia() {
+        // Arrange
+        String pais = "Francia";
+
+        // Assert
+        assertThrows(IllegalArgumentException.class, () -> aerolineaService.obtenerAerolineasPorPaisYCiudad(pais, ""));
+    }
+
 
 }
 

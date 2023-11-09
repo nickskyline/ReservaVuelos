@@ -4,6 +4,8 @@ import com.proyecto.reservavuelos.model.Aerolinea;
 import com.proyecto.reservavuelos.repository.AerolineaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,6 +57,30 @@ public class AerolineaService {
         // Retorna null si la aerolínea no se encuentra
         return aerolineaOptional.orElse (null);
     }
+    public List<Aerolinea> obtenerAerolineasPorCiudad(String ciudad) {
+        // Lógica para obtener aerolíneas por ciudad desde el repositorio
+        List<Aerolinea> aerolineas = (List<Aerolinea>) aerolineaRepository.findByCiudad(ciudad);
+
+        if (aerolineas == null) {
+            return Collections.emptyList(); // Devuelve una lista vacía si no hay aerolíneas
+        }
+
+        return aerolineas;
+    }
+    public List<Aerolinea> obtenerAerolineasPorPaisYCiudad(String pais, String ciudad) {
+        // Verifica que los parámetros no sean nulos o vacíos
+        if (pais == null || ciudad == null || pais.isEmpty() || ciudad.isEmpty()) {
+            throw new IllegalArgumentException("Los parámetros 'pais' y 'ciudad' no pueden ser nulos ni vacíos.");
+        }
+
+        // Lógica para obtener aerolíneas por país y ciudad desde el repositorio
+        List<Aerolinea> aerolineas = aerolineaRepository.findByPaisAndCiudad(pais, ciudad);
+
+        // Puedes agregar más lógica según sea necesario
+
+        return aerolineas;
+    }
+
 
     public boolean actualizarAerolinea(Long id, Aerolinea nuevaAerolinea) {
         Optional<Aerolinea> aerolineaOptional = aerolineaRepository.findById(id);
@@ -85,16 +111,6 @@ public class AerolineaService {
 
         return false; // Aerolínea no encontrada o ID nulo
     }
-
-    public List<Aerolinea> obtenerAerolineasPorCiudad(String estadosUnidos) {
-        return null;
-    }
-
-    public List<Aerolinea> obtenerAerolineasPorPaisYCiudad(String estadosUnidos, String nuevaYork) {
-        this.nuevaYork = nuevaYork;
-        return null;
-    }
-
     public String getNombreAerolinea() {
         return nombreAerolinea;
     }

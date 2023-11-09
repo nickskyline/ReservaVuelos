@@ -35,6 +35,17 @@ public class Aerolinea {
 
     }
 
+    public Aerolinea(String deltaAirlines, String nuevaYork) {
+    }
+
+    public Aerolinea(String britishAirways, String reinoUnido, String londres) {
+
+    }
+
+    public Aerolinea(long l, String deltaAirlines, String pais, String ciudad) {
+
+    }
+
     public void setId(String ap) {
     }
     public boolean getCiudad() {
