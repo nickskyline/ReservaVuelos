@@ -1,6 +1,7 @@
 package com.proyecto.reservavuelos.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.proyecto.reservavuelos.util.TipoVuelo;
 import jakarta.persistence.*;

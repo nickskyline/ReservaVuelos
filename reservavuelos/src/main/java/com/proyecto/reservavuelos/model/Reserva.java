@@ -20,13 +20,11 @@ public class Reserva {
     @Column(name = "fecha_reservacion", nullable = false)
     private LocalDate fechaReserva;
 
-    @ManyToMany
-    @JoinTable(
-            name = "reserva_pasajero",
-            joinColumns = @JoinColumn(name = "id_reserva"),
-            inverseJoinColumns = @JoinColumn(name = "id_pasajero")
-    )
-    private List<Pasajero> pasajeros;
+
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "id_pasajero", referencedColumnName = "id")
+    @JsonBackReference
+    private Pasajero pasajeros;
 
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})

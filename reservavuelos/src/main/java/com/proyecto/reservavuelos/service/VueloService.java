@@ -46,12 +46,12 @@ public class VueloService {
                 fechaLlegadaConvertida.isBefore(fechaMinima) || fechaLlegadaConvertida.isBefore(fechaSalidaConvertida)) {
             throw new IllegalArgumentException("Las fechas de llegada y salida no pueden ser en el futuro, ni en el pasado!");
         }
-
         return fechaSalidaConvertida;
     }
 
 
     public Vuelo crearVuelo(VueloDto vueloDto) {
+
 
         // Validar la informacion proporcionada
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
@@ -62,7 +62,7 @@ public class VueloService {
             throw new ValidationException("Errores de validación en los campos de la creacion del vuelo");
         }
 
-        // Hallar las ciudades y aerolineas a traves del repositorio.
+       // Hallar las ciudades y aerolineas a traves del repositorio.
         Optional<Ciudad> ciudadOrigen = ciudadRepository.findById(vueloDto.getIdCiudadOrigen());
         Optional<Ciudad> ciudadDestino = ciudadRepository.findById(vueloDto.getIdCiudadDestino());
         Optional<Aerolinea> aerolinea = aerolineaRepository.findById(vueloDto.getIdAerolinea());
@@ -71,6 +71,7 @@ public class VueloService {
 
             LocalDateTime fechaSalidaConvertida = convertirYValidarFechas(vueloDto);
             LocalDateTime fechaLlegadaConvertida = convertirYValidarFechas(vueloDto);
+
 
             // Crear el vuelo
             Vuelo nuevoVuelo = new Vuelo(ciudadOrigen.get(), ciudadDestino.get(), fechaSalidaConvertida,
