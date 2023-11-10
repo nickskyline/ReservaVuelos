@@ -1,5 +1,6 @@
 package com.proyecto.reservavuelos.model;
 
+import com.proyecto.reservavuelos.dto.AerolineaDto;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -7,7 +8,7 @@ import java.util.List;
 
 @Entity
 @Data
-public class Aerolinea {
+public class Aerolinea extends AerolineaDto {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "aerolinea_generador")
     @SequenceGenerator(name = "aerolinea_generador", allocationSize = 1)

@@ -16,9 +16,10 @@ public class AerolineaService {
     private String nuevaYork;
 
     @Autowired
-    public AerolineaService(AerolineaRepository aerolineaRepository) {
+    public AerolineaService(AerolineaRepository aerolineaRepository, String nuevaYork) {
 
         this.aerolineaRepository = aerolineaRepository;
+        this.nuevaYork = nuevaYork;
     }
 
     public Aerolinea crearAerolinea(AerolineaDto aerolineaDto) {
@@ -82,7 +83,7 @@ public class AerolineaService {
     }
 
 
-    public boolean actualizarAerolinea(Long id, Aerolinea nuevaAerolinea) {
+    public boolean actualizarAerolinea(Long id, AerolineaDto nuevaAerolinea) {
         Optional<Aerolinea> aerolineaOptional = aerolineaRepository.findById(id);
 
         if (aerolineaOptional.isPresent()) {

@@ -28,4 +28,9 @@ public class Pasajero {
         this.persona = persona;
         this.reservas = reservas;
     }
+
+    public Pasajero() {
+
+    }
+
 }

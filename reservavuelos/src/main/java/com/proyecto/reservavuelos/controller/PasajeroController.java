@@ -1,5 +1,8 @@
 package com.proyecto.reservavuelos.controller;
 
+import com.proyecto.reservavuelos.dto.AerolineaDto;
+import com.proyecto.reservavuelos.dto.PasajeroDto;
+import com.proyecto.reservavuelos.model.Aerolinea;
 import com.proyecto.reservavuelos.model.Pasajero;
 import com.proyecto.reservavuelos.service.PasajeroService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,11 +26,11 @@ public class PasajeroController {
     }
 
     @PostMapping
-    public ResponseEntity<Pasajero> crearPasajero(@RequestBody Pasajero pasajero) {
+    public ResponseEntity<Pasajero> crearPasajero(@RequestBody PasajeroDto pasajero) {
+        Pasajero nuevopasajero;
         Pasajero nuevoPasajero = pasajeroService.crearPasajero(pasajero);
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevoPasajero);
     }
-
     @GetMapping("/{id}")
     public ResponseEntity<Pasajero> obtenerPasajeroPorId(@PathVariable Long id) {
         Pasajero pasajero = pasajeroService.obtenerPasajeroPorId(id);

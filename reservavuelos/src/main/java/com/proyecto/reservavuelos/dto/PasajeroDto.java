@@ -21,4 +21,8 @@ public class PasajeroDto {
     @NotNull
     private List<Reserva> reservas;
 
+
+    public String getNombre() {
+        return null;
+    }
 }

@@ -1,6 +1,7 @@
 package com.proyecto.reservavuelos.service;
 import com.proyecto.reservavuelos.model.Aerolinea;
 import com.proyecto.reservavuelos.repository.AerolineaRepository;
+import org.assertj.core.api.ListAssert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,13 +31,15 @@ class AerolineaServiceTest {
     private AerolineaRepository aerolineaRepository;
     @InjectMocks
     private AerolineaService aerolineaService;
+    private String nuevaYork;
+
     //Crear la isntancia u objeto de la clase que voy a testear
         @BeforeEach//annotation que me Sirve para ete metodo va a correr ante de que e ejecute cada test
     public void setUp() {
             // mock - que es crear una clase falsa y emular su comportamiento
             this.aerolineaRepository = mock(AerolineaRepository.class);// Mock del repositorio
             MockitoAnnotations.openMocks(this);
-         this.aerolineaService= new   AerolineaService(aerolineaRepository); // Inicializa el servicio con el mock del repositorio
+         this.aerolineaService= new   AerolineaService(aerolineaRepository, nuevaYork); // Inicializa el servicio con el mock del repositorio
     }
 
     @AfterEach
@@ -302,7 +305,7 @@ class AerolineaServiceTest {
         Long aerolineaId = 2L;
 
         // Nueva aerolínea con datos actualizados
-        Aerolinea nuevaAerolinea = new Aerolinea( );
+        AerolineaDto nuevaAerolinea = new Aerolinea( );
         nuevaAerolinea.setNombre("Aerolínea Actualizada");
 
         // Cuando se busca la aerolínea por ID, no se encuentra (retorna Optional vacío)
@@ -349,7 +352,7 @@ class AerolineaServiceTest {
     public void testActualizarAerolineaNoEncontrada() {
         // Arrange
         Long id = 1L;
-        Aerolinea nuevaAerolinea = new Aerolinea( );
+        AerolineaDto nuevaAerolinea = new Aerolinea( );
 
         when(aerolineaRepository.findById(id)).thenReturn(Optional.empty());
 
@@ -460,7 +463,7 @@ class AerolineaServiceTest {
         List<Aerolinea> aerolineasEstadosUnidosNuevaYork = this.aerolineaService.obtenerAerolineasPorPaisYCiudad("Estados Unidos", "Nueva York");
 
         // Assert
-        assertThat(aerolineasEstadosUnidosNuevaYork).isNotNull();
+        assertThat (aerolineasEstadosUnidosNuevaYork).isNotNull ( )
         assertThat(aerolineasEstadosUnidosNuevaYork).hasSize(1);
         assertThat(aerolineasEstadosUnidosNuevaYork.get(0).getNombre()).isEqualTo("Delta Airlines");
     }
