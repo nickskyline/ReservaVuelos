@@ -2,7 +2,6 @@ package com.proyecto.reservavuelos.service;
 import com.proyecto.reservavuelos.dto.PasajeroDto;
 import com.proyecto.reservavuelos.model.Pasajero;
 import com.proyecto.reservavuelos.repository.PasajeroRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -24,10 +23,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-
-import java.util.Optional;
-
+import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
 
 @ExtendWith(MockitoExtension.class)
 class PasajeroServiceTest {
@@ -51,6 +50,7 @@ class PasajeroServiceTest {
         this.pasajeroService= new PasajeroService(pasajeroRepository); // Inicializa el servicio con el mock del repositorio
 
     }
+
 
 // Arrange debe preparar lo tet variable o parametros que usted va testera
 // (Preparar): En esta sección, debes configurar el escenario para la prueba.
@@ -89,27 +89,27 @@ public void testCrearPasajero() {
     assertEquals(pasajeroDto.getApellido(), pasajeroCreado.getApellido());
     assertEquals(pasajeroMock.getEdad(), pasajeroCreado.getEdad());
 }
-    @Test
-    public void testObtenerPasajeroExistente() throws PasajeroServiceException {
-        // Arrange
-        Long id = 1L;
-        Pasajero pasajeroMock = new Pasajero();
-        pasajeroMock.setId(id);
-        pasajeroMock.setNombre("John Doe"); // Cambia por el nombre que desees
-        pasajeroMock.setEdad(30); // Cambia por la edad que desees
 
-        // Configuración del repositorio mock
-        Mockito.when(pasajeroRepository.findById(id)).thenReturn(Optional.of(pasajeroMock));
 
-        // Act
-        PasajeroDto pasajeroDtoObtenido = this.pasajeroService.obtenerPasajeroPorId(id);
+        @Test
+        public void testObtenerPasajeroPorId() {
+            // Arrange
+            Long id = 1L;
+            Pasajero pasajeroMock = new Pasajero();
+            pasajeroMock.setId(id);
 
-        // Assert
-        assertNotNull(pasajeroDtoObtenido);
-        assertEquals(id, pasajeroDtoObtenido.getId());
-        assertEquals(pasajeroMock.getNombre(), pasajeroDtoObtenido.getNombre());
-        assertEquals(pasajeroMock.getEdad(), pasajeroDtoObtenido.getEdad());
-    }
+            // Configuración del repositorio mock
+            when(pasajeroRepository.findById(id)).thenReturn(Optional.of(pasajeroMock));
+
+            // Act
+            Pasajero pasajeroObtenido = this.pasajeroService.obtenerPasajeroPorId(id);
+
+            // Assert
+            assertNotNull(pasajeroObtenido);
+            assertEquals(id, pasajeroObtenido.getId());
+        }
+
+
 
 }
 

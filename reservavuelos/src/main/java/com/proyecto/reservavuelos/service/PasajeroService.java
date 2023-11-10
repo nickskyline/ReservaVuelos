@@ -3,6 +3,7 @@ package com.proyecto.reservavuelos.service;
 import com.proyecto.reservavuelos.repository.PasajeroRepository;
 import com.proyecto.reservavuelos.model.Pasajero;
 import com.proyecto.reservavuelos.dto.PasajeroDto;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,37 +27,9 @@ public class PasajeroService {
         return pasajeroRepository.save(pasajero);
     }
 
-    public PasajeroDto obtenerPasajeroPorId(Long id) throws PasajeroServiceException {
-        try {
-            // Buscar el Pasajero en el repositorio
-            Optional<Pasajero> pasajeroOptional = pasajeroRepository.findById(id);
-
-            if (pasajeroOptional.isPresent()) {
-                Pasajero pasajero = pasajeroOptional.get();
-
-                // Crear un PasajeroDto y asignar los campos
-                PasajeroDto pasajeroDto = new PasajeroDto();
-                pasajeroDto.setId(pasajero.getId());
-                pasajeroDto.setNombre(pasajero.getNombre()); // Reemplaza con los campos adecuados
-                pasajeroDto.setApellido(pasajero.getApellido());
-                pasajeroDto.setEdad(pasajero.getEdad());
-                // Agregar más campos según sea necesario
-
-                return pasajeroDto;
-            } else {
-                // Manejar el caso en que el Pasajero no se encuentre
-                throw new PasajeroNotFoundException("No se encontró un Pasajero con el ID: " + id);
-            }
-        } catch (Exception ex) {
-            // Manejar cualquier excepción no controlada, por ejemplo, problemas en el repositorio
-            throw new PasajeroServiceException("Error al obtener el Pasajero por ID: " + id, ex);
-        } catch (PasajeroNotFoundException e) {
-            throw new RuntimeException (e);
-        }
+    public Pasajero obtenerPasajeroPorId(Long id) {
+        return pasajeroRepository.findById(id).orElse(null);
     }
-
-
-
     public List<Pasajero> obtenerTodosLosPasajeros() {
         List<Pasajero> pasajeros = pasajeroRepository.findAll();
         return pasajeros.stream()
@@ -104,4 +77,6 @@ public class PasajeroService {
         pasajero.setApellido(pasajeroDto.getApellido());
         // Actualizar otros campos de Pasajero desde el DTO
     }
-}
+
+    }
+
