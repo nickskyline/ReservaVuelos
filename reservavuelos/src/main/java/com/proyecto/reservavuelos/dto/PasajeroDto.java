@@ -25,4 +25,14 @@ public class PasajeroDto {
     public String getNombre() {
         return null;
     }
+
+    public void setNombre(String john) {
+    }
+
+    public void setApellido(String doe) {
+    }
+
+    public Object getApellido() {
+        return null;
+    }
 }

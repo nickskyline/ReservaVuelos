@@ -1,14 +1,21 @@
 package com.proyecto.reservavuelos.service;
-
+import com.proyecto.reservavuelos.dto.PasajeroDto;
+import com.proyecto.reservavuelos.model.Pasajero;
 import com.proyecto.reservavuelos.repository.PasajeroRepository;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import static org.mockito.MockitoAnnotations.openMocks;
 
-import static org.mockito.Mockito.mock;
 
 @ExtendWith(MockitoExtension.class)
 class PasajeroServiceTest {
@@ -23,11 +30,11 @@ class PasajeroServiceTest {
     //Crear la isntancia u objeto de la clase que voy a testear
     @BeforeEach//annotation que me Sirve para ete metodo va a correr ante de que
     // e ejecute cada test
-    public void setUp(PasajeroRepository pasajeroRepository1) {
+    public void setUp() {
         // mock - que es crear una clase falsa y emular su comportamiento
+        MockitoAnnotations.openMocks(this); // Inicializar mocks
         this.pasajeroRepository = mock(PasajeroRepository.class);// Mock del repositorio
-        MockitoAnnotations.openMocks(this);
-        this.pasajeroService= new PasajeroService(pasajeroRepository1); // Inicializa el servicio con el mock del repositorio
+        this.pasajeroService= new PasajeroService(pasajeroRepository,Jhonn); // Inicializa el servicio con el mock del repositorio
     }
 
 // Arrange debe preparar lo tet variable o parametros que usted va testera
@@ -44,6 +51,7 @@ class PasajeroServiceTest {
 
 /*1.-testCrearNuevoPasajero*/
 
+    }
 
     /*1.-testCrearNuevoPasajero*/
     /*1.-testCrearNuevoPasajero*/
@@ -52,7 +60,7 @@ class PasajeroServiceTest {
     /*1.-testCrearNuevoPasajero*/
     /*1.-testCrearNuevoPasajero*/
 
-   }
+
 
 
 

@@ -41,11 +41,6 @@ class AerolineaServiceTest {
             MockitoAnnotations.openMocks(this);
          this.aerolineaService= new   AerolineaService(aerolineaRepository, nuevaYork); // Inicializa el servicio con el mock del repositorio
     }
-
-    @AfterEach
-    void tearDown() {
-    }
-
         // Arrange debe preparar lo tet variable o parametros que usted va testera
         // (Preparar): En esta sección, debes configurar el escenario para la prueba.
         // Esto incluye crear instancias de objetos,
@@ -463,7 +458,7 @@ class AerolineaServiceTest {
         List<Aerolinea> aerolineasEstadosUnidosNuevaYork = this.aerolineaService.obtenerAerolineasPorPaisYCiudad("Estados Unidos", "Nueva York");
 
         // Assert
-        assertThat (aerolineasEstadosUnidosNuevaYork).isNotNull ( )
+        assertThat (aerolineasEstadosUnidosNuevaYork).isNotNull ( );
         assertThat(aerolineasEstadosUnidosNuevaYork).hasSize(1);
         assertThat(aerolineasEstadosUnidosNuevaYork.get(0).getNombre()).isEqualTo("Delta Airlines");
     }

@@ -33,4 +33,19 @@ public class Pasajero {
 
     }
 
+    public Object getNombre() {
+        return null;
+    }
+
+    public String getApellido(Object apellido) {
+        return null;
+    }
+
+    public void setNombre(String nombre) {
+    }
+
+    public String getApellido() {
+
+        return null;
+    }
 }
