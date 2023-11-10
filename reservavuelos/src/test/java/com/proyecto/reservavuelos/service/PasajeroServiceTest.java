@@ -11,6 +11,7 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
@@ -147,6 +148,48 @@ public void testCrearPasajero() {
             assertEquals(pasajero.getApellido(), pasajeroDto.getApellido());
             assertEquals(pasajero.getEdad(), pasajeroDto.getEdad());
         }
+    }
+    @Test
+    public void testObtenerTodosLosPasajerosSinPasajeros() {
+        // Arrange
+        // Configuración del repositorio mock para devolver una lista vacía
+        when(pasajeroRepository.findAll()).thenReturn(Collections.emptyList());
+
+        // Act
+        List<PasajeroDto> pasajerosDtoObtenidos = pasajeroService.obtenerTodosLosPasajeros();
+
+        // Assert
+        assertNotNull(pasajerosDtoObtenidos);
+        assertTrue(pasajerosDtoObtenidos.isEmpty());
+    }
+    @Test
+    public void testActualizarPasajeroExistente() {
+        // Arrange
+        Long id = 1L;
+        PasajeroDto pasajeroDto = new PasajeroDto();
+        pasajeroDto.setNombre("John");
+        pasajeroDto.setApellido("Doe");
+
+        Pasajero pasajeroExistente = new Pasajero();
+        pasajeroExistente.setId(id);
+        pasajeroExistente.setNombre("Alice");
+        pasajeroExistente.setApellido("Smith");
+
+        // Configuración del repositorio mock
+        when(pasajeroRepository.findById(id)).thenReturn(Optional.of(pasajeroExistente));
+        when(pasajeroRepository.save(any(Pasajero.class))).thenAnswer(invocation -> {
+            Pasajero pasajeroGuardado = invocation.getArgument(0);
+            return pasajeroGuardado; // Devolver el pasajero actualizado
+        });
+
+        // Act
+        PasajeroDto pasajeroActualizado = pasajeroService.actualizarPasajero(id, pasajeroDto);
+
+        // Assert
+        assertNotNull(pasajeroActualizado);
+        assertEquals(id, pasajeroActualizado.getId());
+        assertEquals(pasajeroDto.getNombre(), pasajeroActualizado.getNombre());
+        assertEquals(pasajeroDto.getApellido(), pasajeroActualizado.getApellido());
     }
 }
 

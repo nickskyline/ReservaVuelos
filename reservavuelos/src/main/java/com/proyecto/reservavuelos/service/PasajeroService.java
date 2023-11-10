@@ -38,9 +38,11 @@ public class PasajeroService {
             actualizarPasajeroDesdeDto(pasajeroExistente, pasajeroDto);
             pasajeroExistente.setId(id); // Aseguramos que el ID no cambie
             return convertirPasajeroADto(pasajeroRepository.save(pasajeroExistente));
+        } else {
+            throw new PasajeroNotFoundException("No se encontró un Pasajero con el ID: " + id);
         }
-        return null; // El pasajero no existe
     }
+
 
     public boolean eliminarPasajero(Long id) {
         Pasajero pasajero = pasajeroRepository.findById(id).orElse(null);
