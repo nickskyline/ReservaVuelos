@@ -1,16 +1,11 @@
 package com.proyecto.reservavuelos.service;
-
 import com.proyecto.reservavuelos.repository.PasajeroRepository;
 import com.proyecto.reservavuelos.model.Pasajero;
 import com.proyecto.reservavuelos.dto.PasajeroDto;
-import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
-
 @Service
 public class PasajeroService {
 
@@ -30,7 +25,7 @@ public class PasajeroService {
     public Pasajero obtenerPasajeroPorId(Long id) {
         return pasajeroRepository.findById(id).orElse(null);
     }
-    public List<Pasajero> obtenerTodosLosPasajeros() {
+    public List<PasajeroDto> obtenerTodosLosPasajeros() {
         List<Pasajero> pasajeros = pasajeroRepository.findAll();
         return pasajeros.stream()
                 .map(this::convertirPasajeroADto)

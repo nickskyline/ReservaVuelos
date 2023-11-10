@@ -9,6 +9,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -19,11 +22,8 @@ import com.proyecto.reservavuelos.repository.PasajeroRepository;
 import com.proyecto.reservavuelos.service.PasajeroService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -89,8 +89,6 @@ public void testCrearPasajero() {
     assertEquals(pasajeroDto.getApellido(), pasajeroCreado.getApellido());
     assertEquals(pasajeroMock.getEdad(), pasajeroCreado.getEdad());
 }
-
-
         @Test
         public void testObtenerPasajeroPorId() {
             // Arrange
@@ -108,10 +106,54 @@ public void testCrearPasajero() {
             assertNotNull(pasajeroObtenido);
             assertEquals(id, pasajeroObtenido.getId());
         }
+    @Test
+    public void testObtenerPasajeroPorIdCuandoNoExiste() {
+        // Arrange
+        Long idNoExistente = 2L;
 
+        // Configuración del repositorio mock para devolver Optional vacío
+        when(pasajeroRepository.findById(idNoExistente)).thenReturn(Optional.empty());
 
+        // Act
+        Pasajero pasajeroObtenido = pasajeroService.obtenerPasajeroPorId(idNoExistente);
 
+        // Assert
+        assertNull(pasajeroObtenido);
+    }
+    @Test
+    public void testObtenerTodosLosPasajeros() {
+        // Arrange
+        List<Pasajero> pasajerosMock = Arrays.asList(
+                new Pasajero(1L, "John", "Doe", 30),
+                new Pasajero(2L, "Jane", "Smith", 25)
+        );
+
+        // Configuración del repositorio mock
+        when(pasajeroRepository.findAll()).thenReturn(pasajerosMock);
+
+        // Act
+        List<PasajeroDto> pasajerosDtoObtenidos = this.pasajeroService.obtenerTodosLosPasajeros();
+
+        // Assert
+        assertNotNull(pasajerosDtoObtenidos);
+        assertEquals(pasajerosMock.size(), pasajerosDtoObtenidos.size());
+
+        for (int i = 0; i < pasajerosMock.size(); i++) {
+            Pasajero pasajero = pasajerosMock.get(i);
+            PasajeroDto pasajeroDto = pasajerosDtoObtenidos.get(i);
+
+            assertEquals(pasajero.getId(), pasajeroDto.getId());
+            assertEquals(pasajero.getNombre(), pasajeroDto.getNombre());
+            assertEquals(pasajero.getApellido(), pasajeroDto.getApellido());
+            assertEquals(pasajero.getEdad(), pasajeroDto.getEdad());
+        }
+    }
 }
+
+
+
+
+
 
 
 

@@ -39,8 +39,8 @@ public class PasajeroController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Pasajero>> obtenerTodosLosPasajeros() {
-        List<Pasajero> pasajeros = pasajeroService.obtenerTodosLosPasajeros();
+    public ResponseEntity<List<PasajeroDto>> obtenerTodosLosPasajeros() {
+        List<PasajeroDto> pasajeros = pasajeroService.obtenerTodosLosPasajeros();
         return ResponseEntity.ok(pasajeros);
     }
 

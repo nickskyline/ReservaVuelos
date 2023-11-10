@@ -37,6 +37,9 @@ public class Pasajero {
     public Pasajero(String nombre, String apellido, int i) {
     }
 
+    public Pasajero(long l, String john, String doe, int i) {
+    }
+
     public void setNombre(String nombre) {
     }
 
