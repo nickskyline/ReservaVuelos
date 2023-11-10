@@ -272,4 +272,7 @@ class PersonaServiceTest {
         //Assert
         assertThrows(ValidationException.class, () -> personaService.crearPersona(personaDto));
     }
+
+
+
 }
