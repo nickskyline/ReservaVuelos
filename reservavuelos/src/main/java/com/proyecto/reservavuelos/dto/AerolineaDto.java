@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AerolineaDto {
+    protected String nuevaYork;
     @NotNull
     private String nombre;
 
@@ -19,6 +20,9 @@ public class AerolineaDto {
     @Pattern(regexp = "^(0|[1-9][0-9]*)$")
     @NotNull
     private String telefono;
+
+    public AerolineaDto(String aerolíneaNueva, String francia, String number) {
+    }
 }
 
 

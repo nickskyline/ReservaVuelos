@@ -3,12 +3,15 @@ package com.proyecto.reservavuelos.model;
 import com.proyecto.reservavuelos.dto.AerolineaDto;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
 public class Aerolinea extends AerolineaDto {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "aerolinea_generador")
     @SequenceGenerator(name = "aerolinea_generador", allocationSize = 1)
@@ -37,6 +40,7 @@ public class Aerolinea extends AerolineaDto {
     }
 
     public Aerolinea(String deltaAirlines, String nuevaYork) {
+        this.nuevaYork = nuevaYork;
     }
 
     public Aerolinea(String britishAirways, String reinoUnido, String londres) {

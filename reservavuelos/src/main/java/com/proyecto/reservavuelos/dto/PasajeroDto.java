@@ -1,4 +1,5 @@
 package com.proyecto.reservavuelos.dto;
+import com.proyecto.reservavuelos.model.Pasajero;
 import com.proyecto.reservavuelos.model.Persona;
 import com.proyecto.reservavuelos.model.Reserva;
 import jakarta.validation.constraints.NotNull;
@@ -12,7 +13,8 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PasajeroDto {
+public class PasajeroDto extends Pasajero {
+    protected String Jhonn;
     @NotNull
     private String tipoPasajero;
 
@@ -21,18 +23,4 @@ public class PasajeroDto {
     @NotNull
     private List<Reserva> reservas;
 
-
-    public String getNombre() {
-        return null;
-    }
-
-    public void setNombre(String john) {
-    }
-
-    public void setApellido(String doe) {
-    }
-
-    public Object getApellido() {
-        return null;
-    }
 }

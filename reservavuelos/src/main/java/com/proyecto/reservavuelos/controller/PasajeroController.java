@@ -1,10 +1,8 @@
 package com.proyecto.reservavuelos.controller;
-
-import com.proyecto.reservavuelos.dto.AerolineaDto;
 import com.proyecto.reservavuelos.dto.PasajeroDto;
-import com.proyecto.reservavuelos.model.Aerolinea;
 import com.proyecto.reservavuelos.model.Pasajero;
 import com.proyecto.reservavuelos.service.PasajeroService;
+import com.proyecto.reservavuelos.service.PasajeroServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,8 +30,8 @@ public class PasajeroController {
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevoPasajero);
     }
     @GetMapping("/{id}")
-    public ResponseEntity<Pasajero> obtenerPasajeroPorId(@PathVariable Long id) {
-        Pasajero pasajero = pasajeroService.obtenerPasajeroPorId(id);
+    public ResponseEntity<Pasajero> obtenerPasajeroPorId(@PathVariable Long id) throws PasajeroServiceException {
+        Pasajero pasajero = pasajeroService.obtenerPasajeroPorId (id);
         if (pasajero != null) {
             return ResponseEntity.ok(pasajero);
         } else {
@@ -49,7 +47,7 @@ public class PasajeroController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Pasajero> actualizarPasajero(@PathVariable Long id, @RequestBody Pasajero pasajeroActualizado) {
-        Pasajero pasajero = pasajeroService.actualizarPasajero(id, pasajeroActualizado);
+        Pasajero pasajero = pasajeroService.actualizarPasajero(id, (PasajeroDto) pasajeroActualizado);
         if (pasajero != null) {
             return ResponseEntity.ok(pasajero);
         } else {
