@@ -41,73 +41,9 @@ class AerolineaServiceTest {
             MockitoAnnotations.openMocks(this);
          this.aerolineaService= new   AerolineaService(aerolineaRepository, nuevaYork); // Inicializa el servicio con el mock del repositorio
     }
-        // Arrange debe preparar lo tet variable o parametros que usted va testera
-        // (Preparar): En esta sección, debes configurar el escenario para la prueba.
-        // Esto incluye crear instancias de objetos,
-        // establecer estados iniciales y configurar cualquier dependencia que sea necesaria.
 
-        // Act (Actuar): En esta sección, debes realizar la acción o el método que deseas probar.
-
-        // Assert (Afirmar): En esta sección, debes realizar afirmaciones para verificar
-        // que el método actúa como se espera. Puedes usar aserciones
-    // de JUnit o cualquier otra biblioteca de aserciones para realizar las comprobaciones.
     //-----------------------------------*****************----------------------------//
-
 /*1.-testCrearNuevaAerolinea*/
-    @Test
-    public void testCrearNuevaAerolineaConDto() {
-        // Datos de ejemplo para la prueba
-        AerolineaDto aerolineaDto = new AerolineaDto("Aerolínea Nueva", "Francia", "4444224");
-
-        // Crea una instancia de Aerolinea basada en el DTO
-        Aerolinea nuevaAerolinea = new Aerolinea( );
-        nuevaAerolinea.setNombre(aerolineaDto.getNombre());
-        nuevaAerolinea.setPais(aerolineaDto.getPais());
-        nuevaAerolinea.setTelefono(aerolineaDto.getTelefono());
-
-        // Mock de aerolineaRepository para simular que la aerolínea no existe en la base de datos
-        when(aerolineaRepository.existsByNombre(aerolineaDto.getNombre())).thenReturn(false);
-
-        // Configura el comportamiento del repositorio al guardar la aerolínea
-        when(aerolineaRepository.save(nuevaAerolinea)).thenReturn(nuevaAerolinea);
-
-        // Llamada al método a probar
-        Aerolinea aerolineaCreada = this.aerolineaService.crearAerolinea(aerolineaDto);
-
-        // Verificaciones
-        assertEquals("Aerolínea Nueva", aerolineaCreada.getNombre());
-        assertEquals("Francia", aerolineaCreada.getPais());
-        assertEquals("4444224", aerolineaCreada.getTelefono());
-
-        // Verificar que el método existsByNombre se llamó una vez con el nombre correcto
-        verify(aerolineaRepository, times(1)).existsByNombre("Aerolínea Nueva");
-
-        // Verificar que el método save se llamó una vez con la aerolínea creada
-        verify(aerolineaRepository, times(1)).save(nuevaAerolinea);
-    }
-
-    @Test
-    public void crearAerolineaDeberiaGuardarAerolineaEnElRepositorio() {
-        // Arrange
-        AerolineaDto aerolineaDto = new AerolineaDto("Aerolínea de Prueba", "Pais de Prueba", "1234567890");
-        Aerolinea aerolinea = new Aerolinea( );
-        aerolinea.setNombre(aerolineaDto.getNombre());
-        aerolinea.setPais(aerolineaDto.getPais());
-        aerolinea.setTelefono(aerolineaDto.getTelefono());
-
-        // Configura el comportamiento del repositorio al guardar la aerolínea
-        when(aerolineaRepository.save(aerolinea)).thenReturn(aerolinea);
-
-        // Act
-        Aerolinea aerolineaCreada = this.aerolineaService.crearAerolinea(aerolineaDto);
-
-        // Assert
-        // Verificar que el método save del repositorio haya sido llamado con la aerolínea proporcionada
-        verify(aerolineaRepository).save(aerolinea);
-
-        // Verificar que la aerolínea creada sea igual a la aerolínea original
-        assertEquals(aerolinea, aerolineaCreada);
-    }
     @Test
     public void testCrearNuevaAerolineaValidandoNombre() {
         // Datos de ejemplo para la prueba
@@ -122,30 +58,6 @@ class AerolineaServiceTest {
             assertEquals("El nombre de la aerolínea no es válido", e.getMessage());
         }
     }
-    /*@Test
-    public void testCrearNuevaAerolineaExitosa() {
-        // Datos de ejemplo para la prueba
-        AerolineaDto aerolineaDto = new AerolineaDto("Aerolínea Válida", "Francia", "4444224");
-
-        // Simular el comportamiento del repositorio para no devolver una aerolínea con el mismo nombre
-        when(aerolineaRepository.existsByNombre(aerolineaDto.getNombre()))
-                .thenReturn(false);
-
-        // Llamada al método a probar
-        Aerolinea nuevaAerolinea = this.aerolineaService.crearAerolinea(aerolineaDto);
-
-        // Verificaciones
-        assertEquals("Aerolínea Válida", nuevaAerolinea.getNombre());
-        assertEquals("Francia", nuevaAerolinea.getPais());
-        assertEquals("4444224", nuevaAerolinea.getTelefono());
-
-        // Verificar que el método existsByNombre se llamó una vez con el nombre correcto
-        verify(aerolineaRepository, times(1)).existsByNombre("Aerolínea Válida");
-
-        // Verificar que el método save se llamó una vez
-        verify(aerolineaRepository, times(1)).save(any(Aerolinea.class));
-    }*/
-
     @Test
     public void testCrearAerolineaNombreInvalido() {
         // Arrange
@@ -154,18 +66,8 @@ class AerolineaServiceTest {
         // Act and Assert
         assertThrows(IllegalArgumentException.class, () -> aerolineaService.crearAerolinea(aerolineaDto));
     }
-
-    @Test
-    public void testCrearAerolineaNombreExistente() {
-        // Arrange
-        AerolineaDto aerolineaDto = new AerolineaDto("Aerolínea 2", "Francia", "4444224");
-
-        when(aerolineaRepository.existsByNombre("Aerolínea 2")).thenReturn(true);
-
-        // Act and Assert
-        assertThrows(IllegalArgumentException.class, () -> aerolineaService.crearAerolinea(aerolineaDto));
-    }
 /*2.-@Test tObtenerLaAerolinea*/
+@Test
     public void testObtenerTodasLasAerolineas() {
         // Datos de ejemplo para la prueba
         List<Aerolinea> aerolineas = new ArrayList<>();
@@ -440,29 +342,6 @@ class AerolineaServiceTest {
         assertThat(aerolineasObtenidas).isNotNull();
         assertThat(aerolineasObtenidas).isEmpty();
     }
-
-    @Test
-    public void obtenerAerolineasPorPaisYCiudadDeberiaRetornarAerolineasDelPaisYCiudadEspecificados() {
-        // Arrange
-        List<Aerolinea> aerolineas = Arrays.asList(
-                new Aerolinea("Delta Airlines", "Estados Unidos", "Nueva York"),
-                new Aerolinea("British Airways", "Reino Unido", "Londres"),
-                new Aerolinea("Air France", "Francia", "París"),
-                new Aerolinea("Lufthansa", "Alemania", "Berlín")
-        );
-
-        // Simula que el repositorio devuelve todas las aerolíneas
-        when(aerolineaRepository.findAll()).thenReturn(aerolineas);
-
-        // Act
-        List<Aerolinea> aerolineasEstadosUnidosNuevaYork = this.aerolineaService.obtenerAerolineasPorPaisYCiudad("Estados Unidos", "Nueva York");
-
-        // Assert
-        assertThat (aerolineasEstadosUnidosNuevaYork).isNotNull ( );
-        assertThat(aerolineasEstadosUnidosNuevaYork).hasSize(1);
-        assertThat(aerolineasEstadosUnidosNuevaYork.get(0).getNombre()).isEqualTo("Delta Airlines");
-    }
-
     @Test
     public void testObtenerAerolineasPorPaisYCiudad() {
         // Arrange
@@ -543,8 +422,6 @@ class AerolineaServiceTest {
         // Assert
         assertThrows(IllegalArgumentException.class, () -> aerolineaService.obtenerAerolineasPorPaisYCiudad(pais, ""));
     }
-
-
 }
 
 

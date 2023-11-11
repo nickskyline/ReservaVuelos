@@ -45,12 +45,9 @@ public class AerolineaService {
         // Guardar la aerolínea en la base de datos
         return aerolineaRepository.save(aerolinea);
     }
-
-
     public List<Aerolinea> obtenerTodasLasAerolineas() {
         return aerolineaRepository.findAll();
     }
-
 
     public Aerolinea obtenerAerolineaPorId(Long id) {
         Optional<Aerolinea> aerolineaOptional = aerolineaRepository.findById(id);
