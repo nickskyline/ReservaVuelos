@@ -1,8 +1,15 @@
 package com.proyecto.reservavuelos.service;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.mockito.Mock;
+import org.springframework.boot.test.context.SpringBootTest;
+import static org.junit.jupiter.api.Assertions.*;
+
 import com.proyecto.reservavuelos.dto.PasajeroDto;
 import com.proyecto.reservavuelos.model.Pasajero;
 import com.proyecto.reservavuelos.repository.PasajeroRepository;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -11,9 +18,23 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.junit.jupiter.api.extension.ExtendWith;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 @ExtendWith(MockitoExtension.class)
 class PasajeroServiceTest {
@@ -42,19 +63,31 @@ class PasajeroServiceTest {
 /*1.-testCrearNuevoPasajero*/
 
 
+    @Test
+    void testCrearPasajero() {
+        // Arrange
+        Pasajero pasajero = new Pasajero(/* create a Pasajero object */);
+        when(pasajeroRepository.save(pasajero)).thenReturn(pasajero);
+
+        // Act
+        Pasajero createdPasajero = this.pasajeroService.crearPasajero(pasajero);
+
+        // Assert
+        // Add your assertions here
+        // Verify that the save method was called with the expected arguments
+        verify(pasajeroRepository, times(1)).save(pasajero);
+    }
+
+
 
 }
 
+/*2.-test convertirPasajeroDtoAEntidad*/
 
 
 
 
 
-
-
-
-
-/*1.-testCrearNuevoPasajero*/
     /*1.-testCrearNuevoPasajero*/
     /*1.-testCrearNuevoPasajero*/
     /*1.-testCrearNuevoPasajero*/

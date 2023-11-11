@@ -1,26 +1,97 @@
 package com.proyecto.reservavuelos.service;
-import com.proyecto.reservavuelos.repository.PasajeroRepository;
+
 import com.proyecto.reservavuelos.dto.PasajeroDto;
 import com.proyecto.reservavuelos.model.Pasajero;
+import com.proyecto.reservavuelos.model.Persona;
+import com.proyecto.reservavuelos.repository.PasajeroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PasajeroService {
 
-    @Autowired
-    private PasajeroRepository pasajeroRepository;
+    private final PasajeroRepository pasajeroRepository;
 
+    @Autowired
     public PasajeroService(PasajeroRepository pasajeroRepository) {
-    }   public PasajeroService( ){
+        this.pasajeroRepository = pasajeroRepository;
     }
 
-    public Pasajero crearPasajero(PasajeroDto pasajeroDto) {
-        Pasajero pasajero = convertirDtoAPasajero(pasajeroDto);
+    public Pasajero crearPasajero(Pasajero pasajeroDto) {
+        // Realizar validaciones en pasajeroDto si es necesario
+        Pasajero pasajero = convertirPasajeroDtoAEntidad(pasajeroDto);
         return pasajeroRepository.save(pasajero);
+
+
+    }
+    private Pasajero convertirPasajeroDtoAEntidad(Pasajero pasajeroDto) {
+        return pasajeroDto;
+    }
+
+      /*  private Pasajero convertirPasajeroDtoAEntidad(PasajeroDto pasajeroDto) {
+            Pasajero pasajero = new Pasajero();
+
+            // Acceder a los campos heredados de Persona a través de la instancia de Persona en Pasajero
+            pasajero.getPersona().setPasajero (pasajeroDto.getPersona ( ).getPasajero ( ));
+            pasajero.setTipoPasajero(pasajeroDto.getTipoPasajero( ));
+
+            // Configurar otros campos específicos de Pasajero
+            pasajero.setPersona (pasajeroDto.getPersona ());
+            pasajero.setPasajero (pasajeroDto.getPersona ( ).getPasajero ());
+            pasajero.setTipoPasajero (pasajeroDto.getTipoPasajero ());
+
+            return pasajero;
+        }
+*/
+
+    private Pasajero convertirPasajeroDtoAEntidad(PasajeroDto pasajeroDto) {
+        Pasajero pasajero = new Pasajero();
+
+        // Copiar los campos específicos de Pasajero desde PasajeroDto
+        pasajero.setTipoPasajero(pasajeroDto.getTipoPasajero());
+        pasajero.setReservas(pasajeroDto.getReservas());
+
+        // Copiar la instancia de Persona desde PasajeroDto
+        pasajero.setPersona(pasajeroDto.getPersona());
+
+        // Puedes realizar otras configuraciones específicas de Pasajero si es necesario
+
+        return pasajero;
+    }
+
+    public Pasajero actualizarPasajero(Long id, Pasajero pasajeroDto) {
+        Optional<Pasajero> pasajeroOptional = pasajeroRepository.findById(id);
+
+        if (pasajeroOptional.isPresent()) {
+            Pasajero pasajeroExistente = pasajeroOptional.get();
+            // Realizar validaciones en pasajeroDto si es necesario
+            actualizarDatosPasajeroDesdeDto(pasajeroExistente, pasajeroDto);
+            return pasajeroRepository.save(pasajeroExistente);
+        }
+
+        return null; // El pasajero no existe
+    }
+
+    /*private void actualizarDatosPasajeroDesdeDto(Pasajero pasajeroExistente, PasajeroDto pasajeroDto) {
+        pasajeroExistente.setPasajero (pasajeroDto.getPersona ( ).getPasajero ());
+        pasajeroExistente.setTipoPasajero (pasajeroDto.getTipoPasajero ());
+
+    }*/
+
+    private void actualizarDatosPasajeroDesdeDto(Pasajero pasajeroExistente, Pasajero pasajeroDto) {
+        // Actualizar campos específicos de Pasajero
+        pasajeroExistente.setTipoPasajero(pasajeroDto.getTipoPasajero());
+
+        // Actualizar la instancia de Persona en Pasajero
+        Persona personaExistente = pasajeroExistente.getPersona();
+        Persona personaDesdeDto = pasajeroDto.getPersona();
+
+        // Actualizar campos heredados de Persona
+        personaExistente.setPasajero(personaDesdeDto.getPasajero());
+
     }
 
     public Pasajero obtenerPasajeroPorId(Long id) {
@@ -30,39 +101,16 @@ public class PasajeroService {
     public List<Pasajero> obtenerTodosLosPasajeros() {
         return pasajeroRepository.findAll();
     }
-    public ResponseEntity<Pasajero> actualizarPasajero(Long id, PasajeroDto pasajeroActualizado) {
-        Pasajero pasajeroExistente = pasajeroRepository.findById(id).orElse(null);
-
-        if (pasajeroExistente != null) {
-            // Aseguramos que el ID no cambie
-            pasajeroActualizado.setId(id);
-
-            // Actualizamos los campos que sean necesarios
-            pasajeroExistente.setTipoPasajero(pasajeroActualizado.getTipoPasajero());
-            // Actualiza otros campos aquí según tus necesidades
-
-            Pasajero pasajeroActualizadoEntity = pasajeroRepository.save(pasajeroExistente);
-            return ResponseEntity.ok(pasajeroActualizadoEntity);
-        } else {
-            // Devuelve una respuesta 404 Not Found si el pasajero no existe
-            return ResponseEntity.notFound().build();
-        }
-    }
-
 
     public boolean eliminarPasajero(Long id) {
-        Pasajero pasajero = pasajeroRepository.findById(id).orElse(null);
-        if (pasajero != null) {
-            pasajeroRepository.delete(pasajero);
+        Optional<Pasajero> pasajeroOptional = pasajeroRepository.findById(id);
+
+        if (pasajeroOptional.isPresent()) {
+            pasajeroRepository.delete(pasajeroOptional.get());
             return true;
         }
+
         return false; // No se pudo eliminar el pasajero
     }
-
-    private Pasajero convertirDtoAPasajero(PasajeroDto pasajeroDto) {
-        Pasajero pasajero = new Pasajero();
-        pasajero.setTipoPasajero(pasajeroDto.getTipoPasajero());
-        // Asigna otros campos según sea necesario
-        return pasajero;
-    }
 }
+

@@ -14,16 +14,19 @@ import java.util.List;
 @RequestMapping("api/v1/pasajeros")
 public class PasajeroController {
 
-    private final PasajeroService pasajeroService;
+    private PasajeroService pasajeroService;
+
 
     @Autowired
+
     public PasajeroController(PasajeroService pasajeroService) {
         this.pasajeroService = pasajeroService;
     }
 
     @PostMapping
     public ResponseEntity<Pasajero> crearPasajero(@RequestBody PasajeroDto pasajeroDto) {
-        Pasajero nuevoPasajero = pasajeroService.crearPasajero(pasajeroDto);
+        PasajeroDto pasajero = null;
+        Pasajero nuevoPasajero = pasajeroService.crearPasajero(pasajero);
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevoPasajero);
     }
 
@@ -44,8 +47,8 @@ public class PasajeroController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ResponseEntity<Pasajero>> actualizarPasajero(@PathVariable Long id, @RequestBody PasajeroDto pasajeroDto) {
-        ResponseEntity<Pasajero> pasajero = pasajeroService.actualizarPasajero(id, pasajeroDto);
+    public ResponseEntity<Pasajero> actualizarPasajero(@PathVariable Long id, @RequestBody Pasajero pasajeroActualizado) {
+        Pasajero pasajero = pasajeroService.actualizarPasajero(id, pasajeroActualizado);
         if (pasajero != null) {
             return ResponseEntity.ok(pasajero);
         } else {
