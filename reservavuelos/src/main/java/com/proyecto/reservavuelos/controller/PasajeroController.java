@@ -1,4 +1,5 @@
 package com.proyecto.reservavuelos.controller;
+
 import com.proyecto.reservavuelos.dto.PasajeroDto;
 import com.proyecto.reservavuelos.model.Pasajero;
 import com.proyecto.reservavuelos.service.PasajeroService;
@@ -13,24 +14,22 @@ import java.util.List;
 @RequestMapping("api/v1/pasajeros")
 public class PasajeroController {
 
-    private PasajeroService pasajeroService;
-
+    private final PasajeroService pasajeroService;
 
     @Autowired
-
     public PasajeroController(PasajeroService pasajeroService) {
         this.pasajeroService = pasajeroService;
     }
 
     @PostMapping
-    public ResponseEntity<Pasajero> crearPasajero(@RequestBody PasajeroDto pasajero) {
-        Pasajero nuevopasajero;
-        Pasajero nuevoPasajero = pasajeroService.crearPasajero(pasajero);
+    public ResponseEntity<Pasajero> crearPasajero(@RequestBody PasajeroDto pasajeroDto) {
+        Pasajero nuevoPasajero = pasajeroService.crearPasajero(pasajeroDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevoPasajero);
     }
+
     @GetMapping("/{id}")
-    public ResponseEntity<Pasajero> obtenerPasajeroPorId(@PathVariable Long id){
-        Pasajero pasajero = pasajeroService.obtenerPasajeroPorId (id);
+    public ResponseEntity<Pasajero> obtenerPasajeroPorId(@PathVariable Long id) {
+        Pasajero pasajero = pasajeroService.obtenerPasajeroPorId(id);
         if (pasajero != null) {
             return ResponseEntity.ok(pasajero);
         } else {
@@ -39,14 +38,14 @@ public class PasajeroController {
     }
 
     @GetMapping
-    public ResponseEntity<List<PasajeroDto>> obtenerTodosLosPasajeros() {
-        List<PasajeroDto> pasajeros = pasajeroService.obtenerTodosLosPasajeros();
+    public ResponseEntity<List<Pasajero>> obtenerTodosLosPasajeros() {
+        List<Pasajero> pasajeros = pasajeroService.obtenerTodosLosPasajeros();
         return ResponseEntity.ok(pasajeros);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Pasajero> actualizarPasajero(@PathVariable Long id, @RequestBody Pasajero pasajeroActualizado) {
-        Pasajero pasajero = pasajeroService.actualizarPasajero(id, (PasajeroDto) pasajeroActualizado);
+    public ResponseEntity<ResponseEntity<Pasajero>> actualizarPasajero(@PathVariable Long id, @RequestBody PasajeroDto pasajeroDto) {
+        ResponseEntity<Pasajero> pasajero = pasajeroService.actualizarPasajero(id, pasajeroDto);
         if (pasajero != null) {
             return ResponseEntity.ok(pasajero);
         } else {
@@ -63,3 +62,4 @@ public class PasajeroController {
         }
     }
 }
+

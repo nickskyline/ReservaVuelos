@@ -1,11 +1,13 @@
 package com.proyecto.reservavuelos.service;
 import com.proyecto.reservavuelos.repository.PasajeroRepository;
-import com.proyecto.reservavuelos.model.Pasajero;
 import com.proyecto.reservavuelos.dto.PasajeroDto;
+import com.proyecto.reservavuelos.model.Pasajero;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
-import java.util.stream.Collectors;
+
 @Service
 public class PasajeroService {
 
@@ -13,10 +15,9 @@ public class PasajeroService {
     private PasajeroRepository pasajeroRepository;
 
     public PasajeroService(PasajeroRepository pasajeroRepository) {
-        this.pasajeroRepository = pasajeroRepository;
+    }   public PasajeroService( ){
     }
-    public PasajeroService() {
-    }
+
     public Pasajero crearPasajero(PasajeroDto pasajeroDto) {
         Pasajero pasajero = convertirDtoAPasajero(pasajeroDto);
         return pasajeroRepository.save(pasajero);
@@ -25,21 +26,26 @@ public class PasajeroService {
     public Pasajero obtenerPasajeroPorId(Long id) {
         return pasajeroRepository.findById(id).orElse(null);
     }
-    public List<PasajeroDto> obtenerTodosLosPasajeros() {
-        List<Pasajero> pasajeros = pasajeroRepository.findAll();
-        return pasajeros.stream()
-                .map(this::convertirPasajeroADto)
-                .collect(Collectors.toList());
-    }
 
-    public PasajeroDto actualizarPasajero(Long id, PasajeroDto pasajeroDto) {
+    public List<Pasajero> obtenerTodosLosPasajeros() {
+        return pasajeroRepository.findAll();
+    }
+    public ResponseEntity<Pasajero> actualizarPasajero(Long id, PasajeroDto pasajeroActualizado) {
         Pasajero pasajeroExistente = pasajeroRepository.findById(id).orElse(null);
+
         if (pasajeroExistente != null) {
-            actualizarPasajeroDesdeDto(pasajeroExistente, pasajeroDto);
-            pasajeroExistente.setId(id); // Aseguramos que el ID no cambie
-            return convertirPasajeroADto(pasajeroRepository.save(pasajeroExistente));
+            // Aseguramos que el ID no cambie
+            pasajeroActualizado.setId(id);
+
+            // Actualizamos los campos que sean necesarios
+            pasajeroExistente.setTipoPasajero(pasajeroActualizado.getTipoPasajero());
+            // Actualiza otros campos aquí según tus necesidades
+
+            Pasajero pasajeroActualizadoEntity = pasajeroRepository.save(pasajeroExistente);
+            return ResponseEntity.ok(pasajeroActualizadoEntity);
         } else {
-            throw new PasajeroNotFoundException("No se encontró un Pasajero con el ID: " + id);
+            // Devuelve una respuesta 404 Not Found si el pasajero no existe
+            return ResponseEntity.notFound().build();
         }
     }
 
@@ -55,25 +61,8 @@ public class PasajeroService {
 
     private Pasajero convertirDtoAPasajero(PasajeroDto pasajeroDto) {
         Pasajero pasajero = new Pasajero();
-        pasajero.setNombre(pasajeroDto.getNombre());
-        pasajero.setApellido(pasajeroDto.getApellido());
-        // Setear otros campos de Pasajero desde el DTO
+        pasajero.setTipoPasajero(pasajeroDto.getTipoPasajero());
+        // Asigna otros campos según sea necesario
         return pasajero;
     }
-
-    private PasajeroDto convertirPasajeroADto(Pasajero pasajero) {
-        PasajeroDto pasajeroDto = new PasajeroDto();
-        pasajeroDto.setNombre(pasajero.getNombre());
-        pasajeroDto.setApellido(pasajero.getApellido());
-        // Setear otros campos de PasajeroDto desde el Pasajero
-        return pasajeroDto;
-    }
-
-    private void actualizarPasajeroDesdeDto(Pasajero pasajero, PasajeroDto pasajeroDto) {
-        pasajero.setNombre(pasajeroDto.getNombre());
-        pasajero.setApellido(pasajeroDto.getApellido());
-        // Actualizar otros campos de Pasajero desde el DTO
-    }
-
-    }
-
+}
