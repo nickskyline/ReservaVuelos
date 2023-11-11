@@ -59,14 +59,27 @@ class AerolineaServiceTest {
         }
     }
     @Test
-    public void testCrearAerolineaNombreInvalido() {
+    public void crearAerolineaConNombreNuloDeberiaLanzarExcepcion() {
         // Arrange
-        AerolineaDto aerolineaDto = new AerolineaDto("", "Francia", "4444224");
+        AerolineaDto aerolineaDto = new AerolineaDto(null, "Pais de Prueba", "1234567890");
 
-        // Act and Assert
-        assertThrows(IllegalArgumentException.class, () -> aerolineaService.crearAerolinea(aerolineaDto));
+        // Act y Assert
+        assertThrows(IllegalArgumentException.class, () -> {
+            this.aerolineaService.crearAerolinea(aerolineaDto);
+        });
     }
-/*2.-@Test tObtenerLaAerolinea*/
+
+    @Test
+    public void crearAerolineaConNombreVacioDeberiaLanzarExcepcion() {
+        // Arrange
+        AerolineaDto aerolineaDto = new AerolineaDto("", "Pais de Prueba", "1234567890");
+
+        // Act y Assert
+        assertThrows(IllegalArgumentException.class, () -> {
+            this.aerolineaService.crearAerolinea(aerolineaDto);
+        });
+    }
+    /*2.-@Test tObtenerLaAerolinea*/
 @Test
     public void testObtenerTodasLasAerolineas() {
         // Datos de ejemplo para la prueba
