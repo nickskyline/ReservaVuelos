@@ -1,5 +1,6 @@
 package com.proyecto.reservavuelos.controller;
 
+import com.proyecto.reservavuelos.dto.PasajeroDto;
 import com.proyecto.reservavuelos.model.Pasajero;
 import com.proyecto.reservavuelos.service.PasajeroService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,18 +14,16 @@ import java.util.List;
 @RequestMapping("api/v1/pasajeros")
 public class PasajeroController {
 
-    private PasajeroService pasajeroService;
-
+    private final PasajeroService pasajeroService;
 
     @Autowired
-
     public PasajeroController(PasajeroService pasajeroService) {
         this.pasajeroService = pasajeroService;
     }
 
     @PostMapping
-    public ResponseEntity<Pasajero> crearPasajero(@RequestBody Pasajero pasajero) {
-        Pasajero nuevoPasajero = pasajeroService.crearPasajero(pasajero);
+    public ResponseEntity<Pasajero> crearPasajero(@RequestBody PasajeroDto pasajeroDto) {
+        Pasajero nuevoPasajero = pasajeroService.crearPasajero(pasajeroDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevoPasajero);
     }
 
@@ -45,8 +44,8 @@ public class PasajeroController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Pasajero> actualizarPasajero(@PathVariable Long id, @RequestBody Pasajero pasajeroActualizado) {
-        Pasajero pasajero = pasajeroService.actualizarPasajero(id, pasajeroActualizado);
+    public ResponseEntity<ResponseEntity<Pasajero>> actualizarPasajero(@PathVariable Long id, @RequestBody PasajeroDto pasajeroDto) {
+        ResponseEntity<Pasajero> pasajero = pasajeroService.actualizarPasajero(id, pasajeroDto);
         if (pasajero != null) {
             return ResponseEntity.ok(pasajero);
         } else {
@@ -63,3 +62,4 @@ public class PasajeroController {
         }
     }
 }
+

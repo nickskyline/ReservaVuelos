@@ -1,20 +1,20 @@
 package com.proyecto.reservavuelos.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.proyecto.reservavuelos.dto.AerolineaDto;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.EqualsAndHashCode;
 
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class Aerolinea {
+public class Aerolinea extends AerolineaDto {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "aerolinea_generador")
+    @SequenceGenerator(name = "aerolinea_generador", allocationSize = 1)
     private Long id;
 
     @Column(name = "nombre", nullable = false)
@@ -27,13 +27,35 @@ public class Aerolinea {
     private String telefono;
 
     @OneToMany(mappedBy = "aerolinea", cascade = CascadeType.ALL)
-    @JsonBackReference
     private List<Vuelo> vuelos;
 
-    public Aerolinea(Long id, String nombre, String pais, String telefono) {
-        this.id = id;
+    public Aerolinea(String nombre) {
         this.nombre = nombre;
         this.pais = pais;
         this.telefono = telefono;
     }
+
+    public Aerolinea() {
+
+    }
+
+    public Aerolinea(String deltaAirlines, String nuevaYork) {
+        this.nuevaYork = nuevaYork;
+    }
+
+    public Aerolinea(String britishAirways, String reinoUnido, String londres) {
+
+    }
+
+    public Aerolinea(long l, String deltaAirlines, String pais, String ciudad) {
+
+    }
+
+    public void setId(String ap) {
+    }
+    public boolean getCiudad() {
+        return false;
+    }
 }
+
+

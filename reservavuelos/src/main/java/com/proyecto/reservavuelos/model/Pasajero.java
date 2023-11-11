@@ -1,6 +1,5 @@
 package com.proyecto.reservavuelos.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -24,4 +23,6 @@ public class Pasajero {
     @OneToMany(mappedBy = "pasajeros")
     @JsonIgnore
     private List<Reserva> reservas;
+
 }
+

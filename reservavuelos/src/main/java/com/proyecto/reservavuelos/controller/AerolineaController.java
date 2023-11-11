@@ -1,11 +1,10 @@
 package com.proyecto.reservavuelos.controller;
-
+import com.proyecto.reservavuelos.dto.AerolineaDto;
 import com.proyecto.reservavuelos.model.Aerolinea;
 import com.proyecto.reservavuelos.service.AerolineaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,8 +20,9 @@ public class AerolineaController {
         this.aerolineaService = aerolineaService;
     }
 
-    @PostMapping()
-    public ResponseEntity<String> crearAerolinea(@RequestBody Aerolinea aerolinea) {
+    @PostMapping
+    public ResponseEntity<String> crearAerolinea(@RequestBody AerolineaDto aerolinea) {
+   
         Aerolinea nuevaAerolinea = aerolineaService.crearAerolinea(aerolinea);
         return new ResponseEntity<>("Aerolínea creada con éxito", HttpStatus.CREATED);
     }
@@ -53,7 +53,6 @@ public class AerolineaController {
             return new ResponseEntity<>("Aerolínea no encontrada", HttpStatus.NOT_FOUND);
         }
     }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<String> eliminarAerolinea(@PathVariable Long id) {
         boolean eliminada = aerolineaService.eliminarAerolinea(id);
