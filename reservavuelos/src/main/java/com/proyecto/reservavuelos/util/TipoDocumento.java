@@ -1,4 +1,6 @@
-package com.proyecto.reservavuelos.model;
+package com.proyecto.reservavuelos.util;
+
+
 
 public enum TipoDocumento {
     TARJETA_DE_IDENTIDAD,
@@ -6,5 +8,4 @@ public enum TipoDocumento {
     REGISTRO_CIVIL,
     CEDULA_DE_EXTRANJERIA,
     PASAPORTE
-
 }

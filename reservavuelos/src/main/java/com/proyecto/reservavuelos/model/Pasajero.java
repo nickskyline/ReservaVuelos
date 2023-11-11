@@ -1,22 +1,26 @@
 package com.proyecto.reservavuelos.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Data;
 
+import java.util.List;
+
+
+@Entity
+@Data
 public class Pasajero {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pasajero_generador")
-    @SequenceGenerator(name = "pasajero_generador", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(name = "id_persona")
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id")
-    private Long id_persona;
-    @Column(name = "tipo_pasajero")
+    @Column(name = "tipo_pasajero", nullable = false)
     private String tipoPasajero;
 
-    @OneToMany(mappedBy = "reserva", cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_pasajero")
-    private Reserva reserva;
+    @OneToOne
+    @JoinColumn(name = "id_persona", nullable = false)
+    private Persona persona;
+    @OneToMany(mappedBy = "pasajeros")
+    @JsonIgnore
+    private List<Reserva> reservas;
 }
