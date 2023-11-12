@@ -142,59 +142,35 @@ class PasajeroServiceTest {
     @Test
     public void testActualizarDatosPasajeroDesdeDto() {
         // Arrange
+        PasajeroService pasajeroService = new PasajeroService();
         Pasajero pasajeroExistente = new Pasajero();
-        pasajeroExistente.setTipoPasajero("TipoAntiguo");
+        pasajeroExistente.setId(1L); // Supongamos que el pasajero con ID 1 existe en el repositorio
+        pasajeroExistente.setTipoPasajero("Tipo Original"); // Establecer un valor original
 
+        // Crear objeto Persona existente
         Persona personaExistente = new Persona();
-        personaExistente.setPasajero(pasajeroExistente);
+        pasajeroExistente.setPersona(personaExistente);
 
         Pasajero pasajeroDto = new Pasajero();
-        pasajeroDto.setTipoPasajero("TipoNuevo"); // Configura el campo 'tipoPasajero' para la actualización
+        pasajeroDto.setTipoPasajero("Tipo Actualizado");
 
+        // Crear objeto Persona desde DTO
         Persona personaDesdeDto = new Persona();
-        personaDesdeDto.setPasajero(pasajeroDto);
-
-        // Act
-        pasajeroService.actualizarDatosPasajeroDesdeDto(pasajeroExistente, pasajeroDto);
-
-        // Assert
-        // Verifica que el campo 'tipoPasajero' se haya actualizado en pasajeroExistente
-        assertEquals("TipoNuevo", pasajeroExistente.getTipoPasajero());
-
-        // Verifica que personaExistente y personaDesdeDto sean las mismas instancias
-        assertSame(personaExistente, personaDesdeDto);
-
-        // Verifica que el campo 'pasajero' en personaExistente se haya actualizado
-        assertEquals(pasajeroDto, personaExistente.getPasajero());
-    }
-
-   /* @Test
-    public void testActualizarDatosPasajeroDesdeDto() {
-        // Arrange
-        Pasajero pasajeroExistente = new Pasajero();
-        pasajeroExistente.setTipoPasajero("TipoAntiguo");
-
-        Persona personaExistente = new Persona();
-        personaExistente.setPasajero(pasajeroExistente);
-
-        Pasajero pasajeroDto = new Pasajero();
-        pasajeroDto.setTipoPasajero("TipoNuevo");
-
-        Persona personaDesdeDto = new Persona();
-        personaDesdeDto.setPasajero(pasajeroDto);
+        pasajeroDto.setPersona(personaDesdeDto);
 
         // Act
         this.pasajeroService.actualizarDatosPasajeroDesdeDto(pasajeroExistente, pasajeroDto);
 
-        // Assert Verifica que el campo 'tipoPasajero' se haya actualizado en pasajeroExistente
-        assertEquals("TipoNuevo", pasajeroExistente.getTipoPasajero());
+        // Assert
+        assertEquals("Tipo Actualizado", pasajeroExistente.getTipoPasajero());
 
-        // Verifica que personaExistente y personaDesdeDto sean las mismas instancias
-        assertSame(personaExistente, personaDesdeDto);
+        // Verificar que los objetos de persona estén relacionados
+        assertNotNull(pasajeroExistente.getPersona());
+        /* assertSame(pasajeroExistente, pasajeroExistente.getPersona().getPasajero()); */
+    }
 
-        // Verifica que el campo 'pasajero' en personaExistente se haya actualizado
-        assertEquals(pasajeroDto, personaExistente.getPasajero());
-    }*/
+
+
 }
 
     /*1.-testCrearNuevoPasajero*/

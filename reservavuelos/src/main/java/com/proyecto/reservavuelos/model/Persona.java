@@ -38,4 +38,11 @@ public class Persona {
 
     @OneToOne(mappedBy = "persona")
     private Pasajero pasajero;
+
+    public String getNombre() {
+        return null;
+    }
+
+    public void setNombre(String nombreExistente) {
+    }
 }

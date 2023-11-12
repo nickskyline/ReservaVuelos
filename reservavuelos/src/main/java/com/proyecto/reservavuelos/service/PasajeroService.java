@@ -63,7 +63,6 @@ public class PasajeroService {
         pasajeroExistente.setTipoPasajero (pasajeroDto.getTipoPasajero ());
 
     }*/
-
     void actualizarDatosPasajeroDesdeDto(Pasajero pasajeroExistente, Pasajero pasajeroDto) {
         // Actualizar campos específicos de Pasajero
         pasajeroExistente.setTipoPasajero(pasajeroDto.getTipoPasajero());
@@ -72,11 +71,11 @@ public class PasajeroService {
         Persona personaExistente = pasajeroExistente.getPersona();
         Persona personaDesdeDto = pasajeroDto.getPersona();
 
-        // Actualizar campos heredados de Persona
-        personaExistente.setPasajero(personaDesdeDto.getPasajero());
-
+        if (personaExistente != null && personaDesdeDto != null) {
+            // Actualizar campos heredados de Persona
+            personaExistente.setPasajero(personaDesdeDto.getPasajero());
+        }
     }
-
     public Pasajero obtenerPasajeroPorId(Long id) {
         return pasajeroRepository.findById(id).orElse(null);
     }

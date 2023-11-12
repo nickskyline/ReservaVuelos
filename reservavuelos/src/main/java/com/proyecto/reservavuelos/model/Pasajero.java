@@ -32,8 +32,18 @@ public class Pasajero extends Persona {
     @OneToMany(mappedBy = "pasajeros")
     @JsonIgnore
     private List<Reserva> reservas;
-
+   private String ValorEjemplo;
     public Pasajero() {
 
+    }
+
+ 
+
+    public String getCampoEjemplo() {
+
+        return ValorEjemplo;
+    }
+
+    public void setCampoEjemplo(String valorEjemplo) {
     }
 }
