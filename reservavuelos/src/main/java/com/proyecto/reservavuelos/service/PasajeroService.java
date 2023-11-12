@@ -14,11 +14,11 @@ import java.util.Optional;
 @Service
 public class PasajeroService {
 
-    private PasajeroRepository pasajeroRepository;
+    private final PasajeroRepository pasajeroRepository ;
 
     @Autowired
     public PasajeroService(PasajeroRepository pasajeroRepository) {
-        this.pasajeroRepository = this.pasajeroRepository;
+        this.pasajeroRepository = pasajeroRepository;
     }
 
     public Pasajero crearPasajero(Pasajero pasajeroDto) {
@@ -85,7 +85,6 @@ public class PasajeroService {
             throw new NoSuchElementException ("No se encontró el Pasajero con el ID: " + id);
         }
     }
-
     public List<Pasajero> obtenerTodosLosPasajeros() {
         return pasajeroRepository.findAll();
     }

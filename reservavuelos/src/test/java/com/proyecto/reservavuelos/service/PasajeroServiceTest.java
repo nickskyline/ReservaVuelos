@@ -13,9 +13,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-import static com.sun.org.apache.xerces.internal.util.PropertyState.is;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
@@ -25,9 +24,9 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-import static org.hamcrest.Matchers.*;
-import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
@@ -49,7 +48,7 @@ class PasajeroServiceTest {
         // mock - que es crear una clase falsa y emular su comportamiento
         MockitoAnnotations.openMocks(this); // Inicializar mocks
         this.pasajeroRepository = mock(PasajeroRepository.class);// Mock del repositorio
-        this.pasajeroService= new PasajeroService(pasajeroRepository); // Inicializa el servicio con el mock del repositorio
+        this.pasajeroService= new PasajeroServiceBuilder ( ).setPasajeroRepository (pasajeroRepository).createPasajeroService ( ); // Inicializa el servicio con el mock del repositorio
 
     }
 //-----------------------------------*****************----------------------------//
@@ -77,7 +76,7 @@ class PasajeroServiceTest {
     @Test
     public void testConvertirPasajeroDtoAEntidad() {
         // Arrange
-        PasajeroService pasajeroService = new PasajeroService(pasajeroRepository); // Crea una instancia de la clase que contiene el método
+        PasajeroService pasajeroService = new PasajeroServiceBuilder ( ).setPasajeroRepository (pasajeroRepository).createPasajeroService ( ); // Crea una instancia de la clase que contiene el método
 
         Pasajero pasajeroDto = new Pasajero();
         // Configura el pasajeroDto con los datos necesarios
@@ -92,7 +91,7 @@ class PasajeroServiceTest {
     @Test
     public void testConvertirPasajeroDtoAEntidad_WithPersonaAndTipoPasajero() {
         // Arrange
-        PasajeroService pasajeroService = new PasajeroService(pasajeroRepository); // Crea una instancia de la clase que contiene el método
+        PasajeroService pasajeroService = new PasajeroServiceBuilder ( ).setPasajeroRepository (pasajeroRepository).createPasajeroService ( ); // Crea una instancia de la clase que contiene el método
 
         PasajeroDto pasajeroDto = new PasajeroDto();
         pasajeroDto.setTipoPasajero("VIP");
@@ -109,7 +108,7 @@ class PasajeroServiceTest {
     @Test
     public void testConvertirPasajeroDtoAEntidad_WithNoPersona() {
         // Arrange
-        PasajeroService pasajeroService = new PasajeroService(pasajeroRepository); // Crea una instancia de la clase que contiene el método
+        PasajeroService pasajeroService = new PasajeroServiceBuilder ( ).setPasajeroRepository (pasajeroRepository).createPasajeroService ( ); // Crea una instancia de la clase que contiene el método
 
         PasajeroDto pasajeroDto = new PasajeroDto();
         pasajeroDto.setTipoPasajero("Económico");
@@ -125,7 +124,7 @@ class PasajeroServiceTest {
     @Test
     public void testConvertirPasajeroDtoAEntidad_WithNoReservas() {
         // Arrange
-        PasajeroService pasajeroService = new PasajeroService(pasajeroRepository); // Crea una instancia de la clase que contiene el método
+        PasajeroService pasajeroService = new PasajeroServiceBuilder ( ).setPasajeroRepository (pasajeroRepository).createPasajeroService ( ); // Crea una instancia de la clase que contiene el método
 
         PasajeroDto pasajeroDto = new PasajeroDto();
         pasajeroDto.setTipoPasajero("Regular");
@@ -144,7 +143,7 @@ class PasajeroServiceTest {
     @Test
     public void testActualizarDatosPasajeroDesdeDto() {
         // Arrange
-        PasajeroService pasajeroService = new PasajeroService(pasajeroRepository);
+        PasajeroService pasajeroService = new PasajeroServiceBuilder ( ).setPasajeroRepository (pasajeroRepository).createPasajeroService ( );
         Pasajero pasajeroExistente = new Pasajero();
         pasajeroExistente.setId(1L); // Supongamos que el pasajero con ID 1 existe en el repositorio
         pasajeroExistente.setTipoPasajero("Tipo Original"); // Establecer un valor original
@@ -170,34 +169,96 @@ class PasajeroServiceTest {
         assertNotNull(pasajeroExistente.getPersona());
         /* assertT(pasajeroExistente, pasajeroExistente.getPersona().getPasajero()); */
     }
+    /*4.-testObtenerPasajero*/
     @Test
-    public void testObtenerPasajeroPorId() {
-        // Arrange
+    public void testObtenerPasajeroPorIdExistente() {
+        // Mock del repositorio de pasajeros
+        PasajeroRepository pasajeroRepository = mock(PasajeroRepository.class);
+
+        // Crear un objeto de Pasajero para el caso de prueba
+        Pasajero pasajero = new Pasajero();
+        pasajero.setId(1L); // Establecer el ID del pasajero
+
+        // Configurar el comportamiento del mock para devolver el Pasajero cuando se llame a findById
+        when(pasajeroRepository.findById(eq(1L))).thenReturn(Optional.of(pasajero));
+
+        // Crear una instancia de la clase que contiene el método a probar
+        PasajeroService pasajeroService = new PasajeroServiceBuilder ( ).setPasajeroRepository (pasajeroRepository).createPasajeroService ( );
+
+        // Llamar al método a probar
+        Pasajero resultado = pasajeroService.obtenerPasajeroPorId(1L); // Cambia 1L al ID que desees buscar
+
+        // Verificar que se devolvió el Pasajero esperado
+        assertEquals(pasajero, resultado);
+
+        // Verificar que se llamó al método findById del repositorio con el ID correcto
+        verify(pasajeroRepository).findById(1L);
+
+        // Verificar que no se lanzó ninguna excepción
+        assertDoesNotThrow(() -> pasajeroService.obtenerPasajeroPorId(1L));
+    }
+    @Test
+    public void testObtenerTodosLosPasajeros() {
+        // Crear una lista de pasajeros de prueba
+        Pasajero pasajero1 = new Pasajero();
+        pasajero1.setId(1L);
+        pasajero1.setNombre("Pasajero 1");
+
+        Pasajero pasajero2 = new Pasajero();
+        pasajero2.setId(2L);
+        pasajero2.setNombre("Pasajero 2");
+
+        List<Pasajero> listaPasajeros = new ArrayList<> ();
+        listaPasajeros.add(pasajero1);
+        listaPasajeros.add(pasajero2);
+
+        // Configurar el comportamiento del repositorio de pasajeros para devolver la lista de pasajeros de prueba
+        when(pasajeroRepository.findAll()).thenReturn(listaPasajeros);
+
+        // Llamar al método a probar
+        List<Pasajero> resultado = pasajeroService.obtenerTodosLosPasajeros();
+
+        // Verificar que se devolvió la lista de pasajeros esperada
+        assertEquals(listaPasajeros, resultado);
+    }
+    /*1.-testEliminarPasajero*/
+    @Test
+    public void testEliminarPasajeroExistente() {
         Long pasajeroId = 1L;
         Pasajero pasajero = new Pasajero();
         pasajero.setId(pasajeroId);
 
-        PasajeroRepository pasajeroRepository = mock(PasajeroRepository.class);
+        // Configurar el comportamiento del mock del repositorio para que devuelva el pasajero
         when(pasajeroRepository.findById(pasajeroId)).thenReturn(Optional.of(pasajero));
 
-        PasajeroService pasajeroService = new PasajeroService(pasajeroRepository);
+        // Llamar al método a probar
+        boolean resultado = pasajeroService.eliminarPasajero(pasajeroId);
 
-        // Act
-        Pasajero result = this.pasajeroService.obtenerPasajeroPorId(pasajeroId);
+        // Verificar que se eliminó el pasajero
+        assertTrue(resultado);
 
-        // Assert
-        assertEquals(pasajero, result);
-        verify(pasajeroRepository, times(1)).findById(pasajeroId);
+        // Verificar que se llamó al método delete del repositorio con el pasajero
+        verify(pasajeroRepository).delete(pasajero);
+    }
+
+    @Test
+    public void testEliminarPasajeroNoExistente() {
+        Long pasajeroId = 2L;
+
+        // Configurar el comportamiento del mock del repositorio para que devuelva un Optional vacío
+        when(pasajeroRepository.findById(pasajeroId)).thenReturn(Optional.empty());
+
+        // Llamar al método a probar
+        boolean resultado = pasajeroService.eliminarPasajero(pasajeroId);
+
+        // Verificar que no se pudo eliminar el pasajero
+        assertFalse(resultado);
+
+        // Verificar que no se llamó al método delete del repositorio
+        verify(pasajeroRepository, never()).delete(any(Pasajero.class));
     }
     }
 
-
-
-
-    /*1.-testCrearNuevoPasajero*/
-    /*1.-testCrearNuevoPasajero*/
-    /*1.-testCrearNuevoPasajero*/
-    /*1.-testCrearNuevoPasajero*/
 
 
 
