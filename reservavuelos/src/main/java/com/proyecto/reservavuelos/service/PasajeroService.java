@@ -16,8 +16,8 @@ public class PasajeroService {
     private PasajeroRepository pasajeroRepository;
 
     @Autowired
-    public PasajeroService() {
-        this.pasajeroRepository = pasajeroRepository;
+    public PasajeroService(PasajeroRepository pasajeroRepository) {
+        this.pasajeroRepository = this.pasajeroRepository;
     }
 
     public Pasajero crearPasajero(Pasajero pasajeroDto) {

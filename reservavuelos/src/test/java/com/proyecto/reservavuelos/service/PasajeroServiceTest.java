@@ -12,6 +12,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import static com.sun.org.apache.xerces.internal.util.PropertyState.is;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
@@ -20,13 +24,9 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-import org.mockito.Mock;
 
 import java.util.Optional;
-
-import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class PasajeroServiceTest {
@@ -47,7 +47,7 @@ class PasajeroServiceTest {
         // mock - que es crear una clase falsa y emular su comportamiento
         MockitoAnnotations.openMocks(this); // Inicializar mocks
         this.pasajeroRepository = mock(PasajeroRepository.class);// Mock del repositorio
-        this.pasajeroService= new PasajeroService( ); // Inicializa el servicio con el mock del repositorio
+        this.pasajeroService= new PasajeroService(pasajeroRepository); // Inicializa el servicio con el mock del repositorio
 
     }
 //-----------------------------------*****************----------------------------//
@@ -75,7 +75,7 @@ class PasajeroServiceTest {
     @Test
     public void testConvertirPasajeroDtoAEntidad() {
         // Arrange
-        PasajeroService pasajeroService = new PasajeroService(); // Crea una instancia de la clase que contiene el método
+        PasajeroService pasajeroService = new PasajeroService(pasajeroRepository); // Crea una instancia de la clase que contiene el método
 
         Pasajero pasajeroDto = new Pasajero();
         // Configura el pasajeroDto con los datos necesarios
@@ -90,7 +90,7 @@ class PasajeroServiceTest {
     @Test
     public void testConvertirPasajeroDtoAEntidad_WithPersonaAndTipoPasajero() {
         // Arrange
-        PasajeroService pasajeroService = new PasajeroService(); // Crea una instancia de la clase que contiene el método
+        PasajeroService pasajeroService = new PasajeroService(pasajeroRepository); // Crea una instancia de la clase que contiene el método
 
         PasajeroDto pasajeroDto = new PasajeroDto();
         pasajeroDto.setTipoPasajero("VIP");
@@ -107,7 +107,7 @@ class PasajeroServiceTest {
     @Test
     public void testConvertirPasajeroDtoAEntidad_WithNoPersona() {
         // Arrange
-        PasajeroService pasajeroService = new PasajeroService(); // Crea una instancia de la clase que contiene el método
+        PasajeroService pasajeroService = new PasajeroService(pasajeroRepository); // Crea una instancia de la clase que contiene el método
 
         PasajeroDto pasajeroDto = new PasajeroDto();
         pasajeroDto.setTipoPasajero("Económico");
@@ -123,7 +123,7 @@ class PasajeroServiceTest {
     @Test
     public void testConvertirPasajeroDtoAEntidad_WithNoReservas() {
         // Arrange
-        PasajeroService pasajeroService = new PasajeroService(); // Crea una instancia de la clase que contiene el método
+        PasajeroService pasajeroService = new PasajeroService(pasajeroRepository); // Crea una instancia de la clase que contiene el método
 
         PasajeroDto pasajeroDto = new PasajeroDto();
         pasajeroDto.setTipoPasajero("Regular");
@@ -142,7 +142,7 @@ class PasajeroServiceTest {
     @Test
     public void testActualizarDatosPasajeroDesdeDto() {
         // Arrange
-        PasajeroService pasajeroService = new PasajeroService();
+        PasajeroService pasajeroService = new PasajeroService(pasajeroRepository);
         Pasajero pasajeroExistente = new Pasajero();
         pasajeroExistente.setId(1L); // Supongamos que el pasajero con ID 1 existe en el repositorio
         pasajeroExistente.setTipoPasajero("Tipo Original"); // Establecer un valor original
@@ -166,10 +166,26 @@ class PasajeroServiceTest {
 
         // Verificar que los objetos de persona estén relacionados
         assertNotNull(pasajeroExistente.getPersona());
-        /* assertSame(pasajeroExistente, pasajeroExistente.getPersona().getPasajero()); */
+        /* assertT(pasajeroExistente, pasajeroExistente.getPersona().getPasajero()); */
     }
+    @Test
+    public void testObtenerPasajeroPorId() {
+        // Arrange
+        Long pasajeroId = 1L;
+        Pasajero pasajero = new Pasajero();
+        pasajero.setId(pasajeroId);
+        PasajeroRepository pasajeroRepository = mock(PasajeroRepository.class);
 
+        // Simulamos el comportamiento del PasajeroRepository
+        when(pasajeroRepository.findById(pasajeroId)).thenReturn(Optional.of(pasajero));
+        PasajeroService pasajeroService = new PasajeroService(pasajeroRepository);
 
+        // Act
+        Pasajero result = this.pasajeroService.obtenerPasajeroPorId(pasajeroId);
+
+        // Assert utilizando Hamcrest
+        assertThat(result);
+    }
 
 }
 
