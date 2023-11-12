@@ -1,40 +1,32 @@
 package com.proyecto.reservavuelos.service;
 
+import com.proyecto.reservavuelos.dto.PasajeroDto;
+import com.proyecto.reservavuelos.model.Persona;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Mock;
-import org.springframework.boot.test.context.SpringBootTest;
-import static org.junit.jupiter.api.Assertions.*;
 
-import com.proyecto.reservavuelos.dto.PasajeroDto;
 import com.proyecto.reservavuelos.model.Pasajero;
 import com.proyecto.reservavuelos.repository.PasajeroRepository;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.junit.jupiter.api.extension.ExtendWith;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
+import static org.junit.jupiter.api.Assertions.*;
+import org.mockito.Mock;
+
+import java.util.Optional;
+
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class PasajeroServiceTest {
@@ -55,7 +47,7 @@ class PasajeroServiceTest {
         // mock - que es crear una clase falsa y emular su comportamiento
         MockitoAnnotations.openMocks(this); // Inicializar mocks
         this.pasajeroRepository = mock(PasajeroRepository.class);// Mock del repositorio
-        this.pasajeroService= new PasajeroService(pasajeroRepository); // Inicializa el servicio con el mock del repositorio
+        this.pasajeroService= new PasajeroService( ); // Inicializa el servicio con el mock del repositorio
 
     }
 //-----------------------------------*****************----------------------------//
@@ -77,18 +69,134 @@ class PasajeroServiceTest {
         // Verify that the save method was called with the expected arguments
         verify(pasajeroRepository, times(1)).save(pasajero);
     }
+    /*2.-test convertirPasajeroDtoAEntidad*/
+    /*En estas pruebas, simplemente estamos verificando que los campos tipoPasajero,
+    persona, y reservas se copian correctamente de PasajeroDto a Pasajero.*/
+    @Test
+    public void testConvertirPasajeroDtoAEntidad() {
+        // Arrange
+        PasajeroService pasajeroService = new PasajeroService(); // Crea una instancia de la clase que contiene el método
 
+        Pasajero pasajeroDto = new Pasajero();
+        // Configura el pasajeroDto con los datos necesarios
 
+        // Act
+        Pasajero pasajeroEntity = pasajeroService.convertirPasajeroDtoAEntidad(pasajeroDto);
 
+        // Assert
+        assertNotNull(pasajeroEntity);
+
+    }
+    @Test
+    public void testConvertirPasajeroDtoAEntidad_WithPersonaAndTipoPasajero() {
+        // Arrange
+        PasajeroService pasajeroService = new PasajeroService(); // Crea una instancia de la clase que contiene el método
+
+        PasajeroDto pasajeroDto = new PasajeroDto();
+        pasajeroDto.setTipoPasajero("VIP");
+        pasajeroDto.setPersona(new Persona ());
+
+        // Act
+        Pasajero pasajeroEntity = this.pasajeroService.convertirPasajeroDtoAEntidad(pasajeroDto);
+
+        // Assert
+        assertNotNull(pasajeroEntity);
+        assertEquals("VIP", pasajeroEntity.getTipoPasajero());
+        assertNotNull(pasajeroEntity.getPersona());
+    }
+    @Test
+    public void testConvertirPasajeroDtoAEntidad_WithNoPersona() {
+        // Arrange
+        PasajeroService pasajeroService = new PasajeroService(); // Crea una instancia de la clase que contiene el método
+
+        PasajeroDto pasajeroDto = new PasajeroDto();
+        pasajeroDto.setTipoPasajero("Económico");
+
+        // Act
+        Pasajero pasajeroEntity = this.pasajeroService.convertirPasajeroDtoAEntidad(pasajeroDto);
+
+        // Assert
+        assertNotNull(pasajeroEntity);
+        assertEquals("Económico", pasajeroEntity.getTipoPasajero());
+        assertNull(pasajeroEntity.getPersona());
+    }
+    @Test
+    public void testConvertirPasajeroDtoAEntidad_WithNoReservas() {
+        // Arrange
+        PasajeroService pasajeroService = new PasajeroService(); // Crea una instancia de la clase que contiene el método
+
+        PasajeroDto pasajeroDto = new PasajeroDto();
+        pasajeroDto.setTipoPasajero("Regular");
+        pasajeroDto.setPersona(new Persona());
+
+        // Act
+        Pasajero pasajeroEntity = this.pasajeroService.convertirPasajeroDtoAEntidad(pasajeroDto);
+
+        // Assert
+        assertNotNull(pasajeroEntity);
+        assertEquals("Regular", pasajeroEntity.getTipoPasajero());
+        assertNull(pasajeroEntity.getReservas());
+        assertNotNull(pasajeroEntity.getPersona());
+    }
+    /*3.-testActualizar un pasajero existente*/
+    @Test
+    public void testActualizarDatosPasajeroDesdeDto() {
+        // Arrange
+        Pasajero pasajeroExistente = new Pasajero();
+        pasajeroExistente.setTipoPasajero("TipoAntiguo");
+
+        Persona personaExistente = new Persona();
+        personaExistente.setPasajero(pasajeroExistente);
+
+        Pasajero pasajeroDto = new Pasajero();
+        pasajeroDto.setTipoPasajero("TipoNuevo"); // Configura el campo 'tipoPasajero' para la actualización
+
+        Persona personaDesdeDto = new Persona();
+        personaDesdeDto.setPasajero(pasajeroDto);
+
+        // Act
+        pasajeroService.actualizarDatosPasajeroDesdeDto(pasajeroExistente, pasajeroDto);
+
+        // Assert
+        // Verifica que el campo 'tipoPasajero' se haya actualizado en pasajeroExistente
+        assertEquals("TipoNuevo", pasajeroExistente.getTipoPasajero());
+
+        // Verifica que personaExistente y personaDesdeDto sean las mismas instancias
+        assertSame(personaExistente, personaDesdeDto);
+
+        // Verifica que el campo 'pasajero' en personaExistente se haya actualizado
+        assertEquals(pasajeroDto, personaExistente.getPasajero());
+    }
+
+   /* @Test
+    public void testActualizarDatosPasajeroDesdeDto() {
+        // Arrange
+        Pasajero pasajeroExistente = new Pasajero();
+        pasajeroExistente.setTipoPasajero("TipoAntiguo");
+
+        Persona personaExistente = new Persona();
+        personaExistente.setPasajero(pasajeroExistente);
+
+        Pasajero pasajeroDto = new Pasajero();
+        pasajeroDto.setTipoPasajero("TipoNuevo");
+
+        Persona personaDesdeDto = new Persona();
+        personaDesdeDto.setPasajero(pasajeroDto);
+
+        // Act
+        this.pasajeroService.actualizarDatosPasajeroDesdeDto(pasajeroExistente, pasajeroDto);
+
+        // Assert Verifica que el campo 'tipoPasajero' se haya actualizado en pasajeroExistente
+        assertEquals("TipoNuevo", pasajeroExistente.getTipoPasajero());
+
+        // Verifica que personaExistente y personaDesdeDto sean las mismas instancias
+        assertSame(personaExistente, personaDesdeDto);
+
+        // Verifica que el campo 'pasajero' en personaExistente se haya actualizado
+        assertEquals(pasajeroDto, personaExistente.getPasajero());
+    }*/
 }
 
-/*2.-test convertirPasajeroDtoAEntidad*/
-
-
-
-
-
-    /*1.-testCrearNuevoPasajero*/
     /*1.-testCrearNuevoPasajero*/
     /*1.-testCrearNuevoPasajero*/
     /*1.-testCrearNuevoPasajero*/

@@ -13,10 +13,10 @@ import java.util.Optional;
 @Service
 public class PasajeroService {
 
-    private final PasajeroRepository pasajeroRepository;
+    private PasajeroRepository pasajeroRepository;
 
     @Autowired
-    public PasajeroService(PasajeroRepository pasajeroRepository) {
+    public PasajeroService() {
         this.pasajeroRepository = pasajeroRepository;
     }
 
@@ -27,26 +27,9 @@ public class PasajeroService {
 
 
     }
-    private Pasajero convertirPasajeroDtoAEntidad(Pasajero pasajeroDto) {
+    Pasajero convertirPasajeroDtoAEntidad(Pasajero pasajeroDto) {
         return pasajeroDto;
     }
-
-      /*  private Pasajero convertirPasajeroDtoAEntidad(PasajeroDto pasajeroDto) {
-            Pasajero pasajero = new Pasajero();
-
-            // Acceder a los campos heredados de Persona a través de la instancia de Persona en Pasajero
-            pasajero.getPersona().setPasajero (pasajeroDto.getPersona ( ).getPasajero ( ));
-            pasajero.setTipoPasajero(pasajeroDto.getTipoPasajero( ));
-
-            // Configurar otros campos específicos de Pasajero
-            pasajero.setPersona (pasajeroDto.getPersona ());
-            pasajero.setPasajero (pasajeroDto.getPersona ( ).getPasajero ());
-            pasajero.setTipoPasajero (pasajeroDto.getTipoPasajero ());
-
-            return pasajero;
-        }
-*/
-
     private Pasajero convertirPasajeroDtoAEntidad(PasajeroDto pasajeroDto) {
         Pasajero pasajero = new Pasajero();
 
@@ -81,7 +64,7 @@ public class PasajeroService {
 
     }*/
 
-    private void actualizarDatosPasajeroDesdeDto(Pasajero pasajeroExistente, Pasajero pasajeroDto) {
+    void actualizarDatosPasajeroDesdeDto(Pasajero pasajeroExistente, Pasajero pasajeroDto) {
         // Actualizar campos específicos de Pasajero
         pasajeroExistente.setTipoPasajero(pasajeroDto.getTipoPasajero());
 
