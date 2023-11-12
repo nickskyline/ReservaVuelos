@@ -5,14 +5,14 @@ import com.proyecto.reservavuelos.model.Persona;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Mock;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
 import com.proyecto.reservavuelos.model.Pasajero;
 import com.proyecto.reservavuelos.repository.PasajeroRepository;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 import static com.sun.org.apache.xerces.internal.util.PropertyState.is;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
@@ -25,7 +25,9 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.junit.jupiter.api.Assertions.*;
-
+import static org.mockito.Mockito.*;
+import static org.hamcrest.Matchers.*;
+import org.junit.jupiter.api.Test;
 import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
@@ -174,20 +176,23 @@ class PasajeroServiceTest {
         Long pasajeroId = 1L;
         Pasajero pasajero = new Pasajero();
         pasajero.setId(pasajeroId);
-        PasajeroRepository pasajeroRepository = mock(PasajeroRepository.class);
 
-        // Simulamos el comportamiento del PasajeroRepository
+        PasajeroRepository pasajeroRepository = mock(PasajeroRepository.class);
         when(pasajeroRepository.findById(pasajeroId)).thenReturn(Optional.of(pasajero));
+
         PasajeroService pasajeroService = new PasajeroService(pasajeroRepository);
 
         // Act
         Pasajero result = this.pasajeroService.obtenerPasajeroPorId(pasajeroId);
 
-        // Assert utilizando Hamcrest
-        assertThat(result);
+        // Assert
+        assertEquals(pasajero, result);
+        verify(pasajeroRepository, times(1)).findById(pasajeroId);
+    }
     }
 
-}
+
+
 
     /*1.-testCrearNuevoPasajero*/
     /*1.-testCrearNuevoPasajero*/

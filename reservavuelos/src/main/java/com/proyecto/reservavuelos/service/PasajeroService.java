@@ -6,8 +6,9 @@ import com.proyecto.reservavuelos.model.Persona;
 import com.proyecto.reservavuelos.repository.PasajeroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import java.util.NoSuchElementException;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -77,7 +78,12 @@ public class PasajeroService {
         }
     }
     public Pasajero obtenerPasajeroPorId(Long id) {
-        return pasajeroRepository.findById(id).orElse(null);
+        Optional<Pasajero> pasajeroOptional = pasajeroRepository.findById(id);
+        if (pasajeroOptional.isPresent()) {
+            return pasajeroOptional.get();
+        } else {
+            throw new NoSuchElementException ("No se encontró el Pasajero con el ID: " + id);
+        }
     }
 
     public List<Pasajero> obtenerTodosLosPasajeros() {
