@@ -29,10 +29,9 @@ Resultados de la búsqueda de vuelos.
 Reserva
 Proceso de reserva de vuelos.
 
-Tecnologías Utilizadas 💻
-Front-end: El cliente está desarrollado en React para una interfaz de usuario interactiva y receptiva.
-Back-end: Utiliza Node.js y Express para gestionar las solicitudes del cliente y la lógica del servidor.
-Base de Datos: Se utiliza MongoDB para almacenar la información de usuarios, vuelos y reservas de manera eficiente.
+
+Back-end: Utiliza Java  y MySQL  para gestionar las solicitudes del cliente y la lógica del servidor.
+Base de Datos: Se utiliza MySQL   worben para almacenar la información de usuarios, vuelos y reservas de manera eficiente.
 Requisitos Funcionales 📋
 RF1: Búsqueda de Vuelos: Los usuarios deben poder buscar vuelos proporcionando información como origen, destino, fecha y número de pasajeros.
 RF2: Reserva de Vuelos: Los usuarios deben poder seleccionar un vuelo y completar el proceso de reserva, ingresando la información necesaria.
@@ -41,12 +40,12 @@ RNF1: Rendimiento: El sistema debe cargar los resultados de búsqueda en menos d
 RNF2: Seguridad: La información del usuario y las transacciones deben estar cifradas para garantizar la seguridad de los datos.
 Seguridad 🔒
 Autenticación y Autorización: Se implementa un sistema de autenticación robusto para asegurar que solo los usuarios autorizados puedan acceder y realizar reservas.
-Cifrado de Datos: Toda la comunicación entre el cliente y el servidor, así como los datos almacenados, se cifran utilizando estándares de seguridad.
-Protección contra Inyección de Datos: Se aplican medidas para prevenir ataques de inyección de datos, como SQL injection, mediante el uso de consultas parametrizadas.
+
 Mejora Continua 🔄
 Monitoreo de Rendimiento: Se implementan herramientas de monitoreo para evaluar y mejorar constantemente el rendimiento del sistema.
 Retroalimentación del Usuario: Se recopila feedback de los usuarios para identificar áreas de mejora y nuevas funcionalidades.
 Actualizaciones de Tecnología: Se realiza un seguimiento de las actualizaciones tecnológicas para incorporar nuevas características y mejorar la seguridad.
+EScalabilidad
 Integración con el Frontend 🔄
 Este sistema puede integrarse con otros servicios relacionados con la industria de viajes, como servicios de alojamiento, alquiler de automóviles, etc. Esto permitiría a los usuarios planificar y reservar su viaje completo desde una sola plataforma.
 
