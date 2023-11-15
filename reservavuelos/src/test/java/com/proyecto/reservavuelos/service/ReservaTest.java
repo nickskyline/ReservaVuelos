@@ -1,8 +1,13 @@
 
 package com.proyecto.reservavuelos.service;
+import com.proyecto.reservavuelos.dto.ReservaDto;
+import com.proyecto.reservavuelos.model.Pasajero;
 import com.proyecto.reservavuelos.model.Reserva;
 
+import com.proyecto.reservavuelos.model.Vuelo;
+import com.proyecto.reservavuelos.repository.PasajeroRepository;
 import com.proyecto.reservavuelos.repository.ReservaRepository;
+import com.proyecto.reservavuelos.repository.VueloRepository;
 import com.proyecto.reservavuelos.service.ReservaService;
 import jakarta.validation.ValidationException;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,26 +34,49 @@ public class ReservaTest {
 
     @Mock
     private ReservaRepository mockReservaRepository;
+    @Mock
+    private PasajeroRepository mockPasajeroRepository;
+    @Mock
+    private VueloRepository mockVueloRepository;
 
     @BeforeEach
     public void setUp() {
         mockReservaRepository = Mockito.mock(ReservaRepository.class);
-        reservaService = new ReservaService(mockReservaRepository);
+        mockPasajeroRepository = Mockito.mock(PasajeroRepository.class);
+        mockVueloRepository = Mockito.mock(VueloRepository.class);
+        reservaService = new ReservaService(mockReservaRepository, mockPasajeroRepository, mockVueloRepository);
     }
 
     @Test
     public void crearReservaTest() {
         // Arrange
-        Reserva reserva = new Reserva();
-        when(mockReservaRepository.save(any())).thenReturn(reserva);
+        Pasajero pasajero = new Pasajero();
+        pasajero.setId(1L);
+
+        Vuelo vuelo = new Vuelo();
+        vuelo.setId(1L);
+
+        when(mockPasajeroRepository.findById(1L)).thenReturn(Optional.of(pasajero));
+        when(mockVueloRepository.findById(1L)).thenReturn(Optional.of(vuelo));
+
+        Reserva reservaEsperada = new Reserva();
+        when(mockReservaRepository.save(any(Reserva.class))).thenReturn(reservaEsperada);
+
+        ReservaDto reservaDto = new ReservaDto();
+        reservaDto.setIdPasajero(pasajero.getId());
+        reservaDto.setIdVuelo(vuelo.getId());
+        reservaDto.setFechaReserva("2023-11-14");  // Asegúrate de que esta fecha esté en el formato correcto
 
         // Act
-        Reserva nuevaReserva = reservaService.crearReserva(reserva);
+        Reserva nuevaReserva = reservaService.crearReserva(reservaDto);
 
         // Assert
         assertNotNull(nuevaReserva);
-        verify(mockReservaRepository, times(1)).save(reserva);
+        assertEquals(reservaEsperada, nuevaReserva);
+        verify(mockReservaRepository, times(1)).save(any());
     }
+
+
 
     @Test
     public void obtenerReservaPorIdTest() {
@@ -108,11 +136,11 @@ public class ReservaTest {
     @Test
     public void crearReservaTest_RepositoryThrowsException() {
         // Arrange
-        Reserva reserva = new Reserva();
+        ReservaDto reservaDto = new ReservaDto();
         when(mockReservaRepository.save(any())).thenThrow(new RuntimeException());
 
         // Act & Assert
-        assertThrows(RuntimeException.class, () -> reservaService.crearReserva(reserva));
+        assertThrows(RuntimeException.class, () -> reservaService.crearReserva(reservaDto));
     }
 
     @Test
@@ -164,11 +192,12 @@ public class ReservaTest {
     @Test
     public void crearReservaTest_ReservaNull() {
         // Arrange
-        Reserva reserva = null;
+        ReservaDto reservaDto = null;
 
         // Act & Assert
-        assertThrows(IllegalArgumentException.class, () -> reservaService.crearReserva(reserva));
+        assertThrows(IllegalArgumentException.class, () -> reservaService.crearReserva(reservaDto));
     }
+
 
     @Test
     public void actualizarReservaTest_ReservaActualizadaNull() {
