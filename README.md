@@ -4,10 +4,10 @@
 
 Este proyecto aborda el desafío de simplificar y mejorar la experiencia de reserva de vuelos para los usuarios. Tradicionalmente, este proceso puede ser complicado y consumir mucho tiempo, con múltiples pasos y interfaces poco intuitivas. Nuestro objetivo es proporcionar una solución eficiente, segura y fácil de usar.
 
-Problema 🤔
+## Problema 🤔
 La reserva de vuelos a menudo implica enfrentarse a interfaces confusas, largos formularios y resultados de búsqueda abrumadores. Además, la falta de notificaciones efectivas puede resultar en una experiencia desorganizada para los usuarios, desde la búsqueda inicial hasta la confirmación de la reserva.
 
-Solución 💡
+##  Solución 💡
 Nuestra solución es un sistema de reserva de vuelos centrado en el usuario, que ofrece:
 
 Interfaz Intuitiva: Una interfaz de usuario sencilla y fácil de navegar que permite a los usuarios buscar, seleccionar y reservar vuelos de manera eficiente.
@@ -16,9 +16,8 @@ Búsqueda Personalizada: Un sistema de búsqueda avanzada que permite a los usua
 
 Proceso de Reserva Simplificado: Un proceso de reserva optimizado que guía a los usuarios paso a paso, minimizando la cantidad de información requerida y agilizando la confirmación de la reserva.
 
-Notificaciones Efectivas: Un sistema de notificación proactivo que informa a los usuarios sobre la confirmación de la reserva, detalles del vuelo y recordatorios, mejorando así la organización y la experiencia general del usuario.
 
-Capturas de Pantalla 📸
+## Capturas de Pantalla 📸
 Inicio
 Página de inicio con opciones de búsqueda.
 
