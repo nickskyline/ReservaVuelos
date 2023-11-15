@@ -1,4 +1,4 @@
-Sistema de Reserva de Vuelos ✈️
+Sistema de Reserva de Vuelos  FlyLite ✈️
 Este proyecto aborda el desafío de simplificar y mejorar la experiencia de reserva de vuelos para los usuarios. Tradicionalmente, este proceso puede ser complicado y consumir mucho tiempo, con múltiples pasos y interfaces poco intuitivas. Nuestro objetivo es proporcionar una solución eficiente, segura y fácil de usar.
 
 Problema 🤔
@@ -18,6 +18,10 @@ Notificaciones Efectivas: Un sistema de notificación proactivo que informa a lo
 Capturas de Pantalla 📸
 Inicio
 Página de inicio con opciones de búsqueda.
+
+# PROTOTIPO DEL PROYECTO RESERVA DE VUELO 
+(https://wireframe.cc/pro/pp/b7435192b681501)
+![image](https://github.com/ad-nicolas/ReservaVuelos/assets/92681721/4f2ca636-e7c6-40d4-831b-702337759de3)
 
 Resultados
 Resultados de la búsqueda de vuelos.
@@ -58,9 +62,6 @@ Estos insights ayudarán a adaptar y mejorar continuamente el sistema para satis
 Contribución 🤝
 ¡Agradecemos las contribuciones! Si deseas contribuir al proyecto, sigue las pautas en CONTRIBUTING.md.
 
-Licencia 📝
-Este proyecto está bajo la Licencia MIT. Consulta el archivo LICENSE.md para más detalles.
-
 Contacto 📬
 Para preguntas o comentarios, contáctanos en correo@example.com o a través de nuestras redes sociales.
 
@@ -84,9 +85,7 @@ Siente libre de navegar a través de los archivos del repositorio, estamos encan
 
 ![DIAGRAMA DB](https://github.com/ad-nicolas/ReservaVuelos/blob/eb02d955f39a0aeb625a1bf048f015f985d13eb8/assets/Diagrama%20Entidad-Relacion.png)
 
-# PROTOTIPO DEL PROYECTO RESERVA DE VUELO 
-(https://wireframe.cc/pro/pp/b7435192b681501)
-![image](https://github.com/ad-nicolas/ReservaVuelos/assets/92681721/4f2ca636-e7c6-40d4-831b-702337759de3)
+
 
 
 Esto es un proyecto de:
