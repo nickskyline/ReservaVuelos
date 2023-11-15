@@ -15,8 +15,9 @@ Siente libre de navegar a través de los archivos del repositorio, estamos encan
 ![ReservaVuelosModelo-Entidad-Relacion.png](https://github.com/ad-nicolas/ReservaVuelos/assets/92681721/a8a4872f-791b-4036-9421-eda3e35ec61b)
 
 # PROTOTIPO DEL PROYECTO RESERVA DE VUELO 
+(https://wireframe.cc/pro/pp/b7435192b681501)
 
-(https://wireframe.cc/pro/pp/b7435192b681501)![image](https://github.com/ad-nicolas/ReservaVuelos/assets/92681721/421d8d7c-dac0-455d-ba53-8e911bbd6b21)
+![image](https://github.com/ad-nicolas/ReservaVuelos/assets/92681721/421d8d7c-dac0-455d-ba53-8e911bbd6b21)
 
 
 
