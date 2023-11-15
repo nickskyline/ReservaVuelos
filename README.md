@@ -25,25 +25,23 @@ Página de inicio con opciones de búsqueda.
 (https://wireframe.cc/pro/pp/b7435192b681501)
 ![image](https://github.com/ad-nicolas/ReservaVuelos/assets/92681721/4f2ca636-e7c6-40d4-831b-702337759de3)
 
-Resultados
+## Resultados
 Resultados de la búsqueda de vuelos.
 
-Reserva
+## Reserva
 Proceso de reserva de vuelos.
-
-
 Back-end: Utiliza Java  y MySQL  para gestionar las solicitudes del cliente y la lógica del servidor.
 Base de Datos: Se utiliza MySQL   worben para almacenar la información de usuarios, vuelos y reservas de manera eficiente.
-Requisitos Funcionales 📋
+## Requisitos Funcionales 📋
 RF1: Búsqueda de Vuelos: Los usuarios deben poder buscar vuelos proporcionando información como origen, destino, fecha y número de pasajeros.
 RF2: Reserva de Vuelos: Los usuarios deben poder seleccionar un vuelo y completar el proceso de reserva, ingresando la información necesaria.
-Requisitos No Funcionales 🛠️
+## Requisitos No Funcionales 🛠️
 RNF1: Rendimiento: El sistema debe cargar los resultados de búsqueda en menos de 3 segundos para una experiencia de usuario fluida.
 RNF2: Seguridad: La información del usuario y las transacciones deben estar cifradas para garantizar la seguridad de los datos.
 Seguridad 🔒
 Autenticación y Autorización: Se implementa un sistema de autenticación robusto para asegurar que solo los usuarios autorizados puedan acceder y realizar reservas.
 
-Mejora Continua 🔄
+## Mejora Continua 🔄
 Monitoreo de Rendimiento: Se implementan herramientas de monitoreo para evaluar y mejorar constantemente el rendimiento del sistema.
 Retroalimentación del Usuario: Se recopila feedback de los usuarios para identificar áreas de mejora y nuevas funcionalidades.
 Actualizaciones de Tecnología: Se realiza un seguimiento de las actualizaciones tecnológicas para incorporar nuevas características y mejorar la seguridad.
@@ -51,7 +49,7 @@ EScalabilidad
 Integración con el Frontend 🔄
 Este sistema puede integrarse con otros servicios relacionados con la industria de viajes, como servicios de alojamiento, alquiler de automóviles, etc. Esto permitiría a los usuarios planificar y reservar su viaje completo desde una sola plataforma.
 
-Entrevista con el Usuario 🎙️
+## Entrevista con el Usuario 🎙️
 Durante la entrevista con el usuario, nos enfocaremos en entender las necesidades y preferencias específicas del usuario. Preguntaremos sobre:
 
 Preferencias de búsqueda de vuelos (horarios, aerolíneas preferidas).
@@ -60,10 +58,10 @@ Requisitos de notificación y recordatorio para confirmaciones y detalles de vue
 Factores importantes al seleccionar y reservar vuelos (precio, comodidad, etc.).
 Estos insights ayudarán a adaptar y mejorar continuamente el sistema para satisfacer las necesidades cambiantes de los usuarios.
 
-Contribución 🤝
+## Contribución 🤝
 ¡Agradecemos las contribuciones! Si deseas contribuir al proyecto, sigue las pautas en CONTRIBUTING.md.
 
-Contacto 📬
+## Contacto 📬
 Para preguntas o comentarios, contáctanos en correo@example.com o a través de nuestras redes sociales.
 
 
