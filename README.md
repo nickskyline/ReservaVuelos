@@ -10,11 +10,12 @@ Siente libre de navegar a través de los archivos del repositorio, estamos encan
 # DIAGRAMA DE CLASES UML
 
 ![DIAGRAMA UML](https://github.com/ad-nicolas/ReservaVuelos/assets/92681721/ba89ad11-8b1d-44c9-a29c-be0bbfe6cb27)
-
-
 # DIAGRAMA ENTIDAD-RELACION
+C:\Users\MAKAI\Downloads\ReservaVuelosModelo-Entidad-Relacion.png
 
-![DIAGRAMA DB]](https://github.com/ad-nicolas/ReservaVuelos/assets/92681721/32095736-6879-458b-a337-4d24739272e1)
+![image](https://github.com/ad-nicolas/ReservaVuelos/assets/92681721/a8a4872f-791b-4036-9421-eda3e35ec61b)
+
+  
 
 
 # PROTOTIPO DEL PROYECTO RESERVA DE VUELO 
