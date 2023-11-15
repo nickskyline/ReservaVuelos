@@ -1,6 +1,13 @@
 ## Sistema de Reserva de Vuelos  FlyLite ✈️
 
-## Descripción del Proyecto
+## Descripción del Proyecto  
+¡Hola muy buenas!
+
+Este es nuestro proyecto integrador y para ello decidimos realizar un sistema de reserva de vuelos el cual tiene como objetivo facilitar estos procesos tanto para los usuarios como las compañias.
+
+En este sistema de reserva de vuelos los usuarios podrán acceder y reservar los vuelos disponibles con información completamente detallada.
+
+Siente libre de navegar a través de los archivos del repositorio, estamos encantados de recibir feedback y todo tipo de retroalimentación!
 
 Este proyecto aborda el desafío de simplificar y mejorar la experiencia de reserva de vuelos para los usuarios. Tradicionalmente, este proceso puede ser complicado y consumir mucho tiempo, con múltiples pasos y interfaces poco intuitivas. Nuestro objetivo es proporcionar una solución eficiente, segura y fácil de usar.
 
@@ -22,7 +29,7 @@ Inicio
 Página de inicio con opciones de búsqueda.
 
 # PROTOTIPO DEL PROYECTO RESERVA DE VUELO 
-(https://wireframe.cc/pro/pp/b7435192b681501)
+
 ![image](https://github.com/ad-nicolas/ReservaVuelos/assets/92681721/4f2ca636-e7c6-40d4-831b-702337759de3)
 
 ## Resultados
@@ -64,16 +71,6 @@ Estos insights ayudarán a adaptar y mejorar continuamente el sistema para satis
 ## Contacto 📬
 Para preguntas o comentarios, contáctanos en correo@example.com o a través de nuestras redes sociales.
 
-
-
-# ReservaVuelos
-¡Hola muy buenas!
-
-Este es nuestro proyecto integrador y para ello decidimos realizar un sistema de reserva de vuelos el cual tiene como objetivo facilitar estos procesos tanto para los usuarios como las compañias.
-
-En este sistema de reserva de vuelos los usuarios podrán acceder y reservar los vuelos disponibles con información completamente detallada.
-
-Siente libre de navegar a través de los archivos del repositorio, estamos encantados de recibir feedback y todo tipo de retroalimentación!
 
 # DIAGRAMA DE CLASES UML
 
