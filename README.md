@@ -14,11 +14,12 @@ Siente libre de navegar a través de los archivos del repositorio, estamos encan
 
 # DIAGRAMA ENTIDAD-RELACION
 
-![DIAGRAMA DB](https://github.com/ad-nicolas/ReservaVuelos/blob/eb02d955f39a0aeb625a1bf048f015f985d13eb8/assets/Diagrama%20Entidad-Relacion.png)
+![DIAGRAMA DB]](https://github.com/ad-nicolas/ReservaVuelos/assets/92681721/32095736-6879-458b-a337-4d24739272e1)
+
 
 # PROTOTIPO DEL PROYECTO RESERVA DE VUELO 
-(https://wireframe.cc/pro/pp/b7435192b681501)
-![image](https://github.com/ad-nicolas/ReservaVuelos/assets/92681721/4f2ca636-e7c6-40d4-831b-702337759de3)
+(https://wireframe.cc/pro/pp/b7435192b681501)![image](https://github.com/ad-nicolas/ReservaVuelos/assets/92681721/421d8d7c-dac0-455d-ba53-8e911bbd6b21)
+
 
 
 Esto es un proyecto de:
