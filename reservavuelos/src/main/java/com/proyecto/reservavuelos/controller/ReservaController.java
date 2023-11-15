@@ -49,7 +49,7 @@ public class ReservaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Reserva> actualizarReserva(@PathVariable Long id, @RequestBody Reserva reservaActualizda) {
+    public ResponseEntity<Reserva> actualizarReserva(@PathVariable Long id, @RequestBody ReservaDto reservaActualizda) {
         Reserva reservaActualizada = reservaService.actualizarReserva(id, reservaActualizda);
         if (reservaActualizada != null) {
             return new ResponseEntity<>(reservaActualizada, HttpStatus.OK);

@@ -1,6 +1,7 @@
 package com.proyecto.reservavuelos.controller;
 
 
+import com.proyecto.reservavuelos.dto.CiudadDto;
 import com.proyecto.reservavuelos.model.Ciudad;
 import com.proyecto.reservavuelos.service.CiudadService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,5 +1,6 @@
 package com.proyecto.reservavuelos.service;
 
+import com.proyecto.reservavuelos.dto.CiudadDto;
 import com.proyecto.reservavuelos.model.Ciudad;
 import com.proyecto.reservavuelos.repository.CiudadRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ public class CiudadService {
         }
         return ciudadRepository.save(ciudad);
     }
+
 
     public List<Ciudad> listarCiudades() {
         return ciudadRepository.findAll();
@@ -59,4 +61,23 @@ public class CiudadService {
 
         return false; // Ciudad no encontrada
     }
+
+    /*public void actualizarVuelo(Long vueloId, VueloDto vueloDto) {
+        // Realizar las validaciones necesarias en caso de ser necesario
+
+        Ciudad ciudadOrigen = ciudadRepository.findById(vueloDto.getIdCiudadOrigen()).orElseThrow(NoSuchElementException::new);
+        Ciudad ciudadDestino = ciudadRepository.findById(vueloDto.getIdCiudadDestino()).orElseThrow(NoSuchElementException::new);
+        Aerolinea aerolinea = aerolineaRepository.findById(vueloDto.getIdAerolinea()).orElseThrow(NoSuchElementException::new);
+
+        LocalDateTime fechaSalidaConvertida = convertirYValidarFechas(vueloDto);
+        LocalDateTime fechaLlegadaConvertida = convertirYValidarFechas(vueloDto);
+
+        vueloRepository.actualizarVuelo(vueloId, ciudadOrigen, ciudadDestino,
+                fechaSalidaConvertida,
+                fechaLlegadaConvertida,
+                vueloDto.getAsientosDisponibles(),
+                vueloDto.getPrecio(),
+                vueloDto.getTipoVuelo(),
+                aerolinea);
+    }*/
 }

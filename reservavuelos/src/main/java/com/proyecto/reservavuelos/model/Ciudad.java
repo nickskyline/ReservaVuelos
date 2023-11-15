@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -16,6 +17,7 @@ import java.util.Set;
 @NoArgsConstructor
 public class Ciudad {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
@@ -25,4 +27,9 @@ public class Ciudad {
 
     @Column(name = "pais", nullable = false)
     private String pais;
+
+    public Ciudad(String nombre, String pais) {
+        this.nombre = nombre;
+        this.pais = pais;
+    }
 }

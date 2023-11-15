@@ -65,7 +65,7 @@ public class ReservaTest {
         ReservaDto reservaDto = new ReservaDto();
         reservaDto.setIdPasajero(pasajero.getId());
         reservaDto.setIdVuelo(vuelo.getId());
-        reservaDto.setFechaReserva("2023-11-14");  // Asegúrate de que esta fecha esté en el formato correcto
+        reservaDto.setFechaReserva("2025-11-15");
 
         // Act
         Reserva nuevaReserva = reservaService.crearReserva(reservaDto);
@@ -110,7 +110,7 @@ public class ReservaTest {
     public void actualizarReservaTest_ReservaNoExistente() {
         // Arrange
         Long id = 1L;
-        Reserva reservaActualizada = new Reserva();
+        ReservaDto reservaActualizada = new ReservaDto();
         when(mockReservaRepository.findById(id)).thenReturn(Optional.empty());
 
         // Act
@@ -169,12 +169,15 @@ public class ReservaTest {
     public void actualizarReservaTest_RepositoryThrowsException() {
         // Arrange
         Long id = 1L;
+        ReservaDto reservaActualizadaDto = new ReservaDto();
+
         Reserva reservaActualizada = new Reserva();
+
         when(mockReservaRepository.findById(id)).thenReturn(Optional.of(reservaActualizada));
         when(mockReservaRepository.save(any())).thenThrow(new RuntimeException());
 
         // Act & Assert
-        assertThrows(RuntimeException.class, () -> reservaService.actualizarReserva(id, reservaActualizada));
+        assertThrows(RuntimeException.class, () -> reservaService.actualizarReserva(id, reservaActualizadaDto));
     }
 
     @Test
@@ -203,7 +206,8 @@ public class ReservaTest {
     public void actualizarReservaTest_ReservaActualizadaNull() {
         // Arrange
         Long id = 1L;
-        Reserva reservaActualizada = null;
+
+        ReservaDto reservaActualizada = null;
         when(mockReservaRepository.findById(id)).thenReturn(Optional.of(new Reserva()));
 
         // Act & Assert
@@ -214,7 +218,7 @@ public class ReservaTest {
     public void actualizarReservaTest_IdNull() {
         // Arrange
         Long id = null;
-        Reserva reservaActualizada = new Reserva();
+        ReservaDto reservaActualizada = new ReservaDto();
 
         // Act & Assert
         assertThrows(IllegalArgumentException.class, () -> reservaService.actualizarReserva(id, reservaActualizada));

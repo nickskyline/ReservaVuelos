@@ -76,20 +76,30 @@ public class ReservaService {
         return reservaRepository.findAll();
     }
 
-    public Reserva actualizarReserva(Long id, Reserva reservaActualizada) {
+    public Reserva actualizarReserva(Long id, ReservaDto reservaActualizada) {
         if (id == null) {
             throw new IllegalArgumentException("El ID no puede ser null");
         }
         if (reservaActualizada == null) {
             throw new IllegalArgumentException("La reserva actualizada no puede ser null");
         }
+
+        Optional<Pasajero> pasajero = pasajeroRepository.findById(reservaActualizada.getIdPasajero());
+        Optional<Vuelo> vuelo = vueloRepository.findById(reservaActualizada.getIdVuelo());
         Reserva reservaExistente = reservaRepository.findById(id).orElse(null);
         if (reservaExistente != null) {
-            reservaActualizada.setId(id); // Aseguramos que el ID no cambie
+            reservaExistente.setId(id); // Aseguramos que el ID no cambie
             // Aquí puedes realizar otras actualizaciones necesarias
-            return reservaRepository.save(reservaActualizada);
+            LocalDate fechaReservaConvertida = convertirYValidarFechas(reservaActualizada);
+            reservaExistente.setFechaReserva(fechaReservaConvertida);
+            reservaExistente.setPasajeros(pasajero.get());
+            reservaExistente.setVuelo(vuelo.get());
+
+            return reservaRepository.save(reservaExistente);
         }
-        return null; // La reserva no existe
+
+        return null;
+
     }
 
 
