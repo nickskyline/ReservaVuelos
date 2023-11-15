@@ -20,7 +20,6 @@ import org.springframework.context.annotation.Configuration;
                 title = "API Documentation"
         ),
         servers = {
-                @Server(url = "http://localhost:8080/swagger-ui.html",description = "Production server"),
                 @Server(url = "http://localhost:8080",description = "Development server")
         }
 )
