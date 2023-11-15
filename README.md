@@ -1,4 +1,7 @@
-Sistema de Reserva de Vuelos  FlyLite ✈️
+## Sistema de Reserva de Vuelos  FlyLite ✈️
+
+## Descripción del Proyecto
+
 Este proyecto aborda el desafío de simplificar y mejorar la experiencia de reserva de vuelos para los usuarios. Tradicionalmente, este proceso puede ser complicado y consumir mucho tiempo, con múltiples pasos y interfaces poco intuitivas. Nuestro objetivo es proporcionar una solución eficiente, segura y fácil de usar.
 
 Problema 🤔
