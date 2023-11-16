@@ -1,5 +1,6 @@
 package com.proyecto.reservavuelos.controller;
 
+import com.proyecto.reservavuelos.dto.ReservaDto;
 import com.proyecto.reservavuelos.model.Reserva;
 import com.proyecto.reservavuelos.service.ReservaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/reservas")
+@RequestMapping("api/v1/reservas")
 public class ReservaController {
 
     private ReservaService reservaService;
@@ -22,8 +23,8 @@ public class ReservaController {
     }
 
     @PostMapping
-    public ResponseEntity<Reserva> crearReserva(@RequestBody Reserva reserva) {
-        Reserva nuevaReserva = reservaService.crearReserva(reserva);
+    public ResponseEntity<Reserva> crearReserva(@RequestBody ReservaDto reservaDto) {
+        Reserva nuevaReserva = reservaService.crearReserva(reservaDto);
         if (nuevaReserva != null) {
             return new ResponseEntity<>(nuevaReserva, HttpStatus.CREATED);
         } else {
@@ -48,7 +49,7 @@ public class ReservaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Reserva> actualizarReserva(@PathVariable Long id, @RequestBody Reserva reservaActualizda) {
+    public ResponseEntity<Reserva> actualizarReserva(@PathVariable Long id, @RequestBody ReservaDto reservaActualizda) {
         Reserva reservaActualizada = reservaService.actualizarReserva(id, reservaActualizda);
         if (reservaActualizada != null) {
             return new ResponseEntity<>(reservaActualizada, HttpStatus.OK);
